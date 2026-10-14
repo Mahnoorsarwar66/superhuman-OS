@@ -35,6 +35,20 @@ def init_db():
             )
             """
         )
+
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS reviews (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                task_id INTEGER NOT NULL,
+                action TEXT NOT NULL,
+                note TEXT,
+                created_at TEXT NOT NULL,
+                FOREIGN KEY(task_id) REFERENCES tasks(id)
+            )
+            """
+        )
+
     print("Superhuman OS database initialized.")
 
 
@@ -131,6 +145,66 @@ def show_task(task_id):
         content = Path(output_path).read_text(encoding="utf-8")
         print(content[:3000])
 
+def review_task(task_id, action, note):
+    allowed_actions = {
+        "approve": "approved",
+        "revise": "needs_revision",
+        "reject": "rejected",
+    }
+
+    if action not in allowed_actions:
+        print(f"Unsupported review action: {action}")
+        return
+
+    new_status = allowed_actions[action]
+    now = datetime.now().isoformat(timespec="seconds")
+
+    with connect() as conn:
+        reviews = conn.execute(
+            """
+            SELECT action, note, created_at
+            FROM reviews
+            WHERE task_id = ?
+            ORDER BY id ASC
+            """,
+            (task_id,),
+        ).fetchall()
+
+    if reviews:
+        print("\n--- Review history ---\n")
+        for action, note, created_at in reviews:
+            print(f"{created_at} - {action}: {note or ''}")
+
+    with connect() as conn:
+        row = conn.execute(
+            "SELECT id, title, status FROM tasks WHERE id = ?",
+            (task_id,),
+        ).fetchone()
+
+        if not row:
+            print(f"Task #{task_id} not found.")
+            return
+
+        conn.execute(
+            """
+            INSERT INTO reviews (task_id, action, note, created_at)
+            VALUES (?, ?, ?, ?)
+            """,
+            (task_id, action, note, now),
+        )
+
+        conn.execute(
+            """
+            UPDATE tasks
+            SET status = ?, updated_at = ?
+            WHERE id = ?
+            """,
+            (new_status, now, task_id),
+        )
+
+    print(f"Task #{task_id} marked as {new_status}.")
+    if note:
+        print(f"Review note: {note}")
 
 def run_task(task_id):
     load_dotenv()
@@ -217,6 +291,18 @@ def main():
     run = sub.add_parser("run")
     run.add_argument("task_id", type=int)
 
+    approve = sub.add_parser("approve")
+    approve.add_argument("task_id", type=int)
+    approve.add_argument("--note", default="")
+
+    revise = sub.add_parser("revise")
+    revise.add_argument("task_id", type=int)
+    revise.add_argument("--note", default="")
+
+    reject = sub.add_parser("reject")
+    reject.add_argument("task_id", type=int)
+    reject.add_argument("--note", default="")
+
     route = sub.add_parser("route")
     route.add_argument("--title", required=True)
     route.add_argument("--details", default="")
@@ -245,6 +331,15 @@ def main():
         route_preview(args.title, args.details)
     elif args.command == "auto":
         auto_task(args.title, args.details)
+    elif args.command == "approve":
+        init_db()
+        review_task(args.task_id, "approve", args.note)
+    elif args.command == "revise":
+        init_db()
+        review_task(args.task_id, "revise", args.note)
+    elif args.command == "reject":
+        init_db()
+        review_task(args.task_id, "reject", args.note)
     else:
         parser.print_help()
 
