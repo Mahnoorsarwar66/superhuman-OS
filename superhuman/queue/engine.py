@@ -1,0 +1,143 @@
+"""Local durable work queue. Runs only explicitly authorized draft/research tasks."""
+import json
+from contextlib import contextmanager
+import os
+import sqlite3
+import time
+import traceback
+from datetime import datetime, timezone
+from pathlib import Path
+from uuid import uuid4
+
+ALLOWED = {'research', 'collab'}
+DEFAULT_DB = Path('data/superhuman_queue.db')
+
+
+def now():
+    return datetime.now(timezone.utc).isoformat()
+
+
+@contextmanager
+def connect(path=DEFAULT_DB):
+    p = Path(path)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    db = sqlite3.connect(p, timeout=30)
+    try:
+        db.row_factory = sqlite3.Row
+        db.execute('PRAGMA busy_timeout=30000')
+        db.execute('PRAGMA journal_mode=WAL')
+        with db:
+            yield db
+    finally:
+        db.close()
+
+
+def initialize(path=DEFAULT_DB):
+    with connect(path) as db:
+        db.execute('''CREATE TABLE IF NOT EXISTS queue_jobs (
+          id TEXT PRIMARY KEY, kind TEXT NOT NULL, project TEXT NOT NULL,
+          title TEXT NOT NULL, details TEXT NOT NULL, status TEXT NOT NULL,
+          attempts INTEGER NOT NULL DEFAULT 0, max_attempts INTEGER NOT NULL DEFAULT 2,
+          created_at TEXT NOT NULL, updated_at TEXT NOT NULL, next_run_at REAL NOT NULL,
+          output_path TEXT, last_error TEXT, result_json TEXT, approval_note TEXT
+        )''')
+        db.execute('CREATE INDEX IF NOT EXISTS jobs_ready ON queue_jobs(status,next_run_at)')
+
+
+def enqueue(kind, project, title, details='', path=DEFAULT_DB, max_attempts=2):
+    if kind not in ALLOWED:
+        raise ValueError('Only research and collaboration drafts may be queued')
+    if not title.strip():
+        raise ValueError('Title cannot be empty')
+    from superhuman.core.router import WORKSTREAMS
+    if project not in WORKSTREAMS:
+        raise ValueError(f'Unknown workstream: {project}')
+    # This checks explicit instructions, not a substitute for real scoped tool permissions.
+    from superhuman.core.router import route_task
+    decision = route_task(title, details)
+    if decision.approval_required:
+        raise ValueError('Task requests an external action. This queue only executes research/draft jobs.')
+    if not 1 <= max_attempts <= 5:
+        raise ValueError('max_attempts must be between 1 and 5')
+    initialize(path)
+    job_id = uuid4().hex[:12]
+    stamp = now()
+    with connect(path) as db:
+        db.execute('''INSERT INTO queue_jobs (id,kind,project,title,details,status,attempts,max_attempts,
+           created_at,updated_at,next_run_at) VALUES (?,?,?,?,?,?,?,?,?,?,?)''',
+           (job_id, kind, project, title, details, 'queued', 0, max_attempts, stamp, stamp, time.time()))
+    return job_id
+
+
+def list_jobs(path=DEFAULT_DB):
+    initialize(path)
+    with connect(path) as db:
+        return [dict(row) for row in db.execute('SELECT * FROM queue_jobs ORDER BY created_at DESC')]
+
+
+def get_job(job_id, path=DEFAULT_DB):
+    initialize(path)
+    with connect(path) as db:
+        row = db.execute('SELECT * FROM queue_jobs WHERE id=?', (job_id,)).fetchone()
+        return dict(row) if row else None
+
+
+def claim(path=DEFAULT_DB):
+    """Atomically claim one ready job. Workers may run concurrently."""
+    initialize(path)
+    with connect(path) as db:
+        db.execute('BEGIN IMMEDIATE')
+        row = db.execute('''SELECT * FROM queue_jobs WHERE status='queued' AND next_run_at <= ?
+            ORDER BY next_run_at,created_at LIMIT 1''', (time.time(),)).fetchone()
+        if not row:
+            return None
+        db.execute("UPDATE queue_jobs SET status='running', attempts=attempts+1, updated_at=? WHERE id=?",
+                   (now(), row['id']))
+        return dict(db.execute('SELECT * FROM queue_jobs WHERE id=?', (row['id'],)).fetchone())
+
+
+def run_one(path=DEFAULT_DB, executor=None):
+    job = claim(path)
+    if not job:
+        return None
+    try:
+        if executor is not None:
+            result = executor(job)
+        elif job['kind'] == 'research':
+            from superhuman.research.runner import run_research
+            result = run_research(job['title'], job['details'], project=job['project'])
+        else:
+            from superhuman.collab.runner import run_collaboration
+            # API contract checked against v0.5 implementation.
+            result = run_collaboration(job['title'], job['details'], project=job['project'])
+        if not isinstance(result, dict):
+            raise TypeError('Agent runner must return a dict')
+        output = result.get('output') or result.get('output_path') or result.get('final_path')
+        with connect(path) as db:
+            db.execute('''UPDATE queue_jobs SET status='needs_review', output_path=?, result_json=?,
+                updated_at=?, last_error=NULL WHERE id=?''',
+                (str(output) if output else None, json.dumps(result, default=str), now(), job['id']))
+    except Exception as exc:
+        safe_error = f'{type(exc).__name__}: {str(exc)[:400]}'
+        retries_left = job['attempts'] < job['max_attempts']
+        # exponential backoff; no secrets or full exception traceback stored
+        delay = min(60 * (2 ** (job['attempts'] - 1)), 900)
+        with connect(path) as db:
+            db.execute('''UPDATE queue_jobs SET status=?,last_error=?,updated_at=?,next_run_at=? WHERE id=?''',
+                       ('queued' if retries_left else 'failed', safe_error, now(), time.time() + delay, job['id']))
+    return get_job(job['id'], path)
+
+
+def review(job_id, action, note='', path=DEFAULT_DB):
+    if action not in {'approve', 'reject'}:
+        raise ValueError('action must be approve or reject')
+    with connect(path) as db:
+        db.execute('BEGIN IMMEDIATE')
+        row = db.execute('SELECT status FROM queue_jobs WHERE id=?', (job_id,)).fetchone()
+        if not row:
+            raise ValueError('Job not found')
+        if row['status'] != 'needs_review':
+            raise ValueError('Only completed drafts can be reviewed')
+        db.execute('UPDATE queue_jobs SET status=?,approval_note=?,updated_at=? WHERE id=?',
+                   ('approved' if action == 'approve' else 'rejected', note, now(), job_id))
+    return get_job(job_id, path)
