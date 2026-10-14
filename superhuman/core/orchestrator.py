@@ -1,3 +1,4 @@
+from superhuman.memory.store import context_for
 import os
 from datetime import datetime
 from pathlib import Path
@@ -47,6 +48,9 @@ Routing decision:
 - Risk level: {route.risk_level}
 - Approval required: {route.approval_required}
 - Routing reason: {route.reason}
+
+Reference context for this workstream:
+{context_for(route.workstream)}
 
 Produce a useful first deliverable.
 

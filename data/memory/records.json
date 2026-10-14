@@ -1,0 +1,20 @@
+[
+  {
+    "id": "adb9736b-dbcb-44b2-952c-3221097a8503",
+    "project": "career_rnd",
+    "text": "EdSync is developing an explainable education-to-employment career recommendation algorithm.",
+    "source": "user_confirmed",
+    "kind": "fact",
+    "active": true,
+    "created_at": "2026-10-14T19:47:15.535164+00:00"
+  },
+  {
+    "id": "3238f162-24e8-4b87-bf73-f93cf49d9d51",
+    "project": "career_rnd",
+    "text": "EdSync is developing an explainable education-to-employment career recommendation algorithm.",
+    "source": "user_confirmed",
+    "kind": "fact",
+    "active": true,
+    "created_at": "2026-10-14T19:47:25.416946+00:00"
+  }
+]
