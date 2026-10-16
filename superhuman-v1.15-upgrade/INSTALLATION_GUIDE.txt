@@ -1,0 +1,84 @@
+SUPERHUMAN v1.15 — TASK DESK
+Requires the working v1.14 installation. No new account permissions or reconnections.
+
+1. ON YOUR WINDOWS LAPTOP
+Download this ZIP and extract it so this file exists:
+C:\superhuman-os-starter\superhuman-v1.15-upgrade\upgrade_server.sh
+
+In Windows PowerShell (the prompt starts PS C:\), run:
+
+scp -r -o IdentitiesOnly=yes -i "$env:USERPROFILE\.ssh\superhuman_replacement" "C:\superhuman-os-starter\superhuman-v1.15-upgrade" superhuman@167.71.196.20:/home/superhuman/
+
+Wait for the upload to finish. Then run:
+
+ssh -o IdentitiesOnly=yes -i "$env:USERPROFILE\.ssh\superhuman_replacement" root@167.71.196.20
+
+2. ON THE UBUNTU SERVER
+Only after the prompt starts root@ubuntu, run:
+
+bash /home/superhuman/superhuman-v1.15-upgrade/upgrade_server.sh
+
+This script checks the existing source before stopping services, makes a private
+backup, tests the staged upgrade, installs it and starts both services. If a later
+step fails, it attempts to restart the existing services. It makes no model
+requests. Existing queued work may run when the worker restarts.
+
+Wait for the tests to finish. You should see Installed v1.15.0 and two active lines.
+A source mismatch stops the installer rather than replacing unfamiliar code.
+If it fails, copy the error text, without credentials.
+
+3. OPEN TASK DESK ON YOUR PHONE OR LAPTOP
+https://superhuman.167-71-196-20.sslip.io/tasks
+
+Refresh the page. The navigation now includes Tasks.
+- Proposed: suggestions from all your conversations and inbox reports.
+- Edit the title and complete instructions. Choose a workstream for each task.
+- Inspect source emails for inbox-based suggestions; follow the excerpt links.
+- Approve useful work, or dismiss a suggestion. Approval queues local work using
+  the request limit shown on the button. The worker must be online to run it.
+- Approved: follow Open work and deliverable to review the result and approve or
+  request changes using the existing project controls.
+- Save feedback for future work opens a memory-note form. Saving defaults to
+  Proposed. Confirm the note separately before it is eligible for future tasks.
+
+TEST WITHOUT MAKING MODEL REQUESTS
+Open Tasks, inspect a source, and open a feedback form. These actions are free of
+model requests. Approve only a task you actually want performed; its execution
+uses its displayed budget. If no suggestions exist, an inbox report or Talk reply
+can propose them using the existing separate reply/report budget.
+
+WORKSTREAM CHOICES
+For example, use marketing for university outreach, endorsement for endorsement
+preparation, applications for applications, and career_rnd for career research.
+The menu uses your configured workstreams. You make the routing decision.
+Changing a task's workstream selects its specialist and normal memory context;
+it does not change the inbox default or the source conversation's workstream.
+Task Desk does not send messages, submit applications or modify your mailbox.
+
+FEEDBACK AND SOURCE LIMITS
+Feedback is explicit memory, not model retraining or automatic code changes.
+The source page lists the report's saved email excerpts. A particular suggestion
+may cite only some of them; read its instructions and the original report.
+Excerpts can be truncated; attachments are not available in these snapshots.
+Your existing private login and CSRF protections cover Task Desk as well.
+
+ROLLBACK (ONLY IF NEEDED)
+Keep the exact Rollback backup path printed by installation.
+From the root server terminal, stop both services:
+systemctl stop superhuman-worker.service superhuman-web.service
+
+Switch to the app owner:
+sudo -iu superhuman
+cd /home/superhuman/app
+
+Run this command, replacing BACKUP_DIRECTORY with that exact printed path:
+.venv/bin/python /home/superhuman/superhuman-v1.15-upgrade/install_v115.py --rollback BACKUP_DIRECTORY
+
+Then return to root and restart:
+exit
+systemctl start superhuman-web.service superhuman-worker.service
+
+Rollback restores the prior source and retains all records and approved projects.
+Older approval forms may reject a repeated approval made under v1.15; open the
+existing project instead. Its selected workstream remains attached to the project.
+Rollback refuses changed installed source or altered backups.

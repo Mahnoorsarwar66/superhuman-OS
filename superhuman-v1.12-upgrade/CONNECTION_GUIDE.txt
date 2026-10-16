@@ -1,0 +1,224 @@
+SUPERHUMAN v1.12 — CONNECT FOUR INBOXES
+
+Accounts: Personal Gmail, EdSync Gmail, EdSync Titan, NextSTEP Gmail.
+The installer creates labelled connection slots. It does not connect accounts.
+Never paste passwords, OAuth client JSON, token files or encryption keys into chat.
+
+1. INSTALL THE UPGRADE FIRST
+
+WINDOWS POWERSHELL, from your laptop:
+Assumes the downloaded ZIP is in Downloads. If the browser saved it elsewhere,
+move the ZIP to Downloads first.
+
+scp -o IdentitiesOnly=yes -i "$env:USERPROFILE\.ssh\superhuman_replacement" "$env:USERPROFILE\Downloads\superhuman-v1.12-upgrade.zip" superhuman@167.71.196.20:/home/superhuman/
+ssh -o IdentitiesOnly=yes -i "$env:USERPROFILE\.ssh\superhuman_replacement" root@167.71.196.20
+
+UBUNTU SERVER, only when the prompt begins root@...:
+
+python3 -m zipfile -e /home/superhuman/superhuman-v1.12-upgrade.zip /home/superhuman/
+chown -R superhuman:superhuman /home/superhuman/superhuman-v1.12-upgrade
+bash /home/superhuman/superhuman-v1.12-upgrade/upgrade_server.sh
+
+The script installs the cryptography dependency, checks package compatibility,
+runs a staged test suite, gracefully stops the worker/web, saves a private data
+backup, installs code and restarts both services. Checks use synthetic credentials
+and model responses; they do not call Google, Titan or a paid model API.
+It preserves your existing database, .env, password, origin and service files.
+Do not run a second worker or reinstall an older upgrade over this version.
+
+Open https://superhuman.167-71-196-20.sslip.io/inboxes
+You should see four disconnected inboxes.
+
+2. CHOOSE WHERE APPROVED TASKS WILL GO
+
+UBUNTU SERVER, as root, switch once:
+
+sudo -iu superhuman
+cd /home/superhuman/app
+.venv/bin/python -m superhuman.mail.cli scopes
+
+Use an existing workstream from this list for each connection. Workstreams are
+roles such as marketing or admissions, not separate user accounts. Do not invent
+a workstream name. You will be prompted for the scope in the commands below.
+Reports exclude general memory and other inboxes, even for follow-up discussion.
+Approved tasks use the existing workstream and normal confirmed-memory selection;
+review the full task instructions before approval. This is one owner's workspace,
+not tenant isolation for unrelated users or organisations.
+
+3. CONNECT EDSYNC TITAN FIRST (NO GOOGLE CLOUD SETUP NEEDED)
+
+UBUNTU SERVER, as superhuman@... in /home/superhuman/app:
+
+read -r -p 'EdSync Titan email address: ' TITAN_EMAIL
+read -r -p 'Existing workstream for approved tasks: ' TITAN_SCOPE
+.venv/bin/python -m superhuman.mail.cli connect-titan edsync_titan --email "$TITAN_EMAIL" --scope "$TITAN_SCOPE" --host-profile godaddy
+
+Enter the Titan mailbox password at its private prompt. Nothing appears while you
+type; press Enter afterwards. This is not your SSH passphrase or Superhuman login.
+If your provider supports/requires an app password with 2FA, use that password.
+Do not turn off 2FA as a workaround. Enable third-party client access if required.
+
+The godaddy profile is for GoDaddy Professional Email powered by Titan:
+imap.secureserver.net, SSL, port 993. Other supported profiles, ONLY when the
+mailbox provider's settings say so: titan (imap.titan.email), titan_eu
+(imap0101.titan.email). If the host/profile is wrong, stop and check the provider's
+settings rather than changing the allowlist or using an insecure connection.
+
+A successful connection does not download messages yet. Open the EdSync Titan
+inbox and click Read recent mail. Refresh after the worker completes its read.
+
+4. CREATE A SEPARATE GOOGLE CLOUD PROJECT FOR SUPERHUMAN
+
+On your LAPTOP browser, open https://console.cloud.google.com/
+Create a NEW project for Superhuman, separate from EdSync's existing infrastructure.
+Enable Gmail API in APIs & Services / Library.
+In Google Auth Platform (or OAuth consent screen):
+- Set the app name to Superhuman, with your contact/support email.
+- Choose External audience because the accounts include personal Gmail.
+- Start in Testing. Add all THREE actual Gmail account addresses as test users.
+- Configure only this data-access scope:
+  https://www.googleapis.com/auth/gmail.readonly
+- Create an OAuth client of type Desktop app, named Superhuman private connector.
+- Download its client JSON. Keep it private.
+A Google Workspace administrator may need to permit the OAuth client for business
+accounts. Do not bypass an organisation's account policy.
+
+Testing-mode refresh tokens expire after 7 days for this scope. Re-run the
+connection/import for that same inbox when necessary. A public production release
+with this restricted scope may require Google verification and other compliance
+work; this installer does not bypass those requirements. Production authorisation
+is a separate follow-up before relying on unattended long-term Gmail access.
+No Gmail password or Google service-account key is needed.
+
+5. AUTHORISE EACH GMAIL ON YOUR LAPTOP
+
+Open a NEW WINDOWS POWERSHELL window. Do not run these commands at root@... or
+superhuman@... . They open Google consent in your laptop's normal browser.
+
+Expand-Archive -LiteralPath "$env:USERPROFILE\Downloads\superhuman-v1.12-upgrade.zip" -DestinationPath "$env:USERPROFILE\Downloads" -Force
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.superhuman" | Out-Null
+
+Move/rename your downloaded Desktop OAuth JSON to:
+C:\Users\YOUR_WINDOWS_USER\.superhuman\google-desktop-client.json
+You can use File Explorer. Replace YOUR_WINDOWS_USER with your Windows username.
+The following commands resolve that username automatically.
+
+$connector = "$env:USERPROFILE\Downloads\superhuman-v1.12-upgrade\gmail_connect.py"
+$client = "$env:USERPROFILE\.superhuman\google-desktop-client.json"
+$personal = Read-Host 'Personal Gmail account address'
+$edsync = Read-Host 'EdSync Gmail account address'
+$nextstep = Read-Host 'NextSTEP Gmail account address'
+
+& C:\superhuman-os-starter\.venv\Scripts\python.exe $connector --client $client --slot personal_gmail --email $personal --output "$env:USERPROFILE\.superhuman\personal_gmail.json"
+& C:\superhuman-os-starter\.venv\Scripts\python.exe $connector --client $client --slot edsync_gmail --email $edsync --output "$env:USERPROFILE\.superhuman\edsync_gmail.json"
+& C:\superhuman-os-starter\.venv\Scripts\python.exe $connector --client $client --slot nextstep_gmail --email $nextstep --output "$env:USERPROFILE\.superhuman\nextstep_gmail.json"
+
+Complete each Google consent before moving to the next. Select exactly the account
+printed by the helper. The helper verifies its primary email address and read-only
+scope, then creates a private credential file outside your project. It binds a
+random loopback port on your laptop, checks state and uses PKCE. It does not use
+the public sslip.io hostname for the OAuth callback. There is a five-minute timeout.
+If consent is blocked, check test users, Gmail API, client type and administrator
+policy. Do not continue through an unfamiliar app warning; verify it identifies
+YOUR Superhuman project and client first. Never approve a request to send mail.
+
+6. TRANSFER THE THREE PRIVATE CREDENTIAL FILES
+
+Still WINDOWS POWERSHELL:
+
+scp -o IdentitiesOnly=yes -i "$env:USERPROFILE\.ssh\superhuman_replacement" "$env:USERPROFILE\.superhuman\personal_gmail.json" "$env:USERPROFILE\.superhuman\edsync_gmail.json" "$env:USERPROFILE\.superhuman\nextstep_gmail.json" superhuman@167.71.196.20:/home/superhuman/
+
+UBUNTU SERVER, as superhuman@... in /home/superhuman/app:
+
+chmod 600 /home/superhuman/personal_gmail.json /home/superhuman/edsync_gmail.json /home/superhuman/nextstep_gmail.json
+read -r -p 'Personal Gmail address authorised on the laptop: ' PERSONAL_EMAIL
+read -r -p 'Existing workstream for its approved tasks: ' PERSONAL_SCOPE
+.venv/bin/python -m superhuman.mail.cli import-gmail personal_gmail --email "$PERSONAL_EMAIL" --scope "$PERSONAL_SCOPE" --file /home/superhuman/personal_gmail.json
+
+read -r -p 'EdSync Gmail address authorised on the laptop: ' EDSYNC_EMAIL
+read -r -p 'Existing workstream for its approved tasks: ' EDSYNC_SCOPE
+.venv/bin/python -m superhuman.mail.cli import-gmail edsync_gmail --email "$EDSYNC_EMAIL" --scope "$EDSYNC_SCOPE" --file /home/superhuman/edsync_gmail.json
+
+read -r -p 'NextSTEP Gmail address authorised on the laptop: ' NEXTSTEP_EMAIL
+read -r -p 'Existing workstream for its approved tasks: ' NEXTSTEP_SCOPE
+.venv/bin/python -m superhuman.mail.cli import-gmail nextstep_gmail --email "$NEXTSTEP_EMAIL" --scope "$NEXTSTEP_SCOPE" --file /home/superhuman/nextstep_gmail.json
+
+Each import validates Google identity again, encrypts the long-lived credential,
+and removes its server transfer file ONLY after successful storage. If import
+fails, fix the connection and retry; the source file remains for that retry.
+Once ALL three imports succeed, remove the laptop transfer copies in WINDOWS:
+
+Remove-Item -LiteralPath "$env:USERPROFILE\.superhuman\personal_gmail.json", "$env:USERPROFILE\.superhuman\edsync_gmail.json", "$env:USERPROFILE\.superhuman\nextstep_gmail.json"
+
+Keep the Desktop client JSON privately for future reconnection. Never put these
+files in the app/data folder, a shared drive, a public repository or a screenshot.
+
+7. FIRST REAL INBOX TEST
+
+Open /inboxes in Superhuman on your phone or laptop.
+For each account separately:
+- Click Read recent mail. This queues read-only work, with zero model requests.
+- Refresh and inspect a few sender/subject/body previews against the original inbox.
+- Click Request report. This authorises ONE model attempt using up to 12 newest
+  locally saved previews from this account, with body excerpts up to 2,000 chars.
+- Open the report in Talk. Check urgency against the original email and date.
+- Review/edit any proposed task before Approve task. Each local drafting task has
+  its existing separate budget of up to three model requests. No email is sent.
+- Optional: enable reading every 10 minutes. This reads previews only; it does NOT
+  automatically request paid reports, suggest tasks or issue push notifications.
+The worker must be online and unpaused for reads, reports and approved tasks.
+
+Coverage: INBOX only, last seven days, up to 25 candidate messages per sync. Gmail
+and Titan fetches have size/time limits. All attachments and oversized bodies are
+omitted. Preview bodies stop at 6,000 characters. A limit warning means additional
+messages were missed; no paging/backfill exists in this pilot. Up to 500 previews
+per account remain saved. Reports keep their own immutable snapshot even if older
+previews roll out. Archive, Sent, Spam and other folders are not reviewed.
+This is not a guaranteed urgent-email alert system. Sender names and email claims
+are unverified. Malicious email text is untrusted data, never approval to act.
+No remote images or linked pages are loaded, and HTML is converted to inert text.
+The app has no mail sending, starring, label-changing or mark-as-read commands.
+
+8. PRIVATE BACKUP AND DISCONNECTION
+
+Long-lived OAuth/Titan credentials are encrypted in the project DB. Saved mail
+previews, reports and approved-task text are private working data, not separately
+encrypted by this feature. Existing authenticated UI and private server access
+protect them. Keep deployment bundles private.
+
+The credential-encryption key is outside the app and transfer bundles:
+/home/superhuman/.config/superhuman/mail.key
+Directory permissions should be 700 and key permissions 600. Before relying on
+connections, keep a separate private backup of that key in your password manager
+or other protected backup. Do not print it into chat or put it inside app/data.
+A DB backup without its original key cannot recover the connections; reconnecting
+is the alternative. The code refuses to silently replace a missing key while
+existing credentials remain encrypted.
+
+For future transfer bundles use this version's restore_bundle.py, not the v1.9
+helper. New bundles include requirements-v112.txt. On a fresh server install both
+requirements-v19.txt and requirements-v112.txt before importing the restored app.
+Restore the original mail key separately, with permissions 600, outside app/data.
+The restore helper requires an empty target; never restore over the live app.
+
+Disconnect on the inbox page removes the saved credential and disables future
+reads. It keeps previews, report snapshots and tasks. It does not revoke Google's
+grant; revoke separately in Google Account / Security / Third-party connections
+if needed. Revoking project access may affect other connections sharing that app.
+Titan can be revoked by changing the mailbox/app password with its provider.
+
+Troubleshooting without exposing secrets:
+.venv/bin/python -m superhuman.mail.cli status
+.venv/bin/python -m superhuman.hosted.cli status
+
+Do not enable HTTP wire debugging or paste credential files into support chats.
+A sync failure does not trigger an immediate automatic replay. Opted-in periodic
+reading tries a fresh read on its next scheduled interval. Failed paid reports
+are never retried automatically and still consume their one-attempt budget.
+
+Official setup references checked for this build:
+https://developers.google.com/identity/protocols/oauth2/native-app
+https://developers.google.com/identity/protocols/oauth2
+https://developers.google.com/workspace/gmail/api/auth/scopes
+https://www.godaddy.com/help/use-imap-settings-to-add-my-professional-email-powered-by-titan-to-a-client-32204
+https://support.titan.email/hc/en-us/articles/900000215446-Configure-Titan-on-other-apps-using-IMAP-POP

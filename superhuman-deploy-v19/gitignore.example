@@ -1,0 +1,9 @@
+.env
+.env.*
+.venv/
+__pycache__/
+*.pyc
+/data/
+/backups/
+*-transfer.zip
+*-backup.zip

@@ -1,0 +1,128 @@
+SUPERHUMAN v1.18 — RESEARCH DESK
+Requires v1.17 to have finished successfully. Do not run two upgrades together.
+No new inbox connections, permissions or dependencies.
+
+1. WINDOWS LAPTOP
+Extract this ZIP so this file exists:
+C:\superhuman-os-starter\superhuman-v1.18-upgrade\upgrade_server.sh
+
+In Windows PowerShell (prompt begins PS C:\), upload:
+
+scp -r -o IdentitiesOnly=yes -i "$env:USERPROFILE\.ssh\superhuman_replacement" "C:\superhuman-os-starter\superhuman-v1.18-upgrade" superhuman@167.71.196.20:/home/superhuman/
+
+If you need to reconnect to the server:
+
+ssh -o IdentitiesOnly=yes -i "$env:USERPROFILE\.ssh\superhuman_replacement" root@167.71.196.20
+
+2. UBUNTU SERVER
+After v1.17 has completed, at the root@ubuntu server prompt run:
+
+bash /home/superhuman/superhuman-v1.18-upgrade/upgrade_server.sh
+
+The script verifies source and dependencies before stopping services, makes a
+private-data backup, runs staged tests, installs the package and restarts both
+services. If a later step fails, it attempts to restart existing services.
+Installation makes no model calls; queued work can resume after worker restart.
+Wait for Installed v1.18.0 and two active lines. If it fails, share the error text
+without credentials. Unrecognized source is refused rather than overwritten.
+
+3. OPEN RESEARCH DESK
+https://superhuman.167-71-196-20.sslip.io/research-desk
+
+CREATE AN AREA
+Choose a title, a configured workstream, research questions and an optional working
+hypothesis. The workstream remains fixed so source files stay in the correct
+workspace. Areas are logical folders grouping cards and task outputs. They do
+not move or rename original files.
+Example: EdSync career-office pilot evidence, under career_rnd.
+
+ADD SOURCES
+Use Files in this workstream to upload supported documents. Then add a source
+card with the exact filename, or paste a relevant excerpt. You can also save a
+source URL, synopsis, limitations, reading flag and reason to read it yourself.
+Saving a URL does not download or read the linked page. A URL alone cannot support
+a local synopsis. Cards can start with an owner-written summary and be refined.
+Read by me is your reading flag, not proof that a claim is independently verified.
+
+DRAFT A SOURCE SYNOPSIS
+Open a source card, choose Review source-synopsis task, inspect the full instructions
+and approve only when ready. A local draft costs up to 3 model requests. It covers
+the source question, available methods/findings, limitations, hypothesis relevance
+and which sections you should personally read. Read the result in Open output
+and review. Copy suitable reviewed text back to the source card; generated text
+does not automatically replace your saved notes or become general memory.
+
+SYNTHESIZE EVIDENCE
+Select one to three source cards on the current page, then review the synthesis
+task. The generated instructions distinguish supplied evidence, contradictions,
+interpretation, working hypothesis and unresolved questions. Approval permits up
+to 3 model requests for a local draft. Local synopsis and synthesis do not browse.
+
+WEB RESEARCH
+Review web-research task starts from the area's research question and hypothesis,
+without attached source cards by default. Edit out confidential details before
+approval. The existing hosted web-search runner performs up to 1 model request,
+requires API-provided URL citations, and saves an unverified research draft.
+One request is a research starting point, not an exhaustive literature review.
+No source access or paywall access is guaranteed. Follow-up questions need separate
+approval. Normal workstream specialist and memory context also apply.
+
+FILES AND INPUT LIMITS
+Supported files and extraction tools are unchanged: maximum 10 MB per file;
+selectable PDF text, DOCX, TXT, MD, CSV, JSON and cached XLSX values. No OCR.
+The task payload is limited to 12000 characters. At most three source cards are
+selected by the Research Desk form. Existing file attachment markers can refer
+to up to eight source files, with a shared 12000-character extracted-text budget.
+Long sources can be truncated by the existing extractor; source-operation records
+show hashes, excerpts and warnings. Check Files before relying on a paper summary.
+
+APPROVAL AND FILE CHECKS
+Research area or selected-source changes invalidate an open approval form.
+Attached file hashes are captured at approval and checked again before the worker
+requests a model. Changed or missing files stop the task with zero new model
+requests at that check. The ordinary project page can show ValueError for this
+failure. Inspect the file and approve a new task after reviewing the new version;
+retrying the old task does not bypass its original file check.
+All duplicate submissions of the same approval form return the same project.
+Opening a fresh form can approve a separate, separately budgeted task.
+Failed model attempts count; there are no automatic paid retries.
+
+RESULTS AND ORGANIZATION
+Task outputs remain in the existing project output storage and are linked to the
+research area and Projects. Review, correct or approve them through the normal
+project controls. API-cited research URLs remain in each research output; add
+important papers to source cards yourself. This release does not automatically
+collect every paper into the reading list or ingest reviewed outputs as facts.
+Archiving keeps cards and task links; it prevents new work in that area but does
+not cancel tasks already approved. Reopen the area to continue.
+
+QUICK TEST WITHOUT MODEL REQUESTS
+Create an area, add a card with a short excerpt, flag it for personal reading,
+and open the synopsis review form. Check that no task has run yet. Save a synopsis
+or reading-status change yourself and confirm it appears on the area page.
+Approve only research you want performed; execution uses the shown request budget.
+
+ROLLBACK (IF NEEDED)
+Keep the exact Rollback backup path printed by installation. Finish any pending
+or running Research Desk tasks first; rollback refuses them because v1.17 does
+not enforce the new file checks. Other existing features are unaffected.
+
+At the root server prompt:
+
+systemctl stop superhuman-worker.service superhuman-web.service
+sudo -iu superhuman
+cd /home/superhuman/app
+
+Replace BACKUP_DIRECTORY with the exact printed code backup path:
+
+.venv/bin/python /home/superhuman/superhuman-v1.18-upgrade/install_v118.py --rollback BACKUP_DIRECTORY
+
+Return to root and restart services, including if rollback was refused:
+
+exit
+systemctl start superhuman-web.service superhuman-worker.service
+
+Code rollback preserves areas, source cards, files and projects. The Research Desk
+interface and source-file checks return when v1.18 is reinstalled. Do not retry
+old Research Desk tasks under v1.17; reinstall v1.18 for their file checks.
+Changed installed code or altered backups also stop rollback.

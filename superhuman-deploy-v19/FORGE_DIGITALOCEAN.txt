@@ -1,0 +1,179 @@
+DEDICATED SUPERHUMAN DEPLOYMENT — FORGE + DIGITALOCEAN
+
+Design: one dedicated server, one web process, one worker, persistent local data/.
+Everything is separate from EdSync. No domain is required for the first tunnel
+check. These are preparation steps, not actions already performed in your account.
+
+A. PROVISION THE DEDICATED SERVER
+
+Create a separate DigitalOcean server through Forge. Choose a supported Ubuntu
+version with Python 3.12 or newer; the package was tested on Linux/Python 3.12.
+Use your chosen server size/region; no size or paid resource has been purchased.
+Add your own SSH public key to the new server. Never share its private key.
+Record its public IP. Keep application port 8000 private: the web process binds
+only to 127.0.0.1. SSH access is used before you configure a domain/HTTPS site.
+
+B. TRANSFER AND RESTORE YOUR SOURCE + DATA
+
+First create C:\superhuman-v19-transfer.zip using README_V19.txt. Stop Windows
+workers during transfer/cutover. From Windows PowerShell, replace SERVER_IP:
+
+  scp C:\superhuman-v19-transfer.zip forge@SERVER_IP:/home/forge/
+  scp C:\superhuman-v1.9-upgrade.zip forge@SERVER_IP:/home/forge/
+  ssh forge@SERVER_IP
+
+On the server:
+
+  cd /home/forge
+  python3 -m zipfile -e superhuman-v1.9-upgrade.zip upgrade-v19
+  python3 /home/forge/upgrade-v19/superhuman-v1.9-upgrade/restore_bundle.py --bundle /home/forge/superhuman-v19-transfer.zip --target /home/forge/superhuman
+
+The target must be empty. Restore does not overwrite an existing application.
+It moves only the bundled source and private data; .env and the virtual
+environment are deliberately not transferred. Saved Windows output paths are
+rebased to the server root. Web sessions are invalidated on restore.
+
+Then:
+
+  cd /home/forge/superhuman
+  python3 -m venv .venv
+  .venv/bin/python -m pip install -r requirements-v19.txt
+  mkdir -p data/hosted public-empty
+  chmod 700 data data/hosted
+
+If venv support is missing, install the matching Ubuntu python3-venv package
+through your server package manager, then repeat the venv command.
+
+Create the server's .env privately with OPENAI_API_KEY and your existing
+OPENAI_MODEL / SUPERHUMAN_RESEARCH_MODEL settings where used. Keep the same model
+choices as the working Windows installation. Do not copy Windows-specific path
+settings. Restrict .env permissions:
+
+  chmod 600 .env
+
+Use a private editor or Forge environment configuration. Do not put keys into
+shell command arguments, commit them to Git, or paste them into a chat.
+
+The login/account config should have been transferred. If it was never created
+on Windows, set up a new server owner before starting the web service:
+
+  .venv/bin/python -m superhuman.hosted.cli setup --origin http://127.0.0.1:8000 --tunnel
+
+If a login already exists and the origin needs changing:
+
+  .venv/bin/python -m superhuman.hosted.cli set-origin --origin http://127.0.0.1:8000 --tunnel
+
+C. CONFIGURE TWO FORGE BACKGROUND PROCESSES
+
+In the dedicated server's Processes tab, add CUSTOM background processes.
+These are Python processes, not Laravel queue workers.
+
+Web
+  Name: Superhuman web
+  Command: /home/forge/superhuman/.venv/bin/uvicorn superhuman.hosted.web:app --host 127.0.0.1 --port 8000 --workers 1 --proxy-headers --forwarded-allow-ips=127.0.0.1
+  Working directory: /home/forge/superhuman
+  User: forge
+  Processes: 1
+  Start seconds: 3
+  Stop seconds: 30
+  Stop signal: TERM
+
+Worker
+  Name: Superhuman worker
+  Command: /home/forge/superhuman/.venv/bin/python -m superhuman.hosted.worker --poll-seconds 5
+  Working directory: /home/forge/superhuman
+  User: forge
+  Processes: 1
+  Start seconds: 3
+  Stop seconds: 420
+  Stop signal: TERM
+
+Forge uses Supervisor to keep background processes running. A direct Supervisor
+example is included if you manage that manually; do not create both copies.
+Restart web/worker after code, origin or environment changes. Graceful worker
+shutdown lets current work finish. Force-killed requests require inspection
+and explicit recovery; they are not automatically billed again on restart.
+
+D. FIRST CLOUD CHECK WITHOUT A DOMAIN
+
+Close the local laptop dashboard using port 8000. In a Windows terminal:
+
+  ssh -N -L 127.0.0.1:8000:127.0.0.1:8000 forge@SERVER_IP
+
+Keep it open, then browse http://127.0.0.1:8000. This browser is now reaching the
+SERVER through SSH, not your old Windows application. Sign in with your owner
+credentials. Confirm old project visibility, file access and an Online worker.
+A small new task verifies server execution; it uses your API account.
+
+This step is for laptop/tunnel testing. It does not itself give your phone a
+public URL or configure an Android SSH client. Normal phone access is next.
+
+E. WHEN YOU CHOOSE A DOMAIN / HTTPS ENDPOINT
+
+Point a chosen domain/subdomain to the dedicated server. Allow Nginx to traverse
+the application root to its empty public directory while retaining private data
+permissions:
+
+  chmod 711 /home/forge/superhuman
+  chmod 755 /home/forge/superhuman/public-empty
+  chmod 700 /home/forge/superhuman/data
+
+Create its Forge site
+and let Forge configure SSL and HTTP-to-HTTPS redirection. Use an empty web root,
+/home/forge/superhuman/public-empty, rather than a directory containing code/data.
+Adapt nginx-location.conf.example in the dedicated site's configuration: replace
+its existing root location with the reverse proxy; preserve Forge's certificate
+and ACME includes. Do not expose Python directly on 0.0.0.0:8000.
+
+Validate Nginx before reloading:
+
+  sudo nginx -t
+
+Change the app origin (replace YOUR_HOSTNAME) and restart the web process:
+
+  cd /home/forge/superhuman
+  .venv/bin/python -m superhuman.hosted.cli set-origin --origin https://YOUR_HOSTNAME
+
+Sessions are revoked. Sign in again from your laptop and phone at the new HTTPS
+URL. Only the exact configured origin is accepted. Uvicorn trusts forwarded
+scheme/client headers only from the loopback proxy. Do not set trust to '*'.
+
+F. DATA, SOURCE CONTROL AND BACKUPS
+
+The server's data/ becomes authoritative after cutover. Keep it outside Git.
+The installer adds /data/, /backups/ and secret exclusions to .gitignore, and
+transfers that file. Do not publish private transfer/backup archives. Review
+Git status before creating the separate Superhuman repository; ignore rules do
+not remove material that was already tracked in an old repository.
+
+Disable destructive/zero-downtime release layouts until shared storage is
+explicitly configured. The current working directory must remain the application
+root, and deployments must retain data/. Do not run git clean against private
+state. For a later releases/shared-data layout, configure a single durable data
+location before changing deployment style. SQLite requires this single-host,
+single active worker setup; no multi-server scaling is included.
+
+Create private backups outside the application data tree, e.g.:
+
+  mkdir -p /home/forge/superhuman-backups
+  chmod 700 /home/forge/superhuman-backups
+  cd /home/forge/superhuman
+  .venv/bin/python -m superhuman.hosted.cli bundle --output /home/forge/superhuman-backups/superhuman-backup.zip
+
+Choose a NEW filename for each run; the tool refuses overwrites. You can schedule
+the command through Forge's Scheduler with a timestamped filename and a working
+directory of /home/forge/superhuman. Copy backups off the Droplet and choose a
+retention policy. DigitalOcean backups/snapshots can supplement application
+backups; enabling them is a separate account action and may cost money.
+API keys are not bundled and need separate secure storage.
+
+Restore is a migration into an EMPTY target, not a merge. Stop workers and the
+web service before a cutover. Keep the old copy until restored projects and
+artifacts are verified. Restored login sessions are invalidated.
+
+Official references checked for this package:
+https://laravel.com/forge/docs/resources/background-processes
+https://fastapi.tiangolo.com/deployment/https/
+https://fastapi.tiangolo.com/advanced/behind-a-proxy/
+https://docs.digitalocean.com/products/backups/
+https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html

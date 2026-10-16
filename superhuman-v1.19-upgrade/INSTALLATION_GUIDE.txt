@@ -1,0 +1,104 @@
+SUPERHUMAN v1.19 — RESEARCH REVIEW AND SOURCE INTAKE
+Requires v1.18 to finish successfully. Do not run two upgrades together.
+No new account permissions, connections or dependencies.
+
+WINDOWS LAPTOP
+Extract this ZIP so this file exists:
+C:\superhuman-os-starter\superhuman-v1.19-upgrade\upgrade_server.sh
+
+In Windows PowerShell (prompt begins PS C:\), upload:
+
+scp -r -o IdentitiesOnly=yes -i "$env:USERPROFILE\.ssh\superhuman_replacement" "C:\superhuman-os-starter\superhuman-v1.19-upgrade" superhuman@167.71.196.20:/home/superhuman/
+
+If you need to reconnect to the server:
+
+ssh -o IdentitiesOnly=yes -i "$env:USERPROFILE\.ssh\superhuman_replacement" root@167.71.196.20
+
+UBUNTU SERVER
+After v1.18 has finished, at the root@ubuntu server prompt run:
+
+bash /home/superhuman/superhuman-v1.19-upgrade/upgrade_server.sh
+
+The script checks source/dependencies before stopping services, backs up private
+data, tests staged code, installs it and restarts both services. If a later step
+fails it attempts to restart existing services. Installation makes no model calls.
+Existing queued work can resume after worker restart. Wait for Installed v1.19.0
+and two active lines. Share error text without credentials if it fails.
+
+OPEN YOUR RESEARCH AREA
+https://superhuman.167-71-196-20.sslip.io/research-desk
+
+COLLECT SOURCES FROM A WEB-RESEARCH OUTPUT
+1. Open the research area and use Open output and review for a completed web task.
+2. Review and approve its final output through the existing project controls.
+3. Return to the area and choose Collect cited source suggestions on that task.
+4. Open Review cited source suggestions. Inspect the original URLs and originating
+   research output. Edit the suggested title and optional reading flag/reason.
+5. Save a source card, or dismiss the suggestion. Saving does not download a paper
+   or add a synopsis. Attach a file or excerpt later for a local synopsis.
+
+Only API URL-citation records attached to approved web outputs are used. A citation
+is not proof of authorship or support for a claim. Invalid URLs and records missing
+API-origin markers are skipped and counted. Outputs over 100 citation records are
+refused rather than silently truncated. One suggestion per URL per task is kept.
+
+A matching existing source card is linked, with all its fields preserved. Different
+research tasks may suggest the same URL; concurrent saves still create only one
+matching card. Scheme/query remain significant. Host case, standard ports and URL
+fragments are normalized for matching. Saving a reference does not fetch it.
+
+Recollection does not restore dismissed suggestions or overwrite saved cards.
+Proposed suggestions refresh after an approved output is revised. Recollect if an
+output changes after collection; stale suggestions cannot be saved.
+
+APPLY AN APPROVED SYNOPSIS
+1. Run a source-synopsis task using the existing v1.18 approval workflow.
+2. Review and approve its final project output.
+3. In the research area, choose Review synopsis for source card on that task.
+4. Compare the current saved synopsis with the approved draft. Edit it into a
+   reviewed synopsis up to 2500 characters, then Apply reviewed synopsis.
+5. Only synopsis changes. URL, file, excerpt, limitations and reading flags remain.
+6. Open Applied synopsis history on the source card to read previous/applied text
+   and its originating project. Copy older text into the normal card editor if
+   you want to restore it. No general memory is updated automatically.
+
+The draft is not silently shortened to fit. Outputs over 2500 characters need
+editing; over 20000, the apply editor starts blank and links to the full project.
+Only an approved synopsis job for this exact source card can apply. Changes to
+source material, limitations or attached files require a fresh synopsis or manual
+review outside this application flow. A card changed while its apply form is open
+requires a reload. Changed/tampered project output is refused.
+
+A prior full card payload is saved before application. Repeated submission does
+not apply twice or erase subsequent manual edits. History shows the latest 20
+applications, with older entries retained. Ordinary manual source edits do not
+create entries in applied-synopsis history.
+
+COST AND SCOPE
+All new collection, save/link, application and history operations make zero new
+model requests. Creating original research or synopsis work still uses the
+v1.18 displayed approval budgets. Reopen archived areas before applying changes.
+This release does not download papers, bypass paywalls, verify claims independently,
+send anything or train a model. Source cards remain working research records.
+
+ROLLBACK (IF NEEDED)
+Keep the exact Rollback backup path printed by installation.
+At the root server prompt:
+
+systemctl stop superhuman-worker.service superhuman-web.service
+sudo -iu superhuman
+cd /home/superhuman/app
+
+Replace BACKUP_DIRECTORY with the exact printed code backup path:
+
+.venv/bin/python /home/superhuman/superhuman-v1.19-upgrade/install_v119.py --rollback BACKUP_DIRECTORY
+
+Return to root and restart, including if rollback was refused:
+
+exit
+systemctl start superhuman-web.service superhuman-worker.service
+
+Rollback restores v1.18 source and retains cards, applied synopses, citation records,
+history and projects. The v1.18 source-file checks remain active. New review/history
+screens return after reinstalling v1.19. Changed code or altered backups stop
+rollback. Existing authorised worker tasks may resume after restart.

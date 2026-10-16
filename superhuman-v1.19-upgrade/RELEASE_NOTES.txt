@@ -1,0 +1,35 @@
+SUPERHUMAN v1.19.0 — RESEARCH REVIEW AND SOURCE INTAKE
+
+Added reviewable source-card suggestions from API URL-citation records attached to
+approved Research Desk web outputs. The owner saves, links or dismisses each one.
+New cards start unread with blank synopsis/excerpt. Existing matching cards are
+preserved. Duplicate and concurrent saves do not create duplicate source cards;
+dismissed suggestions stay dismissed on recollection. References are not fetched.
+
+Added reviewed application of an approved source-synopsis output to its exact
+source card. The owner edits before applying. Only synopsis changes; all other
+fields remain. Previous/applied payloads, output hash, project and source version
+are retained in a read-only history. Source material, limitations, files, versions,
+checked content and canonical project approval are checked before application.
+
+Repeat application does not overwrite again. Stale outputs/forms are refused.
+Citations are provenance records, not proof that a paper supports a claim. None of
+the new review operations makes model requests or updates general memory.
+
+Installation adds Research Review and guarded UI links/routes. Existing data and
+v1.18 source-file checks are retained. No new dependencies or account permissions.
+Tables are additive; code rollback restores v1.18 while retaining review history.
+
+Verification: 394 local regression tests passed, including 26 new research-review
+tests. Staged installation, preservation, repeat installation, guarded rollback,
+source drift and administrative-script recovery checks passed. Tests use synthetic
+local provider/model adapters and service simulations, not live provider or
+production browser/service calls. Installation also stages and tests the user's
+installed application code before replacement.
+
+PRODUCTION ROUTER COMPATIBILITY CORRECTION
+The default web-research prompt now says study methods instead of study design.
+The supplied production router matches sign within design. No router or action
+approval rule is changed. Regression checks use the supplied router and verify
+that all eight external-action phrases remain blocked. Corrected full suites
+passed against the supplied production routing behavior.

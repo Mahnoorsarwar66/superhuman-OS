@@ -1,0 +1,116 @@
+SUPERHUMAN v1.17 — MEETING WORKBENCH
+Install only after v1.16 has finished successfully. Requires the working v1.16
+calendar. No new inbox connections, permissions or dependencies.
+
+1. WINDOWS LAPTOP
+Download this ZIP and extract it so this file exists:
+C:\superhuman-os-starter\superhuman-v1.17-upgrade\upgrade_server.sh
+
+In Windows PowerShell (prompt begins PS C:\), upload the extracted folder:
+
+scp -r -o IdentitiesOnly=yes -i "$env:USERPROFILE\.ssh\superhuman_replacement" "C:\superhuman-os-starter\superhuman-v1.17-upgrade" superhuman@167.71.196.20:/home/superhuman/
+
+Wait for the upload to finish, then connect:
+
+ssh -o IdentitiesOnly=yes -i "$env:USERPROFILE\.ssh\superhuman_replacement" root@167.71.196.20
+
+2. UBUNTU SERVER
+At the root@ubuntu server prompt, run:
+
+bash /home/superhuman/superhuman-v1.17-upgrade/upgrade_server.sh
+
+The script checks the v1.16 source before stopping services, makes a private-data
+backup, tests a staged upgrade, installs it, and starts both services. If a later
+step fails it attempts to restart the existing services. No model calls are made
+by installation. Existing queued work may run once the worker restarts.
+
+Wait for Installed v1.17.0 and two active lines. If installation fails, share the
+error text without credentials. Source mismatches stop before unfamiliar code is
+replaced. Do not run this installer while v1.16 is still installing.
+
+3. OPEN MEETINGS
+https://superhuman.167-71-196-20.sslip.io/meetings
+
+You can also open a calendar event and choose Preparation, notes and minutes.
+Confirm or manually add a meeting in Calendar if the workbench is empty.
+
+BEFORE A MEETING
+Open the meeting workbench and choose Review preparation task.
+Choose a workstream, review the complete instructions, and edit them as needed.
+Approval authorises up to 3 model requests for a local preparation pack containing
+suggested agenda items, questions and a blank meeting record. It runs through the
+existing worker and quality checks, with no automatic paid retry.
+Open draft and review links to the ordinary project review page.
+
+DURING OR AFTER A MEETING
+Enter attendees and roles, participant statements, our interpretation, explicitly
+agreed decisions, explicitly agreed actions/owners/dates, and open questions.
+Leave unknown fields blank. The whole record is limited to 6000 characters, with
+individual field limits shown by the forms. Save notes before opening a draft.
+Each changed save keeps an earlier version. History displays the last 20 saved
+versions; older versions remain stored. An identical save at the current version
+does not add another history entry. A stale form is refused to prevent overwriting
+changes made in another window.
+
+DRAFT MINUTES
+Save participant statements, agreed decisions or agreed actions first. Attendees
+or interpretation alone are not enough to generate minutes.
+Choose Review minutes task. Check the full payload and select a workstream.
+Approval creates a local drafting project with up to 3 model requests. Review its
+result using the existing project controls. Meeting tasks also remain accessible
+in Projects; they are not conversation suggestions in Task Desk.
+
+Draft instructions separate reported facts, interpretation, decisions, agreed
+actions and open questions. Unknown owners or dates must remain unknown. Minutes
+remain drafts until you review them. No messages or invitations are sent.
+
+WHAT IS SENT TO THE DRAFTING WORKER
+The full editable instruction payload is shown before approval. Its generated
+starting point includes the meeting title/time/local status/context and saved
+owner notes. The chosen workstream also controls its normal specialist and memory
+context. Full email bodies, email attachments and recordings are not included.
+Calendar source-email links stay available through Calendar details.
+
+Approval saves a fixed snapshot with calendar and notes versions. If either has
+changed since the review form opened, reload before approving. Later edits do not
+change a queued task; the workbench marks its older source versions instead.
+Repeated submission of the same approval form creates only one project. Opening
+a fresh form is a new request and can create a separately budgeted draft.
+
+SCOPE
+Saving notes and opening review forms use no model calls. The worker must be
+online to run approved drafts. A cancelled local meeting cannot get a preparation
+task. Existing substantive notes can still support draft minutes.
+Notes remain private meeting records, not automatically confirmed general memory.
+The existing project feedback feature can save a separate proposed memory note
+when you decide a lesson should apply to future work.
+This release does not join, record or transcribe meetings, send minutes, change
+remote calendars or add push notifications. The v1.16 calendar continues to work.
+
+QUICK TEST
+Add a test meeting in Calendar, open its workbench, save a short statement and an
+interpretation, then change the interpretation and verify both saved versions in
+history. Opening the preparation/minutes review forms should create no project.
+Approve only a draft you want performed; its execution uses its displayed budget.
+
+ROLLBACK (IF NEEDED)
+Keep the exact Rollback backup path printed by installation.
+In the root server terminal:
+
+systemctl stop superhuman-worker.service superhuman-web.service
+sudo -iu superhuman
+cd /home/superhuman/app
+
+Replace BACKUP_DIRECTORY with the exact printed code backup path:
+
+.venv/bin/python /home/superhuman/superhuman-v1.17-upgrade/install_v117.py --rollback BACKUP_DIRECTORY
+
+Return to root and restart:
+
+exit
+systemctl start superhuman-web.service superhuman-worker.service
+
+Rollback restores v1.16 code and keeps all records, notes history and approved
+projects. Calendar and project review still work; the meeting-note interface
+returns when v1.17 is reinstalled. Queued projects remain authorised and may run
+when the worker restarts. Changed installed source or altered backups stop rollback.

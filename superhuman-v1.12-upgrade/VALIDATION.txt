@@ -1,0 +1,47 @@
+SUPERHUMAN v1.12 VALIDATION
+
+Local checks use synthetic email, synthetic credentials and fake model/provider
+responses. No paid model calls or live inbox/server access occurred.
+
+64 new mail tests plus 133 existing regression checks are included (197 total).
+Coverage includes:
+- Four labelled slots, per-account credentials/IDs, repeat sync deduplication,
+  IMAP UIDVALIDITY, cross-account message lookup rejection and immutable reports.
+- Credential encryption, missing/wrong key refusal, private file permissions,
+  and refusing an encryption key inside bundled app/data.
+- Gmail identity verification, exact read-only scope, bounded read endpoints,
+  large-body exclusion, Titan read-only selection and BODY.PEEK commands.
+- Inert HTML conversion, attachment exclusion, Unicode and shortened previews.
+- Local Gmail OAuth PKCE/state, rejected forged callback, denied consent,
+  wrong account, excessive scopes and existing-file preservation.
+- Authenticated inbox pages, CSRF for every action, escaped message text,
+  protected message routes, opt-in background reads and paused worker behaviour.
+- One-attempt report budgets, duplicate/concurrent submission idempotence,
+  account-only report/follow-up context, no automatic task creation or retries,
+  research-proposal rejection and existing atomic task approval.
+- Transfer dependency manifest and restore round trip, excluding the external key.
+- Existing conversation, memory, hosted authentication, worker and project tests.
+
+Installer harness passed against a temporary copy of the v1.11 app:
+check-only leaves source/data unchanged; source installation; version/checksum
+manifest; idempotence; .env/private-data retention; rollback; key/mail retention;
+queued-report rollback refusal; changed installed/backup source and changed
+canonical task-creation contract refusal. Installer checks ran against actual
+v1.12 staged payloads. The source basis was reconstructed from delivered upgrade
+artifacts, independently checked, rather than copied from old staged fixtures.
+
+Upgrade shell checks passed using stub system commands for success, check failure
+before service stop, and recovery after backup failure. No real services touched.
+Python parsing and bash syntax checks passed.
+
+Limits of validation: browser consent/network provider behaviour, Windows ACLs,
+Google project verification/Workspace administrator policy, Titan plan access and
+the live DigitalOcean deployment need the owner's installation/connection tests.
+Local complete-app fixtures include interface substitutes for older unavailable
+core routing/agent modules; workstreams are discovered dynamically. The shipped
+installer runs checks against the actual installed app before replacing source.
+The legacy legal-workstream assumption has not been reintroduced.
+
+The check suite is mechanical/synthetic; it is not proof that a model summary,
+urgency judgement or proposed task is factually correct or immune to every email
+prompt-injection attempt. Review originals and task instructions before approval.

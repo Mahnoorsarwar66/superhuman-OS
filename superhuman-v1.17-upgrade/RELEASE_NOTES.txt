@@ -1,0 +1,37 @@
+SUPERHUMAN v1.17.0 — MEETING WORKBENCH
+
+Added a calendar-linked meeting workbench for preparation, owner notes and minutes.
+Preparation review starts with an agenda/questions/blank-record task. Minutes
+review requires saved participant statements or agreements, rather than assuming
+that a calendar entry means the meeting happened. Both task forms expose the full
+editable instructions and require the owner to choose a configured workstream.
+
+Approved drafts are canonical local collab projects, each limited to 3 model
+requests. Normal quality checks, review controls, worker scheduling and workstream
+context apply. Job creation and the meeting link commit atomically; repeat and
+concurrent submission of the same approval form return the same project. No paid
+retry or model call occurs from viewing pages or saving notes.
+
+Owner notes separate attendees, statements, interpretation, decisions, actions
+and questions. Changes create persistent versions, with stale-form protection.
+Draft approval records a fixed snapshot and both input versions. Changes after
+approval leave its project unchanged and display an older-source warning.
+General memory is not updated automatically. Notes are not a transcript.
+
+New packages/tables are additive; credentials, inboxes, calendars, projects and
+origin are retained. The installer guards the delivered v1.16 source, stages the
+regression suite and creates private-data and code backups. No new dependencies
+or account permissions. Code rollback retains all notes and approved projects.
+
+This release does not join or record meetings, send minutes, sync remote calendars
+or add closed-page notifications. Its job links appear in the meeting workbench
+and Projects, separate from conversation suggestions in Task Desk.
+
+Verification uses synthetic local provider/model adapters, staged source, and
+installer/service-script simulations. It is not a live provider or production
+browser/service test. Installation also runs the suite against a staged copy of
+the user's actual installed application before replacing its source.
+
+Completed verification: 336 local regression tests passed, including 26 new
+meeting-workbench tests. Installer preservation, repeat installation, guarded
+rollback, source drift refusal and administrative-script recovery checks passed.

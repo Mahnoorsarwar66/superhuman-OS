@@ -1,0 +1,47 @@
+SUPERHUMAN v1.13 VALIDATION
+
+236 synthetic tests are included: 39 briefing checks and 197 existing checks.
+The existing mail fake-model fixture now emits the new schema for report calls;
+normal conversation responses retain their original reply/tasks schema.
+No paid model requests, live provider access or real server changes occurred.
+
+New coverage:
+- Pakistan time from ISO/RFC dates; unavailable/naive timestamps not invented.
+- Common credentials, join URLs, numeric/hex IDs masked before model context.
+- Stable E1/E2 aliases; internal message IDs retained only in private metadata.
+- Strict structured schema, report/source limits and local-draft-only proposals.
+- Past meeting classification both at analysis and when the page is displayed.
+- Invalid time/source references and invalid reports fail without automatic retry.
+- Short display text with expandable full prose; extreme response sizes rejected.
+- One initial report attempt and no task execution until explicit owner approval.
+- Report/follow-up context remains within the same account snapshot.
+- Concurrent duplicate batch submission reuses requests independently per account.
+- Disconnected/empty inboxes skipped without blocking the other account reports.
+- Immutable source excerpts remain available after preview retention removes rows.
+- Login, CSRF, inert rendering, private source routes, visible cost, stale reports,
+  original report preservation and escaped subject/body content.
+
+The local full-app fixture is reconstructed from the delivered v1.12 upgrade ZIP
+and prior source. Some older unavailable routing/registry modules are interface
+fixtures. Tests discover configured workstreams dynamically. The shipped installer
+runs checks against the actual installed application before replacing files.
+
+Installer harness uses a temporary app with four pre-existing encrypted inbox
+connections, four saved message previews, a legacy report, a private external key
+and a synthetic .env. It checks --check without changes, installation without DB
+or credential/key changes, repeat-install idempotence, manifest version, code-only
+rollback, retained connections/history, pending-report rollback refusal, changed
+installed source refusal and canonical task-creation drift refusal.
+
+Upgrade-shell validation uses stub administration commands for success, check
+failure before stopping services, and backup-failure recovery. No actual systemd,
+Nginx, firewall, provider or account was operated. Bash/Python syntax checks pass.
+
+Limits: actual Google/Titan behaviour, browser rendering on the user's devices,
+model-generated priorities/claims and the live deployment still need the owner's
+post-install check. Schema/source/time validation does not prove factual accuracy
+or complete resistance to prompt injection. Masking is best effort and does not
+remove secrets from old saved messages, snapshots or conversation replies.
+
+The supplied README explains read/report coverage, separate account model calls,
+manual report requests, privacy limits, preserved connections and rollback.

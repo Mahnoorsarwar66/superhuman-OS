@@ -1,0 +1,10 @@
+CORRECTED PACKAGE: 1.18
+
+Extract this corrected ZIP into C:\superhuman-os-starter and replace the previous
+files in superhuman-v1.18-upgrade. Upload that folder again.
+
+Install corrected v1.18 first. Corrected v1.19 expects the corrected v1.18 source.
+The previously failed v1.18 staged checks left the installed application and data
+unchanged. This correction keeps all approval rules intact.
+
+Corrected full suite: 368 tests passed with production routing behavior.

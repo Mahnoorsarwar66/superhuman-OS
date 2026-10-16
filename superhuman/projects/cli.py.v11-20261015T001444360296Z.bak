@@ -1,0 +1,47 @@
+import argparse
+import json
+from pathlib import Path
+from . import engine
+
+def main():
+    p=argparse.ArgumentParser(description='Superhuman v1.0 project coordinator')
+    p.add_argument('--db',default=str(engine.DEFAULT_DB))
+    sub=p.add_subparsers(dest='cmd',required=True)
+    c=sub.add_parser('create');c.add_argument('--project',required=True);c.add_argument('--objective',required=True)
+    c.add_argument('--details',default='');c.add_argument('--max-calls',type=int,default=12)
+    sub.add_parser('list')
+    for name in ('show','approve-plan','plan','worker','recover','budget'):
+        c=sub.add_parser(name);c.add_argument('id')
+        if name=='plan':c.add_argument('--file',help='Manual JSON plan: no planning API request')
+        if name=='worker':c.add_argument('--max-tasks',type=int,default=4)
+        if name=='recover':c.add_argument('--older-than',type=int,default=3600)
+        if name=='budget':c.add_argument('--max-calls',type=int,required=True)
+    for name in ('approve','reject','retry'):
+        c=sub.add_parser(name);c.add_argument('id');c.add_argument('task');c.add_argument('--note',default='')
+    a=p.parse_args();path=Path(a.db)
+    if a.cmd=='create':
+        print('Project created:',engine.create(a.project,a.objective,a.details,a.max_calls,path));return
+    if a.cmd=='list':result=engine.listing(path)
+    elif a.cmd=='show':result=engine.get(a.id,path)
+    elif a.cmd=='plan':
+        result=engine.set_plan(a.id,json.loads(Path(a.file).read_text(encoding='utf-8-sig')),path) if a.file else engine.generate_plan(a.id,path)
+    elif a.cmd=='approve-plan':result=engine.approve_plan(a.id,path)
+    elif a.cmd=='recover':result={'recovered_tasks':engine.recover(a.id,a.older_than,path)}
+    elif a.cmd=='budget':result=engine.budget(a.id,a.max_calls,path)
+    elif a.cmd=='retry':result=engine.retry(a.id,a.task,a.note,path)
+    elif a.cmd in ('approve','reject'):result=engine.review(a.id,a.task,a.cmd,a.note,path)
+    elif a.cmd=='worker':
+        if not 1<=a.max_tasks<=20:p.error('--max-tasks must be 1 to 20')
+        try:
+            for _ in range(a.max_tasks):
+                task=engine.run_one(a.id,path)
+                if task is None:break
+                print(task['id']+': '+task['status'],flush=True)
+                if task['status']!='needs_review':break
+        except Exception as e:
+            print('Worker stopped: '+type(e).__name__+'; inspect project status before retry.')
+            raise SystemExit(1)
+        result=engine.get(a.id,path)
+    print(json.dumps(result,indent=2))
+
+if __name__=='__main__':main()

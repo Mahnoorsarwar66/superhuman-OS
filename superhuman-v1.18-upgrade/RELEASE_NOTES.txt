@@ -1,0 +1,49 @@
+SUPERHUMAN v1.18.0 — RESEARCH DESK
+
+Added research areas with workstream, questions and working hypothesis; source
+cards with file references, URLs, excerpts, owner synopses, limitations, personal
+reading flags and reading status; and linked project outputs. Areas can be archived
+and reopened. Logical folders reference existing workspace files without moving them.
+
+Added reviewed tasks for hosted public web research (1 model request), local source
+synopsis (3) and local evidence synthesis (3). The complete editable task is shown
+before approval. Local tasks do not browse or treat a URL alone as read evidence.
+Research uses the existing web-search runner and API-citation checks. Results
+remain unverified project drafts until owner review. Owner cards are not silently
+replaced by generated text or copied to general memory.
+
+Approval and canonical task creation commit atomically, with duplicate submission
+protection. Research-area/source versions and file hashes detect stale review
+forms. All actual file markers in approved instructions are hash-bound; the worker
+checks them before a model request. Other existing tasks are unaffected. Source
+text still has the existing extraction and shared-context limits, disclosed in UI.
+
+The source snapshot and edited project instructions remain fixed after approval.
+Changes require a newly reviewed task; no automatic paid retries. Archiving does
+not cancel authorised work. The UI shows 50 cards per page and the last 50 linked
+tasks; older tasks remain in Projects. Synthesis selects up to 3 cards per form.
+
+Installation guards v1.17 hosted/project/file-handling source, stages the regression
+suite, preserves existing data and creates private-data/code backups. No new
+permissions or dependencies. New tables are additive. Source-only rollback retains
+records and refuses while Research Desk tasks are pending or running, since the
+older worker lacks the new file checks.
+
+This is not exhaustive autonomous paper collection, paywall access, hypothesis
+proof, automatic paper verification or model training. Important source URLs and
+reviewed summaries are added to cards explicitly by the owner.
+
+Verification uses synthetic local provider/model adapters, staged source and
+installer/service-script simulations, not live provider or production-service
+checks. The installer also runs the suite against staged installed application code.
+
+Completed verification: 368 local regression tests passed, including 28 new
+Research Desk tests. Staged installation, data/credential preservation, repeat
+installation, guarded rollback, source drift and shell recovery checks passed.
+
+PRODUCTION ROUTER COMPATIBILITY CORRECTION
+The default web-research prompt now says study methods instead of study design.
+The supplied production router matches sign within design. No router or action
+approval rule is changed. Regression checks use the supplied router and verify
+that all eight external-action phrases remain blocked. Corrected full suites
+passed against the supplied production routing behavior.

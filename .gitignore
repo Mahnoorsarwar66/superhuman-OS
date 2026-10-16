@@ -4,3 +4,10 @@ __pycache__/
 *.pyc
 data/*.sqlite3
 data/outputs/
+
+# Superhuman private state
+/data/
+/backups/
+.env.*
+*-transfer.zip
+*-backup.zip

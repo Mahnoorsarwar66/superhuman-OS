@@ -1,0 +1,37 @@
+SUPERHUMAN v1.16.0 — LOCAL UNIFIED CALENDAR
+
+Added an authenticated, mobile-friendly calendar and meeting-review queue.
+Owner can collect explicit meeting times from completed saved inbox reports,
+review source excerpts, correct meeting fields, confirm or dismiss suggestions,
+link duplicate sources to an existing event, and manually add missing meetings.
+
+Confirmed meetings support upcoming/past/cancelled views, a Pakistan-time tomorrow
+agenda, an in-app near-start reminder badge, edits with stale-form protection,
+local cancellation and an escaped, UTF-8-folded single-event iCalendar download.
+Unknown end times remain blank. All timestamps are stored in UTC and edited in PKT.
+
+Collection is incremental, repeatable and transactional, limited to 100 completed
+reports per request. No extra model calls. Pending reports remain eligible once
+they finish. Malformed entries are skipped and counted. Source references must
+exist in the immutable saved report. Confirmation and duplicate linking preserve
+source provenance; concurrent confirmation cannot create two copies of one suggestion.
+Nearby-time hints do not automatically merge events.
+
+This release does not integrate Google/Titan Calendar APIs, parse ICS attachments,
+expand recurring series, send invitations, run background alerts, or automatically
+apply cancellations or reschedules. Calendar suggestions have the same bounded,
+unverified source coverage as the existing email reports. The owner reviews them.
+
+Installation changes only guarded hosted entry/navigation source and adds the
+calendar package. Existing credentials, databases, origin and services are retained.
+New calendar tables are created lazily on use. No dependencies or permissions added.
+Source-only rollback retains records for later reinstallation.
+
+Verification uses synthetic local email/model adapters and a staged application,
+plus installer-preservation and administrative-script simulations. These are not
+live provider, production-browser or production-service tests. The installer runs
+the regression suite against a staged copy of your installed application as well.
+
+Completed verification: 310 regression tests passed, including 29 new calendar
+tests. Installer preservation, repeat installation, guarded rollback, source drift
+refusal and shell success/failure recovery simulations passed.

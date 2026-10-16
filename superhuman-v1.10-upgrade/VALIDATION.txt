@@ -1,0 +1,57 @@
+SUPERHUMAN v1.10.0 VALIDATION
+
+206 automated behavioural tests passed on Linux/Python 3.12:
+- 94 included tests: 52 inherited hosted/auth/worker/transfer checks, 38 memory,
+  UI and lock-file checks, and 4 memory-to-generation integration checks.
+- 112 earlier runtime, generation, context selection, export, coding and
+  reliability regression tests.
+
+Coverage includes note confirmation and archival, scope separation, sensitive
+and expired-note exclusion, genre-specific preferences, topical matching,
+context/count limits, no partial-note truncation, source/version/hash provenance,
+optimistic/concurrent edits, history, literal search and input validation,
+Windows timezone fallback, authenticated/CSRF-protected forms, HTML escaping,
+work briefing, feedback without automatic task actions, actual generation
+adapter prompts for drafting/research/planning, unchanged model request counts,
+invalid reviewer responses remaining blocked with specific reasons, favicon
+session stability, browser-origin headers, runtime-lock exclusion and private
+bundle/restore preservation of the new memory database.
+
+Installer harness passed: check-only leaves installation/data unchanged;
+recognises the exact manual header/favicon/runtime-lock/CSRF-diagnostic fixes
+issued during setup; install preserves existing private data and .env; does not
+create a production memory DB or contact a model; repeat install is idempotent;
+rollback restores prior source and preserves data; rollback refuses changed
+installed source; unexpected baseline source changes are refused. A separate
+scratch-copy check also passed for migrated v1.10 source without a host-specific
+installation manifest.
+
+The shell upgrade helper passes bash syntax validation. Stubbed administration
+checks passed for successful execution, check failure before service shutdown,
+and backup failure followed by an attempt to restart the existing services.
+These stubs do not establish that systemd, SSH, firewall or TLS work on a server.
+
+Source basis: saved earlier upgrade packages and staged code. The original
+v0.2/v0.3 router/registry packages were unavailable here; explicit local fixtures
+are used for those interfaces, not shipped. The installer reruns included tests
+against YOUR installed source. There is no replacement of those original
+modules or of the legacy memory and identity stores.
+
+All model responses and source citations in tests are synthetic. No live model
+requests, connection to the user's Droplet, production installation, real phone
+browser testing, actual Windows execution or independent security audit was
+performed. The simulated Windows tests establish specific control flow, not a
+complete Windows test run. No user keys, passwords, .env or project database
+are included in this package.
+
+This is an upgrade ready for user-side installation and verification. The
+existing server remains on its current code until the owner uploads and runs
+it. No cloud service was modified by this build session.
+
+Packaging correction: reference/hosted/transfer.py now matches the actual
+v1.9 ZIP that was delivered, including the private data-directory permission
+fix. All 94 staged checks passed against that exact delivered transfer module
+plus the manual runtime-lock exclusion. An unrelated mutation was refused.
+The original reference was from an earlier staged fixture and omitted that one
+line; it caused a safe pre-install source-guard refusal on the user's server.
+No production source, services or data were modified by the refusal.

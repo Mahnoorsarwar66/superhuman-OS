@@ -1,0 +1,26 @@
+SUPERHUMAN v1.15.0
+
+Added a private Task Desk across existing Talk and inbox-report suggestions.
+Owner can edit and route each task before approval, inspect email sources,
+track approved work, dismiss suggestions, and open a proposed feedback note.
+The original Talk approval form also supports a workstream selection.
+
+Approvals use canonical runtime creation, preserve local-only task restrictions,
+and commit project, route and approval pointer together. Concurrent duplicate
+approval returns the same project. Older approval hashes remain compatible.
+Task type and request limits retain the existing collab/research rules.
+
+Installation stages tests before replacing guarded source, creates code and
+private-data backups, and retains inbox credentials, data, origin and services.
+The only new table, dialogue_routes, is created lazily on first Task Desk use or
+approval. No new dependencies, account scopes or sending permissions.
+
+Scope of verification: local regression tests with synthetic provider/model
+adapters, staged installer and administrative-script simulations. These checks
+do not represent a live Gmail/Titan, model-provider or production browser test.
+The installer also runs the supplied suite against a staged copy of your actual
+installed application before replacing its source.
+
+Verification completed: 281 local regression tests passed, including 18 new
+Task Desk tests. Installer preservation, duplicate installation, rollback, source
+drift refusal and shell recovery checks passed using synthetic local fixtures.

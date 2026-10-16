@@ -1,0 +1,59 @@
+SUPERHUMAN v1.11.0 VALIDATION
+
+245 automated behavioural tests passed on Linux/Python 3.12:
+- 133 included compatibility/feature tests: 94 inherited hosted, worker, memory,
+  transfer and generation tests plus 39 conversation, approval and UI checks.
+- 112 earlier runtime/context/generation/coding/document regression tests.
+
+Conversation coverage: no requests at creation/queueing; one model attempt per
+reply; inert suggestions; explicit atomic task approval; duplicate and concurrent
+approval producing one canonical project; transaction rollback before commit;
+owner-edited instructions preserved; stale proposal hashes refused; dismissal;
+chat text saying approve not executing; model workstream tampering rejected;
+research versus draft budgets; schema/length/kind checks; incomplete response
+archival; provider error text redaction; interruption without paid replay;
+explicit request limits/increase; queued budget blocking and cancellation;
+scoped/sensitive/archived memory retrieval; bounded ordered history; current
+project summaries; edited approved titles in saved state; late reply ownership
+checks; paused worker; continuous worker fairness between chats and projects;
+authentication, CSRF and origin enforcement; HTML escaping; memory-save forms
+remaining separate and Proposed; cross-conversation ownership checks; navigation.
+
+Installer harness passed against artifact-derived v1.10 references: check-only
+leaves installation unchanged; install preserves private data and .env; does
+not create a production project database; repeat install is idempotent; guarded
+rollback refuses source edits, restores old code and preserves newly created
+conversation rows; unexpected hosted source and task-creation function changes
+are refused before mutation. Migrated v1.11 source without a host-specific
+installation manifest is recognised without inventing a rollback backup.
+
+Reference hosted/knowledge files were derived from actual delivered v1.9 and
+v1.10 ZIPs and their source patches. Canonical validate_job/_insert_job function
+ASTs were separately checked against the actual delivered v1.8 ZIP. This avoids
+the earlier v1.10 reference mismatch caused by an older staged transfer fixture.
+Original v0.2/v0.3 router/agent-registry packages remain unavailable here; local
+interface fixtures are used for those imports, not shipped or installed. The
+installer reruns included tests against YOUR installed modules.
+
+Python sources parse. Bash syntax checks passed. Stubbed system administration
+checks passed for successful upgrade, check failure before stopping services,
+and backup failure followed by attempted service restart. These checks do not
+prove systemd, SSH, TLS, DNS or firewall behaviour on a real server.
+
+All model responses and research citations in tests are synthetic; no live
+model API was called. Tests establish control flow and storage boundaries, not
+model answer quality, reliability of task suggestions, or factual accuracy.
+Not performed: connection to the user's Droplet, production installation,
+real Windows execution, real phone/browser interactions, live model latency/
+provider-schema verification or independent security audit.
+No user credentials, API keys, private SSH keys, conversations or databases are
+included in this package. Installing and checking call no models. Sending a
+message or approving a draft/research task uses the owner's existing API setup.
+The server remains unchanged until the owner uploads and runs the upgrade.
+
+Compatibility test correction: one project-isolation test previously assumed
+a workstream named legal. It now selects another workstream from the actual
+installed router (and skips only that test if only marketing exists). All 133
+included checks passed again with legal deliberately removed. No application
+code or source guards were weakened. The user's original failure happened
+during staging, before source installation or service shutdown.

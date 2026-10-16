@@ -1,0 +1,102 @@
+SUPERHUMAN v1.16 — REVIEWED UNIFIED CALENDAR
+Requires the working v1.15 installation. No new Google permissions or reconnections.
+
+1. ON YOUR WINDOWS LAPTOP
+Download and extract this ZIP so this file exists:
+C:\superhuman-os-starter\superhuman-v1.16-upgrade\upgrade_server.sh
+
+In Windows PowerShell (prompt begins PS C:\), run:
+
+scp -r -o IdentitiesOnly=yes -i "$env:USERPROFILE\.ssh\superhuman_replacement" "C:\superhuman-os-starter\superhuman-v1.16-upgrade" superhuman@167.71.196.20:/home/superhuman/
+
+Wait for upload to finish. Then connect:
+
+ssh -o IdentitiesOnly=yes -i "$env:USERPROFILE\.ssh\superhuman_replacement" root@167.71.196.20
+
+2. ON THE UBUNTU SERVER
+After the prompt begins root@ubuntu, run:
+
+bash /home/superhuman/superhuman-v1.16-upgrade/upgrade_server.sh
+
+The script checks source and dependencies, stops both services, makes a private
+data backup, tests a staged copy of the application, installs the upgrade and
+starts both services. On a later failure it attempts to restart existing services.
+The installer makes no model requests. Queued work may run after worker restart.
+
+Wait for Installed v1.16.0 and two active lines. If there is a failure, share its
+error text without credentials. Unfamiliar source is refused rather than replaced.
+
+3. OPEN YOUR CALENDAR
+https://superhuman.167-71-196-20.sslip.io/calendar
+
+Refresh the page. Calendar now appears in navigation.
+
+FIRST USE
+- Open Review suggestions, then Collect meeting suggestions.
+- This checks up to 100 completed inbox reports per click, from all four accounts.
+  Repeat if the completion screen shows more reports waiting.
+- Open a suggestion and inspect the linked source email excerpts.
+- Verify the invitation, date, time and status. Edit the title and notes as needed.
+  All editable dates and times are shown in Pakistan time (UTC+5).
+- Add an end time if known; the app does not invent a meeting duration.
+- Confirm to save a local meeting, or dismiss the suggestion.
+- Meetings within 15 minutes of another start time get a duplicate/conflict hint.
+  When it is the same meeting, link its source to the existing event. This keeps
+  the existing event fields. Two separate meetings can start near the same time;
+  only you decide whether they are duplicates.
+- For rescheduling, edit the existing event first and then link the new source.
+  For cancellation, cancel the existing local event and dismiss the suggestion.
+- Open Add meeting for meetings missing from email reports.
+
+READING THE CALENDAR
+Upcoming shows confirmed future meetings and meetings with a known end time still
+in progress. Tomorrow shows meetings starting on the next Pakistan calendar day.
+Past and Cancelled are separate views. Event pages support edits, local cancellation,
+source links and a single-meeting .ics download for manual calendar import.
+Refreshing within an hour of a meeting shows a Starts within an hour badge.
+
+IMPORTANT COVERAGE
+Collection reuses explicit, timezone-aware meeting_at values already present in
+completed structured inbox reports. It makes no extra model requests. It does not
+read all emails again, parse calendar attachments, infer times from email delivery
+or relative phrases, or query Google/Titan Calendar directly. Report items can omit
+meetings, and excerpts can omit changes. Check your original invitation.
+
+To discover new meetings: read inboxes in Briefing, request the next reports using
+the existing displayed report budgets, wait for completion, then collect here.
+If no suggestion appears, use Add meeting. Existing old-format reports without
+structured meeting times cannot supply suggestions automatically.
+
+Recurring meetings are individual occurrences; this version does not expand series.
+Changes and cancellations need your review; email cannot silently update a meeting.
+The tomorrow agenda and near-start badges are in-app reminders. This installation
+does not provide push notifications or alerts while the page is closed.
+Downloading or editing a local event does not send invitations or sync remote
+calendars. Existing inbox access remains read-only.
+
+SUGGESTED TEST (NO MODEL REQUESTS)
+Add a clearly named test meeting for tomorrow with a known end time. Check the
+Tomorrow list, open the meeting, download .ics, then mark it Cancelled locally.
+Confirm it moves to Cancelled and disappears from Upcoming and Tomorrow.
+Collect existing reports and inspect suggestions without confirming uncertain ones.
+
+ROLLBACK (ONLY IF NEEDED)
+Keep the exact Rollback backup path printed by installation.
+From the root server terminal:
+
+systemctl stop superhuman-worker.service superhuman-web.service
+sudo -iu superhuman
+cd /home/superhuman/app
+
+Replace BACKUP_DIRECTORY with the exact printed code backup path:
+
+.venv/bin/python /home/superhuman/superhuman-v1.16-upgrade/install_v116.py --rollback BACKUP_DIRECTORY
+
+Then return to root and restart:
+
+exit
+systemctl start superhuman-web.service superhuman-worker.service
+
+Rollback restores v1.15 source and retains all saved data, including calendar
+records. The calendar interface is unavailable on v1.15; reinstall v1.16 to access
+those records again. Changed installed source or altered backups stop rollback.

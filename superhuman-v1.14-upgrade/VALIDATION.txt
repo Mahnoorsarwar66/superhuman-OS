@@ -1,0 +1,49 @@
+SUPERHUMAN v1.14 VALIDATION
+
+263 tests passed in the isolated staged installer. Tests use synthetic provider
+responses, credentials and models. No real inbox, model or live server access.
+
+New and updated coverage:
+- More than 25 messages across multiple pages/continuations; persisted page token
+  and within-page pending list; known-ID skip; finding new IDs in a later scan.
+- Preserved earlier messages and failed candidate after a later provider error.
+- A failed DB checkpoint cannot persist an in-memory advance past unsaved mail.
+- Restart retaining identities/data; restart refused during a running read.
+- Connection-generation change rejects stale checkpoints; account ID separation.
+- UIDVALIDITY resets pending namespace; Titan EXAMINE, UID and BODY.PEEK commands
+  with INTERNALDATE; frozen Gmail query and page token; repeated-token rejection.
+- Missing/deleted messages counted separately; no paid calls in read batches.
+- Capacity backpressure preserves unreported emails; completed-report previews
+  can make space without removing their immutable report excerpts.
+- Next waiting report selection; different concurrent submissions reserve distinct
+  messages; repeated same-form submission reuses its request; completed messages
+  do not trigger a redundant report; failures/cancellations release reservations.
+- Historical report-membership backfill; concurrent indexing is idempotent.
+- Coverage/restart route auth/CSRF and web requests only queue provider work.
+- All previous hosted, memory, conversation, approval, mail and briefing checks.
+
+Installer harness: four encrypted connections, saved previews, a legacy report,
+private external key and synthetic .env established before upgrade. Fast preflight
+left bytes unchanged; install left DB/credentials/key unchanged; repeat install
+was idempotent; queued-report downgrade and source drift were refused; rollback
+retained the four connections, mail data, key and original report history.
+
+Shell harness: success, preflight failure before stopping services, and recovery
+after backup failure, using stub administration commands. No real services touched.
+Python parsing and Bash syntax checks passed. Guards derive from delivered v1.13
+source, with the unchanged provider module checked against its delivered v1.12 ZIP.
+
+A race in concurrent historical-report indexing was caught during checks and
+corrected using idempotent marker inserts before the final passing installer run.
+
+As before, older unavailable core/router registry modules have local interface
+fixtures. The shipped installer runs the suite against the actual installed app
+before replacing source. Live Google/Titan pagination, current provider policies,
+network limits and device rendering require the owner's post-install check.
+A completed scan is only its stated provider window/list, not a universal promise
+of full inbox completeness. A completed report is not proof of factual accuracy,
+model comprehension, human review or complete resistance to malicious email text.
+
+Provider references used:
+https://developers.google.com/workspace/gmail/api/reference/rest/v1/users.messages/list
+https://www.rfc-editor.org/rfc/rfc9051.html

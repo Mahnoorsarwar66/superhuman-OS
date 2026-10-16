@@ -1,0 +1,39 @@
+; Reference configuration if managing Supervisor directly.
+; In Forge, use its Processes UI instead. Do not create both copies.
+[program:superhuman-web]
+directory=/home/forge/superhuman
+command=/home/forge/superhuman/.venv/bin/uvicorn superhuman.hosted.web:app --host 127.0.0.1 --port 8000 --workers 1 --proxy-headers --forwarded-allow-ips=127.0.0.1
+user=forge
+numprocs=1
+autostart=true
+autorestart=true
+startsecs=3
+stopsignal=TERM
+stopwaitsecs=30
+stopasgroup=true
+killasgroup=true
+umask=0077
+environment=PYTHONUNBUFFERED="1"
+redirect_stderr=true
+stdout_logfile=/home/forge/superhuman/data/hosted/web.log
+stdout_logfile_maxbytes=10MB
+stdout_logfile_backups=5
+
+[program:superhuman-worker]
+directory=/home/forge/superhuman
+command=/home/forge/superhuman/.venv/bin/python -m superhuman.hosted.worker --poll-seconds 5
+user=forge
+numprocs=1
+autostart=true
+autorestart=true
+startsecs=3
+stopsignal=TERM
+stopwaitsecs=420
+stopasgroup=true
+killasgroup=true
+umask=0077
+environment=PYTHONUNBUFFERED="1"
+redirect_stderr=true
+stdout_logfile=/home/forge/superhuman/data/hosted/worker.log
+stdout_logfile_maxbytes=10MB
+stdout_logfile_backups=5
