@@ -1,0 +1,42 @@
+SUPERHUMAN v1.22 VALIDATION
+
+Final staged installation: 433 tests passed in 85.312 seconds.
+The installer completed and wrote its code installation/rollback manifest.
+
+18 planning-specific tests cover:
+- Read-only empty planning views without creating the planning database.
+- Goal persistence, versioned edits and before/after history.
+- Stale and duplicate form submissions without overwriting saved data.
+- Same-department project links and rejection of missing/other-department links.
+- Dependency completion, cycle/self-link rejection and cross-department isolation.
+- Reopening completed dependencies while dependents remain active.
+- Blocker resolution notes and completion constraints.
+- Invalid dates, priorities, empty titles and unsupported control characters.
+- Priority/date ordering and visible dependency constraints.
+- Authentication and existing CSRF enforcement on all new forms.
+- Browser-form saves for goals, milestones, project links and blockers.
+- Submitted-value preservation on stale-edit error pages.
+- Saved planning data appearing on Overview, department cards and summaries.
+- HTML escaping, script-free security policy and department isolation.
+- History pagination and existing project/task database preservation.
+- Inclusion of the new planning database in the existing private backup format.
+
+All 415 inherited department/navigation/regression tests also passed in that run.
+Model clients in the suite are mocked; no paid model requests were made.
+
+Installer lifecycle checks passed:
+- Recognizing an identical installed package without writing again.
+- Refusing rollback when installed source has changed.
+- Restoring the exact four original v1.21 source files.
+- Retaining a saved planning database unchanged after code rollback.
+- Refusing unrecognized/customized source before installation changes.
+- Python syntax parsing and bash -n on both server scripts.
+
+The locally reconstructed application uses a synthetic specialist-prompt registry
+because the early registry was absent from recovered archives. That fixture is
+not in this upgrade payload. Server staging uses the server's existing registry.
+
+No live-server installation, real inbox operation or paid production request was
+performed here. Real-browser desktop/mobile inspection and a live export/review
+check remain in the post-install checklist. No browser-rendered visual validation
+is claimed for this package.

@@ -1,0 +1,33 @@
+SUPERHUMAN v1.20 — NAVIGATION CONSOLIDATION
+
+One permanent sidebar: Overview, Talk, Projects, Inbox, Tasks, Reviews,
+Knowledge, Calendar, Settings. A title and Sign out occupy the page header.
+Existing operational pages now use the same shared renderer.
+No JavaScript or external front-end assets are required.
+
+Existing URLs and POST routes remain available. The Projects GET listing gains
+an explicit workstream filter and keeps the existing create-project action.
+Reviews shows plans and outputs awaiting review and links the other queues.
+Knowledge groups Source files, Documents and Research. Settings links memory,
+Writing DNA guidance, context preview, inbox setup instructions and execution.
+Tasks retains suggestions, execution, legacy queue and coding as section tabs.
+Calendar groups existing Calendar and Meetings pages.
+Overview links Inbox briefing and Work briefing as local section tabs.
+
+Project pages gain Summary, Tasks, Conversations, Knowledge and Activity tabs.
+Summary and Tasks use the existing work/review pages. Activity reads only that
+project's recorded execution events. Conversations and uploaded files currently
+belong to workstreams; those tabs explicitly label their shared workstream scope.
+Research links are scoped to the same workstream. No synthetic project/document
+associations or copied records are created.
+
+Security boundaries, model execution, approval logic, messaging permissions and
+request budgets are unchanged. Login remains outside the signed-in sidebar.
+Server scripts include a private backup, staged checks and reversible code changes.
+
+This is an organization release. It does not add search, notifications, new
+external integrations, automatic sending, or a redesigned daily prioritization
+engine. Those controls are not presented as functioning UI in this release.
+
+Supported source baseline: corrected v1.19 following corrected v1.18.
+TESTING.txt records the checks completed during package preparation.

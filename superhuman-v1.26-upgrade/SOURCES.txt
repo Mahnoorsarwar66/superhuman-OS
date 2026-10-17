@@ -1,0 +1,7 @@
+Implementation references checked during preparation (2026-10-16):
+https://developers.openai.com/api/docs/pricing
+https://developers.openai.com/api/reference/resources/chat/subresources/completions/methods/create
+https://developers.openai.com/api/docs/guides/token-counting
+https://developers.openai.com/api/docs/models/gpt-4o-mini
+
+Rates and model availability change. This release intentionally ships no confirmed live rate card. Rates in automated tests are synthetic fixtures. Confirm current rates for the exact model and all applicable context/tool tiers before enabling paid work. The inherited gpt-4o-mini label is not a recommendation of current availability.

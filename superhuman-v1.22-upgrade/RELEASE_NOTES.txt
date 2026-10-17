@@ -1,0 +1,49 @@
+SUPERHUMAN v1.22 — GOALS, PRIORITIES AND MILESTONES
+
+PLAN & PRIORITIES
+New department workspace tab with an editable department objective, priority,
+target date and measurable success criteria. Blank values remain Not set.
+
+MILESTONES
+Owner-edited stages with status, target date, success criteria, completion note,
+linked projects and dependency milestones. Only same-department projects and
+dependencies are accepted. Dependency cycles, self-links and stale edits are
+rejected. Manual completion requires criteria, a completion note, complete
+dependencies and no open linked blocker. Linked project/task approvals remain
+separate and are not changed when a milestone is completed.
+
+BLOCKERS & MISSING INPUTS
+Record what is needed, from whom, its target date and optional milestone.
+Resolve with an explanation. Records do not trigger messaging or task creation.
+
+PRIORITIES ACROSS DEPARTMENTS
+Overview includes the first five planning actions, with a full /priorities view.
+The seven main departments use the priorities you set. Writing DNA remains shared
+support and has its own optional plan; it is not counted as an eighth main team.
+Ordering is explicit: department priority, overdue dates, target dates and missing
+inputs before milestones on the same date. Holds and dependencies remain visible
+constraints. There is no generated schedule, deadline inference or worker launch.
+
+DEPARTMENT INTEGRATION
+Department cards and summaries show saved goals, priorities and targets.
+Next-step suggestions use recorded planning actions, falling back to operational
+statuses when no planning action exists. Calendar events are not automatically
+linked; department/milestone target dates are entered explicitly.
+
+EDIT HISTORY AND CONCURRENCY
+Every successful save records before/after history and advances an edit version.
+Concurrent or stale forms cannot silently overwrite a newer saved record.
+Validation errors preserve submitted values on the error page for comparison.
+No deletion is exposed: milestones can be archived and blockers resolved.
+
+DATA AND SECURITY
+Planning uses a separate transactional SQLite database under data/. Reads do not
+create it; the first save initializes its own tables. Existing task, project,
+conversation, research and memory records are not migrated or rewritten.
+The existing backup tool includes the database. Rollback retains its data.
+New pages and forms stay within existing authentication, CSRF, transport and
+script-free security policies. There are no new external dependencies.
+
+UPGRADE
+Requires v1.21. Exact source guards, staged tests, private backup and code rollback
+are included. Follow INSTALLATION_GUIDE.txt for Windows/Ubuntu commands.

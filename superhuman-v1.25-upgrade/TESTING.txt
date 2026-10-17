@@ -1,0 +1,58 @@
+SUPERHUMAN OS v1.25 — RELEASE VALIDATION
+
+Final staged installer: 546 tests passed in 123.638 seconds.
+The installer installed v1.25 into a local v1.24 fixture and wrote its source and
+rollback manifests. Staged tests used temporary source without live user data.
+
+51 new supervision tests and 495 inherited tests passed. The inherited health
+assertion now expects application release 1.25.0; other inherited behavior was
+retained and exercised, including the v1.24 agentic execution suite.
+
+New tests cover:
+- Default off; no model call or policy database from an unconfigured scheduler.
+- Proposals without execution in review mode and automatic bounded starts.
+- Canonical agent-core execution through a final artifact requiring owner review.
+- Real Word artifact generation under supervision and verified evidence.
+- Atomic/idempotent launch, concurrent approvals and concurrent review reservation.
+- Cumulative allocations, insufficient budget without partial jobs, no budget reset,
+  required tools fitting limits, fixed managed-run ceilings and ordinary manual
+  budget controls remaining available.
+- Pauses, goal holds, blockers, prerequisite selection and existing-work checks.
+- Derived planning links and approved-output milestone assessment, without automatic
+  milestone completion. Next dependent work follows owner completion.
+- No silent repeat of approved/dismissed targets; explicit proposal reopening.
+- Scheduling, unchanged-input local refreshes, change-triggered reviews and caps.
+- Changed policy/context, foreign/extra model fields, interrupted model attempts,
+  restart recovery and department-local failures isolated from other work.
+- Explicit refresh/rebase of unstarted proposals and edited owner instructions.
+- Withdrawn permissions, changed mission/target and changed underlying run ceilings
+  holding execution. Cancelled milestone work can be revised for a new bounded run.
+- Scope isolation, authentication, CSRF, department/Attention links and diagnostics.
+- Supervision on the actual existing worker loop with mocked provider responses.
+- Rollback quarantine, manual-run preservation and review-state restoration.
+
+Installer lifecycle checks passed separately:
+- Idempotent installed-source recognition.
+- Refusal to roll back changed installed source before operational changes.
+- Exact restoration of all 12 original v1.24 source files and module removal.
+- Operational records, allocation history and a saved output retained.
+- Persisted global worker pause, policies disabled, pending and completed managed
+  tasks quarantined. Actual restored v1.24 resume/retry functions cannot execute
+  these managed tasks or spend requests; unrelated manual tasks are not quarantined.
+- Startup recovery after release code reapplication restores completed review state
+  and leaves unfinished runs/policies held for inspection.
+- Unrecognized prior source refused before writes.
+- Python compilation and bash -n for both server scripts.
+
+Model/provider responses are mocked. No paid model request, live mailbox sync,
+actual Docker execution, real-browser visual QA or live server installation was
+performed here. Follow INSTALLATION_GUIDE.txt for live acceptance.
+
+The local reconstructed app uses a synthetic specialist-prompt registry because
+that early registry was missing from recovered archives. It is not shipped; the
+server's staged tests use its existing real registry and source. No new runtime
+third-party dependency is required by this upgrade.
+
+The ZIP contains only the upgrade payload, reference source guards, tests and
+guides. It contains no operational database, credential, local app fixture or
+private server backup.

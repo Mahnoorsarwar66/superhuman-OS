@@ -1,0 +1,51 @@
+SUPERHUMAN v1.21 — DEPARTMENTS
+
+NEW SIDEBAR ENTRY
+Departments sits immediately above Projects in the existing shared sidebar.
+The seven existing business workstreams become department views. Writing DNA
+remains separately available as shared support, rather than an eighth main team.
+
+DEPARTMENTS DASHBOARD
+One card per department with objectives, running tasks, pending plan/output
+reviews, approved-task progress, recorded blockers, task suggestions, last record
+update and a suggested next step. Counts reflect all matching records, not just
+the first displayed page. The dashboard refreshes when reopened/refreshed.
+
+INDIVIDUAL WORKSPACES
+Summary: current objectives, approved-task progress, waiting reviews, blockers,
+latest execution records, materials counts and a status-based suggested next step.
+Projects & Tasks: existing objectives, tasks and proposed tasks.
+Research & Documents: areas, source cards, saved synopses, read reasons, source
+files, document exports and saved task-output links.
+Conversations: existing conversations associated with the workstream.
+Activity & Decisions: project execution events, recent conversation/research-area
+updates and confirmed, non-sensitive, unexpired departmental decision notes.
+
+FACTS AND SUGGESTIONS
+No model synopsis is generated. Counts and status labels reflect saved state.
+Next steps follow explicit status rules (review, blockers, proposals, planning,
+then progress), rather than claiming to know business priorities.
+Missing department goals, priorities and deadlines explicitly say Not set.
+Existing calendar events have no department field, so no deadline is invented.
+A running task means its recorded task status is running; the dashboard is not
+an independent worker-liveness monitor. Source synopses remain saved notes,
+not independently verified conclusions.
+
+DATA AND EXECUTION
+Department queries use SQLite read-only connections. They do not initialize
+business tables, duplicate records, create projects or make model requests.
+SQLite may manage its normal WAL/shared-memory sidecars for existing databases.
+File listings skip hidden/credential files and symlinks. Existing download
+handlers retain their integrity checks. New department pages have no mutation
+routes and remain behind existing authentication and transport controls.
+
+LIMITATIONS
+No ChatGPT-history import, automatic reassignment, editing of department goals,
+new integrations, scheduling or autonomous execution is added in this release.
+Project and document associations reflect their current stored workstreams.
+Execution activity shows the latest 100 matching events. Other lists paginate
+at 50 items per list. Data-read failures are displayed as incomplete-data warnings.
+
+INSTALLATION
+Guarded source patch against v1.20, staged regression checks, private backup,
+repeat-install detection and guarded rollback. See INSTALLATION_GUIDE.txt.

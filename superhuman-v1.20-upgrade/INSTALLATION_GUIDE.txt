@@ -1,0 +1,88 @@
+SUPERHUMAN v1.20 — ONE WORKSPACE NAVIGATION
+
+PREREQUISITE
+Install the corrected v1.18 release, then corrected v1.19, before this release.
+This installer checks the known v1.19 hosted entrypoint before it changes files.
+If your installation is older or customized, it stops instead of overwriting it.
+This package does not connect to your server automatically.
+
+INSTALL ON YOUR DIGITALOCEAN SERVER
+1. Download superhuman-v1.20-upgrade.zip into your Windows Downloads folder.
+2. Open Windows PowerShell. Upload it:
+
+scp "$env:USERPROFILE\Downloads\superhuman-v1.20-upgrade.zip" root@167.71.196.20:/home/superhuman/
+
+3. Connect to Ubuntu:
+
+ssh root@167.71.196.20
+
+4. You are now at the Ubuntu/root prompt. Run these commands there:
+
+python3 -m zipfile -e /home/superhuman/superhuman-v1.20-upgrade.zip /home/superhuman
+chown -R superhuman:superhuman /home/superhuman/superhuman-v1.20-upgrade
+bash /home/superhuman/superhuman-v1.20-upgrade/upgrade_server.sh
+
+Do not run /home/superhuman/... commands directly at the Windows PS prompt.
+Use the commands on separate lines as shown; no PowerShell && is needed.
+If you saved the download elsewhere, adjust only the local upload path.
+
+5. Open or refresh:
+https://superhuman.167-71-196-20.sslip.io/
+Use Ctrl+F5 once if an old page is still visible.
+
+WHAT THE SERVER SCRIPT DOES
+- Checks the two existing service accounts and exact supported hosted source.
+- Stops web and worker after the initial source checks pass.
+- Creates a private backup using the existing hosted backup command.
+- Copies Python source into a temporary test directory, without copying user data.
+- Tests the staged navigation and existing feature workflows using synthetic data.
+- If checks fail, leaves the application code unchanged and restarts services.
+- Saves rollback code, installs the navigation module and updates hosted/web.py.
+- Restarts the two existing services and reports whether they are active.
+- Makes no paid model requests during installation.
+
+No database migration, credentials change, Nginx change or permission-policy
+change is part of this release. Existing output files and mutation routes stay.
+Opening existing pages may initialize their normal empty tables as before.
+
+VERIFY AFTER INSTALLATION
+[ ] Overview, Projects and Talk show the same permanent sidebar.
+[ ] Knowledge > Source files, Documents and Research retain that same sidebar.
+[ ] Tasks > Coding workspace, Execution and Legacy queue remain reachable.
+[ ] Reviews opens project review links and the other existing review queues.
+[ ] Projects workstream filter shows the correct objectives.
+[ ] Open a project: Summary, Tasks, Conversations, Knowledge, Activity tabs work.
+[ ] Conversations and files shared by a workstream are clearly labelled.
+[ ] Calendar and Meetings use the same sidebar.
+[ ] Existing document/deliverable downloads still work with a real saved file.
+[ ] The narrow-screen Menu control can collapse and expand navigation.
+[ ] A real task can still be created and reviewed through the normal workflow.
+
+CHECK WITHOUT INSTALLING (ON UBUNTU)
+cd /home/superhuman/app
+runuser -u superhuman -- .venv/bin/python /home/superhuman/superhuman-v1.20-upgrade/install_v120.py --check
+
+The staged test suite uses temporary data and mocked model clients. It does not
+validate your live Gmail connection or make a paid production request.
+
+ROLLBACK
+The installer prints a directory such as:
+/home/superhuman/app/backups/v1.20-20261016T...
+
+At the Ubuntu root prompt, pass that EXACT printed path:
+
+bash /home/superhuman/superhuman-v1.20-upgrade/rollback_server.sh /home/superhuman/app/backups/v1.20-YOUR_TIMESTAMP
+
+Rollback restores the previous hosted entrypoint and removes this navigation
+module. It retains your data. It refuses to overwrite code changed since install.
+The private data backup is separate and is not restored for a navigation rollback.
+
+LOCAL WINDOWS INSTALLATION (OPTIONAL)
+If testing a local copy already upgraded through v1.19, stop its servers first:
+cd C:\superhuman-os-starter
+python C:\PATH\TO\superhuman-v1.20-upgrade\install_v120.py --check
+python C:\PATH\TO\superhuman-v1.20-upgrade\install_v120.py
+Use the hosted entrypoint with its existing configured authentication settings:
+python -m uvicorn superhuman.hosted.web:app --host 127.0.0.1 --port 8000
+The shared navigation is initialized by the hosted entrypoint. Starting the old
+standalone legacy entrypoints directly continues to use their original local UI.

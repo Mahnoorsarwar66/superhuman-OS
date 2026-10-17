@@ -1,0 +1,38 @@
+SUPERHUMAN v1.21 VALIDATION
+
+Staged installer run: 415 tests passed in 75.157 seconds.
+The installer completed and wrote the installation/rollback manifest.
+
+13 department-specific tests cover:
+- Private access, invalid department names and invalid pagination.
+- Empty departments without creating business databases or workspace folders.
+- Exact task/objective/review/blocker counts and status-based next steps.
+- Department isolation across all five workspace tabs.
+- Departments appearing above Projects on old and new pages.
+- Decision-note scope, confirmation, sensitivity and expiry filtering.
+- Uploaded file/export listing and hidden/symlink file exclusion.
+- Counts exceeding 50-item display limits and pagination links.
+- HTML escaping, security policy and unchanged CSRF protection.
+- Missing goals/deadlines explicitly shown as Not set.
+- Existing business database bytes preserved by department reads.
+- Corrupt database warnings.
+- Writing DNA remaining separate shared support.
+
+The existing 402-test v1.20 regression/navigation suite also passed in that staged
+run. Model clients use synthetic responses. No paid model call was needed.
+The local reconstructed test application uses a synthetic specialist-prompt
+registry because the early registry was absent from recovered source archives.
+That fixture is not in the installation payload. Server staged checks use the
+server's real registry and existing source.
+
+Installer checks also passed for:
+- Recognizing an already installed identical package.
+- Refusing rollback when installed source has changed.
+- Restoring the exact previous v1.20 navigation source on rollback.
+- Refusing an unrecognized/customized v1.20 navigation source before writing.
+- Python syntax parsing and bash -n on both server scripts.
+
+No live server installation or live external account check was performed here.
+Real-browser desktop/mobile visual checks and a real document download remain
+in the post-install checklist. This environment had no available browser binary;
+no claim of browser-rendered visual verification is made.

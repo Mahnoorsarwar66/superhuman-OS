@@ -1,0 +1,62 @@
+{
+  "experience/web.py": {
+    "before": "0e97501e7c050738431208e5429edf248d37d311e7be2e420f9865825990d184",
+    "after": "219743be02fe7cccc122596cf661bc3b77dad4c35578f3a506338e3541b7c554"
+  },
+  "foundation/__init__.py": {
+    "before": "3f9006222eeab2301bfc058465ea1c0ee4a84907cf8ee95d07f043af8d95dba9",
+    "after": "6104e06f5d70cbc9519171a59a2c9bc9b4c9b0e5241e7fc6d358473f39ef2236"
+  },
+  "foundation/web.py": {
+    "before": "94bfbad3d14d400de73119da36f9b394306d44b584e3c5457e9ac73ec79fad46",
+    "after": "ccbdd476a23d0e9d27f66fec57a58490973f48987b3a0bcca6d961bf95ac4e5a"
+  },
+  "hosted/boundary.py": {
+    "before": "3c1797c5b456b9a08c727b6ac73472ecafc42e484f7db50ed1f9e9326407eb4d",
+    "after": "aae38aa420b3b122b17a393b558353825610e9461b45608e6a5f21fcc5468fb3"
+  },
+  "interface/views.py": {
+    "before": "08752eb58c5199b7be83141d44ae196ef1f2b045d0c8f5b36f0757c4a2b27d9b",
+    "after": "ad1c3cd47177ec510786dca5e6d621e64d02561487b22ce229e926e195642b99"
+  },
+  "navigation/shell.py": {
+    "before": "ca4f24f45dbe8456874c389bd9434d290047432a97a89ff65739973d66132f5e",
+    "after": "052dd6e6f35400653c5862ce930056666dd6805e88c113e37e957c5c80e36c83"
+  },
+  "repairs/__init__.py": {
+    "before": "6bd7bc9a52f57651b892734c325af5449e13f45555b0ad9055deac8493ce75eb",
+    "after": "0cecfe9f09dab72c59d379640dedc63699d3a263f58ca728f92ae1011e250fa1"
+  },
+  "team/web.py": {
+    "before": "613b6a517e83de95c26ed08a48e4fbafd5ef1180466dd01caef9cdcf6441366a",
+    "after": "5a67745c8d9d5d541c3c480cff6b71f06a9f9b12a538e020eadbf80a51888a1a"
+  },
+  "teamhub/assets/teamhub.js": {
+    "before": "78fc9e06d2e19b21e8b464d4c53646a00e20a83492b0936a71af28f062ee5188",
+    "after": "29c531a8be4ac63167737a9667170e0f33dcbad468a348b2d00ed27fc89697ec"
+  },
+  "teamhub/project.py": {
+    "before": null,
+    "after": "45d23921052fd5759e6d24584e16b3847aba2349f75c68394e546d67e85be384"
+  },
+  "teamhub/readiness.py": {
+    "before": null,
+    "after": "f88261d3ab198bb3acd45137484c0e45727220a4d89e0b7bf2312bd6d9fe09a1"
+  },
+  "teamhub/store.py": {
+    "before": "28b49b33900695de413f6bcecf0d3a1aa5624394497ad244efd9597149390602",
+    "after": "0ecb6aafbe4156476cc394cba6af36926a80ea2c65cb3c3f2d332399a8bf2968"
+  },
+  "teamhub/web.py": {
+    "before": "6cf7d6e920bc761bf2d2855a7672c441559b3d2b6bb0e5cecf4937d2748aef70",
+    "after": "485357866a82c50ea7638d5eecb68a958155c3b27f7053361aafa4ca34b9f287"
+  },
+  "trust/__init__.py": {
+    "before": "36f6e4f1e78e229af5d1264c8ea6613b476f6c0e69cc10bb4693323cf59ecf44",
+    "after": "6432ce819865367f8f2e5383f3abaf6e0738a8344db4e44e4f32d096d85a5406"
+  },
+  "workspace/web.py": {
+    "before": "1dcb3e28c1e523b095ca10669e222d5e863a95a071142065ef333d694f0cb6ec",
+    "after": "111514805399a3494e6673102ecbfdf8d09f733d7551426591afac6fe2576e51"
+  }
+}

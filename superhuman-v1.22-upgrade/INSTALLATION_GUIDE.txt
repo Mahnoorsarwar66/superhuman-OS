@@ -1,0 +1,120 @@
+SUPERHUMAN v1.22 — DEPARTMENT PLANNING
+
+PREREQUISITE
+Install v1.21 Departments first. The installer checks the exact supported source
+before changing files and refuses to overwrite unrecognized customizations.
+
+WINDOWS: DOWNLOAD AND EXTRACT
+Extract superhuman-v1.22-upgrade.zip into C:\superhuman-os-starter.
+Confirm that this file exists:
+C:\superhuman-os-starter\superhuman-v1.22-upgrade\upgrade_server.sh
+
+In WINDOWS POWERSHELL, upload the extracted folder with your existing key:
+
+scp -r -o IdentitiesOnly=yes -i "$env:USERPROFILE\.ssh\superhuman_replacement" "C:\superhuman-os-starter\superhuman-v1.22-upgrade" superhuman@167.71.196.20:/home/superhuman/
+
+Connect as root:
+
+ssh -o IdentitiesOnly=yes -i "$env:USERPROFILE\.ssh\superhuman_replacement" root@167.71.196.20
+
+At the UBUNTU ROOT prompt, run these separately:
+
+chown -R superhuman:superhuman /home/superhuman/superhuman-v1.22-upgrade
+bash /home/superhuman/superhuman-v1.22-upgrade/upgrade_server.sh
+
+Do not run /home/... Linux commands directly at the Windows PS prompt.
+There is no need for a PowerShell && separator.
+
+AFTER INSTALLATION
+Open your existing Superhuman website and refresh with Ctrl+F5.
+
+1. Departments > choose a department > Plan & Priorities.
+2. Set its objective, priority, target date and success criteria; save the plan.
+3. Add milestones. Optionally link existing projects in that same department.
+4. Add dependency milestones and blockers/missing inputs where relevant.
+5. Return to the department Summary or the Departments dashboard.
+6. Open Overview > Department priorities to compare all seven main departments.
+
+Direct pages:
+https://superhuman.167-71-196-20.sslip.io/priorities
+https://superhuman.167-71-196-20.sslip.io/department-plans/endorsement
+
+Nothing is pre-populated with assumed deadlines, goals or priorities.
+Saving a plan, milestone or blocker does not create tasks, make model requests,
+contact someone or start a worker. Existing approvals and execution are retained.
+
+WHAT THE INSTALLER DOES
+Checks v1.21 navigation, department pages and hosted entrypoint before writing.
+Stops web and worker and creates the existing private data/source backup.
+Runs the staged test suite using temporary synthetic data and mocked model calls.
+Adds superhuman/planning and patches four existing page/navigation files.
+Saves code rollback copies and restarts the existing services.
+Expect about 1–2 minutes for the staged checks.
+
+The live planning database is created on your FIRST SUCCESSFUL SAVE at:
+data/department_planning/plans.db
+It does not replace your existing projects/tasks database.
+The existing private backup tool includes this SQLite database automatically.
+An advanced SUPERHUMAN_PLANNING_DB override outside data/ would require separate
+backup arrangements; the normal installation does not set such an override.
+
+PLANNING RULES
+Priorities: Not set, Critical, High, Normal, Low. They apply to a department;
+milestones inherit that priority in the global ordering. Targets are calendar
+dates interpreted using the existing Asia/Karachi date setting.
+
+Milestones: Planned, In progress, On hold, Complete or Archived.
+A milestone cannot depend on itself or form a dependency cycle.
+Dependencies must belong to the same department and be complete before the
+milestone starts or completes. Reopening a completed dependency is refused while
+its dependents remain In progress or Complete. Move those dependents to Planned
+or On hold first. Remove dependency links before archiving a referenced milestone.
+
+Marking Complete requires saved success criteria and a completion note, with no
+open blocker linked to that milestone. Completion is your recorded assessment;
+it does not automatically approve or complete linked projects or tasks.
+
+Missing inputs: record what is needed, from whom, its date and related milestone.
+Marking Resolved requires a resolution note. Recording a person does not send a
+message. A general department blocker is informational unless linked to a milestone.
+
+Every saved edit retains before/after history. An outdated browser form receives
+a conflict instead of overwriting a newer edit. The error page preserves submitted
+values so you can compare them with the current saved record.
+
+PRIORITIES VIEW
+Order: department priority, then overdue dates, then target dates, then missing
+inputs before milestones on the same date. Undated items follow dated items at
+the same priority. Dependency and hold notes show what is waiting; the view does
+not claim that blocked work can start. High-priority future work can therefore
+appear before lower-priority overdue work, according to the priority you set.
+
+QUICK VERIFICATION
+[ ] Existing navigation and department pages still open normally.
+[ ] Save an actual department objective and priority; reopen to verify persistence.
+[ ] Add a milestone with success criteria and a target date.
+[ ] Link a project from that department and follow the link to its existing tasks.
+[ ] Add a blocker with Needed from and an optional related milestone.
+[ ] Overview and /priorities show the saved items.
+[ ] Department cards and Summary show your saved goal/priority/date.
+[ ] View edit history and confirm the saved changes are recorded.
+[ ] Check one form on a narrow screen/phone.
+[ ] Existing exports and task reviews remain usable.
+
+CHECK WITHOUT INSTALLING (UBUNTU ROOT PROMPT)
+cd /home/superhuman/app
+runuser -u superhuman -- .venv/bin/python /home/superhuman/superhuman-v1.22-upgrade/install_v122.py --check
+
+ROLLBACK
+The installer prints a directory such as:
+/home/superhuman/app/backups/v1.22-TIMESTAMP
+
+At the Ubuntu root prompt, use the EXACT printed directory:
+
+bash /home/superhuman/superhuman-v1.22-upgrade/rollback_server.sh /home/superhuman/app/backups/v1.22-YOUR_TIMESTAMP
+
+This restores v1.21 code and removes the planning module. It RETAINS planning
+records in data/ so they can be used again after reinstalling v1.22. Code rollback
+does not restore or delete database contents. The private backup is separate.
+Roll back v1.22 before attempting to roll back an earlier release.
+Rollback refuses to overwrite code that changed after installation.

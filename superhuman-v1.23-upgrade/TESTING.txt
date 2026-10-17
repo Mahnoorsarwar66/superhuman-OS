@@ -1,0 +1,48 @@
+SUPERHUMAN v1.23 — REPAIR VALIDATION
+
+Final staged installer: 456 tests passed in 97.999 seconds.
+The installer completed and wrote its code installation/rollback manifest.
+
+23 new repair integration tests cover:
+- Restart recovery for unfinished tasks/planners without request replay.
+- Department-priority ordering in task and project-plan selection.
+- Linked milestone dependencies and department holds gating project work.
+- Pending-review precedence and prerequisites ahead of waiting milestones.
+- Goal completion/reopening, history and deadline removal.
+- Rejection of incomplete goals and new open work under a closed goal.
+- Department plans, memory preferences, local excerpts and saved source cards
+  entering the shared AI context, with scope isolation and reference limits.
+- Accurate /healthz release metadata.
+- Unified task/status views and department filters.
+- Explicit retries and request-limit changes with CSRF/stale-state protection.
+- Held pending tasks appearing in the blocked view with an explanation.
+- Calendar/Attention deadlines and an escaped, UTF-8-folded ICS alarm export.
+- Linked-project approval progress flagging a milestone for manual assessment.
+- Real DOCX export integrity and damaged saved-output detection.
+- Read-only inbox probe queueing through the existing sync mechanism.
+- Authentication for all new diagnostic, reminder and export routes.
+
+The 433 inherited tests also passed in the final staged run. Two inherited
+expectations were corrected: a restart must leave an interrupted task visible as
+Interrupted (not Running), and a prerequisite must precede its waiting dependent
+in the action queue. New tests reproduce and guard those defects explicitly.
+
+Installer lifecycle checks passed:
+- Identical-version recognition without rewriting source.
+- Refusal to roll back altered installed source.
+- Exact restoration of all fourteen original v1.22 source files.
+- Planning database retained unchanged after code rollback.
+- Persisted worker pause retained for safe use of the older scheduler.
+- Refusal to overwrite unrecognized source before installation.
+- Python syntax checks and bash -n for both server scripts.
+
+Model clients are mocked. No paid model request or live mailbox sync was made.
+The local reconstructed app uses a synthetic specialist-prompt registry because
+that early registry was absent from recovered archives. It is not shipped in the
+payload; the server's staged checks use its real registry and existing source.
+
+No live server installation or real-browser desktop/mobile visual verification
+was performed here. The installation guide includes actual account, generation,
+download, memory/context, assignment and device checks. System checks reports
+actual saved evidence after installation; configuration alone is not reported
+as proof of a working external account.

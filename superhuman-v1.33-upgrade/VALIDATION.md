@@ -1,0 +1,11 @@
+# v1.33 validation
+
+- Full staged regression: 909 tests passed in 269.631 seconds, including 27 new interface tests. Earlier label assertions were updated for the intentional navigation redesign. Existing execution, sharing, evidence, review, accounting and recovery tests remain.
+- Guarded installation succeeded against a v1.32 fixture retaining the production CLI/orchestrator variants. Those files remained byte-identical.
+- Actual headless browser checks passed across desktop (1440px) and phone (390px): Overview, Projects, employee board, Departments, department agent/supervision, Inbox, Calendar, Storage, Settings, project, milestone and evidence screens. Checks exercised keyboard skip/focus, project activation, source grants, milestone start, evidence review/confirmation, investigation deferral, exact-version milestone approval, scope-change reopening, same-view redirects and Coding access. No body overflow or JavaScript errors remained. The mobile calendar overflow found during QA was corrected.
+- A separate JavaScript-disabled phone check passed login, native navigation/details, authenticated typography/CSS, activation form/CSRF and same-view redirect.
+- Legacy POST-action inventories remain available across focused project/milestone/evidence views. Tests preserve source text, hidden values, scope controls and exact-packet approval checks. Invalid views/HTML errors/JSON responses and unauthenticated assets were checked.
+- Installed preflight was idempotent. Rendering every project/milestone view left team, milestone, assurance and Storage rows unchanged. Rollback refused an extra owner-added package file before deletion; successful rollback restored every original integration hash and retained exact business/approval/budget/permission rows plus packets/exports, with the worker paused. Rolled-back v1.32 source passed reinstall preflight.
+- Shell launchers passed syntax checks. The ZIP passed CRC and per-file SHA-256 checks; owner databases, credentials, browser fixtures/screenshots and runtime caches are excluded.
+
+Tests use synthetic local data and mocked model/provider responses. No live server installation, provider connectivity audit, actual guide review or business-outcome validation was performed. Screenshots were used internally for layout inspection and are not shipped.

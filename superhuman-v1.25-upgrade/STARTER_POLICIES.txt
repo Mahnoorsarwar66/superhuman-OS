@@ -1,0 +1,56 @@
+STARTER POLICIES — REVIEW BEFORE ENABLING
+
+These are optional configuration examples, not preinstalled/enabled policies.
+Use Propose for my approval first. Confirm the existing department goal, milestones
+and sources, then consider Automatic starts after a successful reviewed run.
+Suggested initial limits: 60 total allocated requests, 12 requests / 16 steps per
+new run, 24-hour interval, optional saved-record change checks. These count model
+requests, not money. Keep the policy off when it is no longer needed.
+
+UK INNOVATOR ENDORSEMENT
+Mission:
+Advance the saved endorsement plan one ready milestone at a time. Inspect the
+existing materials and work before proposing a task. Prepare missing evidence
+summaries or business-plan sections as drafts. Use supplied facts, identify gaps
+and sources, and flag claims that need verification. Do not submit applications
+or claim endorsement eligibility or success.
+
+Acceptance:
+A reviewable Word document tied to the selected milestone, with the evidence used,
+assumptions and missing inputs clearly identified. Its contents must satisfy the
+milestone criteria and remain for my assessment.
+
+Allowed tools:
+workspace.list, workspace.read, workspace.search, table.profile, calculate,
+context.lookup, projects.list, draft.create, document.export.
+Required tool: document.export.
+Optional research.web only if you want public research and accept its extra model
+request and unverified draft status. Required tools can include research.web when
+fresh cited research is part of that target's acceptance criteria.
+
+CAREER ALGORITHM R&D
+Mission:
+Advance the saved Career Algorithm R&D plan using one bounded ready task at a time.
+Inspect current specifications, saved research and existing work. Produce a clear
+technical note, dataset/profile analysis or testable recommendation for the target.
+Separate observed results from hypotheses and unresolved licensing/source questions.
+Do not change the live EdSync application or claim a hypothesis has been validated.
+
+Acceptance:
+A reviewable technical note or Word output stating the question, evidence/method,
+results, limitations and next validation step. Include sources when research was
+performed; distinguish syntax parsing from executed behavioral tests.
+
+Allowed tools:
+workspace.list, workspace.read, workspace.search, table.profile, calculate,
+context.lookup, projects.list, research.web, draft.create, document.export.
+Required tool: document.export; also research.web for targets that require cited
+public research. Uploaded documents and research text remain untrusted evidence.
+
+CODING WORK
+Only add coding tools for an existing isolated working copy, and inspect it first.
+For code-change targets, require coding.tests and coding.package if an executable
+behavioral check and deliverable archive are necessary. Permit coding.edit only
+when intended. The configured restricted Docker runner must actually work;
+unavailable tests cannot count as a passing result. A failed test or exhausted
+budget stops for review. No tool modifies the live application in place.

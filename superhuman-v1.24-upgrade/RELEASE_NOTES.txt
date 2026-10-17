@@ -1,0 +1,50 @@
+SUPERHUMAN OS v1.24 — AGENTIC EXECUTION CORE
+First of two planned agentic installations. Requires the delivered v1.23 source.
+
+Tasks > Agent runs now supports a bounded observe/decide/act/verify loop.
+Choose a department, instructions, permitted tools, required evidence, a total
+model-request limit and a decision-step limit. Start explicitly authorizes that
+run within those limits. Existing tasks and plans are not converted.
+
+One decision and at most one tool run per worker tick keeps pause controls and
+other queued work responsive. Tool arguments, results, verification, permissions,
+request usage, interruptions and owner decisions persist in the project database.
+Intermediate actions remain Pending; completed deliverables need owner review.
+The shared navigation gains one contextual Tasks tab, not another main console.
+
+23 adapters reuse installed capabilities:
+- List/read/search department files; profile CSV; calculate arithmetic.
+- Retrieve scoped context and project/task records.
+- Existing cited public research and draft/critique/revision generation.
+- Export Word/PDF/XLSX and create spreadsheets from CSV.
+- Inspect/read/edit existing isolated coding copies, view diffs, check syntax,
+  run selected existing tests through restricted Docker, package results.
+- Read department-assigned inbox previews, queue read-only syncs and inspect sync.
+- Create unplanned internal objectives and propose memory for confirmation.
+
+Unknown tools, extra arguments and scope/path escapes are rejected. Actions
+outside permitted tools wait for approval of the exact saved inputs once. This
+does not permanently expand permissions. Required tools must be pre-permitted.
+Finishing requires verified evidence IDs and all selected required tools. Saved
+artifacts and coding-check snapshots are rechecked before finish. Tool verification
+means the contract/output checks passed; it does not certify factual or business
+success. Syntax checks do not replace tests. Unavailable tests never pass.
+
+Successful writes are cached to avoid duplicates. Dynamic reads are fresh.
+Known read/argument failures allow bounded correction; two consecutive failures
+stop for owner review. Step limits stop the loop. Model requests count against
+the existing project budget, including the three calls inside drafting.
+Uncertain paid/write outcomes and worker restarts stop without automatic replay.
+Continuation requires an inspection note; a repeated uncertain action needs exact
+approval. Pause/cancel applies between steps; an in-flight call can finish.
+
+Included: guarded staged installer, full regression suite, private pre-upgrade
+backup, code manifest, checksum-protected rollback and live acceptance checklist.
+Rollback pauses background work and quarantines all new-kind tasks so
+v1.23 cannot execute them. Records and artifacts remain available for reinstall.
+
+Stage 2 is still future work: recurring department/project supervision, goal
+breakdown, event triggers, automatic assignment, progress assessment and broader
+bounded autonomy. This release starts agent runs explicitly; it is not a claim
+that the entire OS is already autonomous. It adds no sending, publishing,
+purchasing, arbitrary shell or production self-modification tool.

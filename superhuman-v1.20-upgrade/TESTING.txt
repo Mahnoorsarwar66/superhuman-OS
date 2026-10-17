@@ -1,0 +1,37 @@
+VALIDATION SCOPE
+
+The recovered release sources through corrected v1.19 were reconstructed into a
+local test application. The navigation upgrade was tested in that application.
+The early specialist-prompt registry was absent from the recovered archives;
+local regression uses a synthetic specialist-prompt fixture with mocked model
+clients. That fixture is NOT included in the installation payload. On the server,
+the staged suite imports the server's existing registry and other source files.
+
+Navigation-specific coverage:
+- One main sidebar on 20 old and new entry pages.
+- Exactly one selected primary section and no old sidebar renderer.
+- Existing POST /projects, CSRF enforcement and response content lengths.
+- Authentication for new pages; signed-out login without workspace navigation.
+- Project tabs, project-specific activity and workstream-specific conversations.
+- Workstream research filtering and escaping of user-provided project titles.
+- Workstream filter validation, unknown-project responses and request isolation.
+- Script-free layout, mobile menu markup and skip-to-content accessibility link.
+
+Installer checks:
+- Staged installation before switching the hosted entrypoint.
+- Repeat-install detection by installed source checksums.
+- Refusal to overwrite unsupported hosted source.
+- Code rollback restoration.
+- Refusal to roll back changed installed source.
+- Python syntax parsing and bash -n for both server scripts.
+
+The existing v1.19 regression suite is included. Its former direct-home Memory
+navigation assertion was updated to verify Home > Settings > Memory.
+
+No live server installation, real inbox connection or paid model call was made.
+Real-browser visual inspection was unavailable because the browser download was
+blocked in this environment. Perform the short desktop/mobile and real-file
+checks in INSTALLATION_GUIDE.txt after installation.
+
+Final staged installation run: 402 tests passed in 69.013 seconds.
+The installer exited successfully and created its installation/rollback manifest.

@@ -1,0 +1,116 @@
+SUPERHUMAN v1.23 — WORKFLOW REPAIRS
+
+REQUIRES v1.22
+The installer checks supported source before changing files. If you have not
+installed v1.22, install that package first. It refuses unrecognized source.
+
+DOWNLOAD AND EXTRACT ON WINDOWS
+Extract superhuman-v1.23-upgrade.zip into C:\superhuman-os-starter.
+Confirm this exists:
+C:\superhuman-os-starter\superhuman-v1.23-upgrade\upgrade_server.sh
+
+WINDOWS POWERSHELL
+scp -r -o IdentitiesOnly=yes -i "$env:USERPROFILE\.ssh\superhuman_replacement" "C:\superhuman-os-starter\superhuman-v1.23-upgrade" superhuman@167.71.196.20:/home/superhuman/
+
+ssh -o IdentitiesOnly=yes -i "$env:USERPROFILE\.ssh\superhuman_replacement" root@167.71.196.20
+
+AT THE UBUNTU ROOT PROMPT (SEPARATE COMMANDS)
+chown -R superhuman:superhuman /home/superhuman/superhuman-v1.23-upgrade
+bash /home/superhuman/superhuman-v1.23-upgrade/upgrade_server.sh
+
+The installer stops web/worker, creates a private backup, stages the repair and
+runs synthetic-data/mocked-model regression checks before writing source.
+It restarts the existing services and prints a local diagnostic report.
+No paid model request or live inbox probe is part of installation checks.
+Existing already-authorized queued work can resume when the worker restarts.
+
+WHAT TO OPEN AFTER INSTALLATION
+Refresh your website with Ctrl+F5.
+
+Tasks: one view of tasks, project plans, reviews, failures and suggestions.
+Attention: header link for reviews, interrupted work and deadline reminders.
+Department > Plan & Priorities: goal status, dependencies and linked progress.
+Calendar: meetings plus live planning deadlines and ICS download.
+Settings > System checks: recorded inbox sync state and saved-file checks.
+
+FIRST LIVE CHECKS BEFORE FURTHER DEVELOPMENT
+1. Open Settings > System checks. Worker should show Online and not Paused unless
+   you intentionally paused it. Review its activity and recorded failures.
+2. Queue read-only checks for connected inboxes. Let the worker process them;
+   refresh System checks/Inboxes and confirm a new successful sync for each
+   connected account. Configured credentials alone are not proof of connectivity.
+3. Open Tasks. Interrupted work now waits for your inspection and explicit retry.
+   Inspect any saved output first, then supply a correction/retry note if useful.
+   Retry can spend model requests again. Increase a request limit only deliberately.
+4. Create one small real drafting/research task in the correct department. Confirm
+   it progresses to a saved, reviewable deliverable, then inspect and review it.
+   This real task uses your usual model-request budget; it is not run by installer.
+5. Download a real Word/PDF output and inspect its contents. System checks detects
+   saved text/export integrity issues, but does not establish factual correctness.
+6. Check Memory > Context preview with a department-specific task. Verify the
+   saved goal and relevant materials in its selected-context trace. Confirm your
+   writing preferences in one actual output.
+7. Check the seven departments and confirm existing assignments are correct.
+   Unknown scope identifiers are reported; semantically misfiled records are not
+   moved automatically. Share any incorrect examples before further changes.
+8. Check Tasks, Plan & Priorities and Calendar once on desktop and phone.
+
+Download the sanitized System checks JSON if reporting problems. It excludes
+credential payloads and email bodies. Do not share private backup archives.
+
+GOAL AND EXECUTION RULES
+Active: approved project work follows priorities, dates and milestone constraints.
+On hold/Complete/Archived: new project requests in that department wait. Running
+requests finish. Explicit Talk conversations remain available.
+Completion requires a note, success criteria, no unfinished non-archived
+milestones and no open blockers. Reopen the goal before reactivating work.
+Milestone completion stays manual; linked project/task progress updates automatically.
+
+READY ACTIONS AND SCHEDULING
+Pending reviews and blocked-task inspection remain department next steps.
+Ready actions precede waiting/held milestones. Within ready items, department
+priority and dates apply. Equal-priority/date projects retain existing fairness.
+Only the hosted/unified worker can guarantee cross-project selection; a direct
+per-project terminal command explicitly chooses that project. Claim-time gates
+still enforce its department hold and linked milestone constraints.
+
+CONTEXT LIMITS
+Relevant department plans and sources now join the existing memory/writing context.
+Automatic source selection is bounded and topical, not exhaustive. It scans up
+to two file candidates and selects up to two source cards. Selected versions,
+hashes and omissions appear in the trace. Use explicit [[file:filename]] markers
+when an exact file is essential. Source notes and extracted text remain unverified
+reference data, never authorization for external actions.
+
+CALENDAR AND REMINDERS
+Planning dates appear directly on Calendar, without duplicating meeting records.
+Attention shows overdue and next-seven-day deadlines for Active goals. On-hold
+goals suspend their deadline reminders until reactivated. Completed/archived goals
+and milestones are omitted. In-app counts refresh on page view. There is no push,
+email or WhatsApp reminder delivery in this release. The authenticated ICS file
+contains all-day events and one-day alarms for import into a calendar app;
+re-import management and calendar-app alarm settings remain with that app.
+
+CHECK WITHOUT INSTALLING (UBUNTU ROOT)
+cd /home/superhuman/app
+runuser -u superhuman -- .venv/bin/python /home/superhuman/superhuman-v1.23-upgrade/install_v123.py --check
+
+LOCAL DIAGNOSTICS (UBUNTU ROOT)
+cd /home/superhuman/app
+runuser -u superhuman -- .venv/bin/python -m superhuman.repairs.cli check
+
+Optional read-only inbox probes queued for the existing worker:
+runuser -u superhuman -- .venv/bin/python -m superhuman.repairs.cli check --queue-inboxes
+
+ROLLBACK
+The installer prints a directory such as:
+/home/superhuman/app/backups/v1.23-TIMESTAMP
+
+Use its EXACT path:
+bash /home/superhuman/superhuman-v1.23-upgrade/rollback_server.sh /home/superhuman/app/backups/v1.23-YOUR_TIMESTAMP
+
+Rollback restores v1.22 code and retains planning/operational data. It leaves
+background work PAUSED so the older worker cannot bypass newly recorded goal
+holds. Inspect work and deliberately resume from Overview when appropriate.
+Do not restore old Running flags or automatically replay interrupted requests.
+Roll back v1.23 before rolling back an earlier release. Changed source is guarded.

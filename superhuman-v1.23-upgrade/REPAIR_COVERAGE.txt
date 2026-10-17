@@ -1,0 +1,72 @@
+SUPERHUMAN v1.23 — COVERAGE OF THE PRE-BUILD CODE REVIEW
+
+1. Tasks stuck as Running after restart
+   The hosted worker recovers under its existing exclusive lock. Unfinished tasks
+   and planners become Interrupted/Plan failed. No paid request is replayed.
+   Tasks provides explicit retry controls with correction notes and stale-state
+   checks. Existing request caps still apply.
+
+2. Pending reviews displaced by planning suggestions
+   Department next-step selection preserves plan/output/proposal reviews and
+   blocked-work inspection. Attention also collects review/recovery items.
+
+3. Blocked milestones appearing before prerequisites
+   Actionable items precede waiting/held milestones. Dependency constraints remain
+   visible. The worker also refuses project execution when all active linked
+   milestones are held, have unfinished dependencies or have linked open blockers.
+
+4. No completion/archive state for a department goal
+   Goal states are Active, On hold, Complete and Archived. Completion requires
+   criteria, a completion note, finished/archived milestones and resolved blockers.
+   Closed goals stop appearing as overdue and pause new scoped project work.
+   Running requests finish; direct Talk remains an explicitly requested activity.
+
+5. Inaccurate release health information
+   /healthz and System checks report 1.23.0. Worker online, activity and pause state
+   are reported separately from task progress.
+
+6. Priorities not affecting execution
+   Persistent task and project-plan selection now reads department priorities and
+   dates. Existing fairness is retained on ties. Planner work alternates with task
+   execution when both are ready, rather than draining every plan first.
+
+7. Department plans missing from AI context
+   The shared context selector used by Talk, planning, drafting and research adds
+   the owner-saved department goal, status, criteria and relevant milestones.
+   Its existing trace records selected plan versions and hashes.
+
+8. Fragmented task views
+   Tasks now shows project tasks across states, outstanding project plans and the
+   existing suggestion approvals. Filters, review links, explicit retry and
+   request-limit controls are centralized. Existing URLs/forms remain compatible.
+
+9. Deadlines disconnected from Calendar and reminders
+   Calendar shows live department/milestone/input target dates alongside meetings.
+   Attention includes overdue/next-seven-day reminders. The header links Attention.
+   An authenticated ICS export includes all-day deadlines and a one-day alarm.
+   In-app reminders refresh on page view; this is not an external push service.
+
+10. Manual reconciliation of project and milestone progress
+    Linked task approval counts and milestone-ready-for-assessment indicators
+    update from operational records. Human milestone assessment is retained;
+    the system never silently declares business criteria satisfied.
+
+11. Knowledge visible but not retrieved into work
+    The context selector adds topically matched source-card notes and excerpts
+    from up to two supported, same-workstream file candidates. It excludes
+    symlinks/credential files and records hashes, versions, omissions and limits.
+    Explicit [[file:...]] attachments remain available for exact source selection.
+    No OCR or exhaustive/semantic indexing is claimed.
+
+LIVE-SERVER CHECKS (CANNOT BE CERTIFIED IN THE PACKAGE ENVIRONMENT)
+System checks reports actual worker state, recent saved-output integrity,
+export integrity, recorded inbox sync successes/failures and unknown workstream
+assignments. The existing read-only inbox sync can be queued from that page.
+The installer prints a local diagnostic report after restarting services.
+
+A real successful Gmail/Titan sync and a real paid end-to-end task must be
+verified on the running server with its configured accounts and key. This
+package does not claim that remote credentials were repaired or tested here.
+Valid-but-wrong department assignments still require owner judgment; no records
+are silently moved based on guesses. Actual desktop/mobile checks are included
+in the installation checklist.

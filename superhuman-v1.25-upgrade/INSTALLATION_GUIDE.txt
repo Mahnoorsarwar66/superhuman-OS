@@ -1,0 +1,139 @@
+SUPERHUMAN OS v1.25 — INSTALLATION AND FIRST USE
+
+Prerequisite: delivered v1.24 Agentic Execution Core installed at
+/home/superhuman/app. Source guards refuse other versions or unfamiliar edits.
+Install Part 1 first if it is not installed. Preparing this package did not
+establish which version is actually installed on your live server.
+
+No pip/dependency upgrade, credential change, Nginx change, service-unit rewrite
+or database replacement is needed. Keep the existing server environment.
+
+1. Extract the ZIP under C:\superhuman-os-starter. Confirm this exact path:
+C:\superhuman-os-starter\superhuman-v1.25-upgrade\upgrade_server.sh
+
+2. Windows PowerShell (each command on its own line):
+
+scp -r -o IdentitiesOnly=yes -i "$env:USERPROFILE\.ssh\superhuman_replacement" "C:\superhuman-os-starter\superhuman-v1.25-upgrade" superhuman@167.71.196.20:/home/superhuman/
+ssh -o IdentitiesOnly=yes -i "$env:USERPROFILE\.ssh\superhuman_replacement" root@167.71.196.20
+
+3. In the Ubuntu SSH session, as root:
+
+chown -R superhuman:superhuman /home/superhuman/superhuman-v1.25-upgrade
+bash /home/superhuman/superhuman-v1.25-upgrade/upgrade_server.sh
+
+The script checks sources/dependencies, stops services, creates a private full
+backup, tests temporary source without live data/model credentials, backs up
+changed code, installs, restarts and prints diagnostics. Failed staged checks
+leave installed source retained and restart services. Retain the printed code
+rollback directory. The private backup contains sensitive operational material;
+keep it under /home/superhuman/private-backups, not a public download directory.
+
+4. Open https://superhuman.167-71-196-20.sslip.io/ and refresh.
+/healthz and Settings > System checks should report 1.25.0.
+Open Departments > Supervision. Every department remains off until configured.
+Opening these pages does not make a model call.
+
+FIRST LIVE TEST — START WITH PROPOSALS FOR APPROVAL
+Use a department without active milestone work for the simple arithmetic test,
+or save a small test milestone with acceptance criterion "Verified total 50".
+Do not replace a real department plan just for this test. If the department has
+milestones, only ready milestones are eligible; a general mission does not bypass
+held/dependent milestones or existing linked work.
+
+Set a policy:
+Mission: "Use calculate for (120+80)/4, report the result and evidence action ID.
+Do not call other tools. This is a one-off acceptance check."
+Acceptance: "A verified total of 50, with limitations disclosed."
+Mode: Propose for my approval.
+Enable: checked. Interval: 24 hours. Change checks: off.
+Total allocation ceiling: 8. Per-run requests: 4. Per-run steps: 4.
+Allowed tools: calculate only. Required tools: calculate.
+Save explicitly authorizes review requests and the displayed limits. This does
+not start the run until its proposal is approved.
+
+Ensure the global worker is Online and not paused. The review should appear after
+worker polling. If needed use Queue a review now; that can allocate a new review
+request. Refresh the page to see progress; no automatic browser refresh is added.
+Read the proposal and target. If editing instructions, save/refresh them before
+approving. Approve the exact saved proposal. Inspect Tasks > Agent runs and its
+final arithmetic/action evidence, then approve or reject the output yourself.
+Expected allocation: one review request plus four reserved run requests = five.
+Actual run usage should normally be two decision calls (calculate, then finish),
+but model behavior may require more and remains capped. Inspect actual records.
+Unused allocations are deliberately not refunded.
+
+THEN TEST AUTOMATIC STARTS
+After approving the first test output, raise the total allocation ceiling to at
+least 16. Choose a fresh owner-defined target or revise the test mission so it
+is explicitly a new task. Reusing the same handled target does not create another
+run. Change mode to Start bounded runs automatically, keep calculate required,
+check the total budget and enable. The next eligible review may create an agent
+run automatically. Inspect the proposal and action log. Output still needs review.
+Pause the policy afterward if you do not want continuing department checks.
+
+NORMAL DEPARTMENT USE
+See STARTER_POLICIES.txt for UK endorsement and Career Algorithm R&D examples.
+Use existing goals/milestones, clear acceptance criteria and realistic 8–12 request
+allowances. When a required drafting tool is used it costs three additional
+requests; a cited research tool costs one. Each tool decision and finishing also
+costs a model request. Required tools must fit the run limits.
+
+One outstanding managed run or pending proposal per department proceeds at a time.
+Resolve output reviews/interruptions before expecting another task. After approved
+outputs, assess the linked milestone and mark it complete yourself if warranted;
+then the next prerequisite-dependent target can become eligible. A rejected
+finished output can be corrected using the existing Agent runs continuation flow.
+
+Context or policy changes make unstarted proposals stale. Save/refresh a proposal
+to inspect the latest target, instructions and grants, then approve it. Dismissed
+proposals can be reopened explicitly without another model call. A changed active
+milestone/goal, mission or acceptance criterion can hold an existing run: inspect its old instructions and outputs;
+cancel that run and use a fresh target revision if it no longer fits. Withdrawing
+a tool grant also holds older runs that depended on it. Policy settings govern
+new run allowances; they do not expand an already-reserved run ceiling.
+
+Pause disables recurring reviews and future managed steps; a current decision/tool
+step can finish. Manual agent runs use their own controls. An interrupted/invalid
+review enters a hold: read its cycle/error record, inspect existing work and enter
+an inspection note before Queue a review now. Saving a policy alone does not clear
+that hold. There is no automatic replay of an uncertain paid attempt.
+
+An unchanged saved context normally gets a local status refresh without another
+model request. Optional change detection checks at most every five minutes for
+saved goal/project states, selected memory/context and source-file metadata. It
+is not an external service webhook and does not itself sync mail or watch websites.
+An explicit Review now can authorize another paid review when a target is eligible.
+
+LIVE CHECKLIST
+- Existing v1.24 runs, tasks, output reviews and department pages still open.
+- Proposal creation spends one review allocation but starts no run in review mode.
+- Automatic mode starts a single permitted run when its target is ready.
+- Paused/held goals and open blockers prevent new work; policy pause holds future
+  steps. Approved outputs alone do not complete milestones.
+- Two approvals do not create two runs; stale approvals request a refresh.
+- Total allocation and actual per-run usage remain visible and bounded.
+- A Word example produces a real file you can open and inspect.
+- Check desktop/mobile layouts yourself. Browser, live model/account/Docker checks
+  were not performed while preparing this package. Existing Docker requirements
+  apply; this package does not install Docker, pull images or grant host privileges.
+
+If source preflight refuses, retain its output and check the actual installed
+release. Do not bypass its guard. For service errors:
+journalctl -u superhuman-web.service -u superhuman-worker.service -n 100 --no-pager
+Remove credentials/personal material before sharing logs.
+
+ROLLBACK (Ubuntu root; substitute the printed real timestamp):
+bash /home/superhuman/superhuman-v1.25-upgrade/rollback_server.sh /home/superhuman/app/backups/v1.25-TIMESTAMP
+
+Installed source must still match its checksums. Data, proposals, allocations,
+artifacts and run histories are retained. Background work stays globally paused;
+supervision policies are disabled. Managed tasks temporarily become unavailable
+so the restored v1.24 cannot bypass their policy. Manual runs are not quarantined.
+Reinstall v1.25 and start the worker to restore finished review states; inspect
+unfinished runs, explicitly enable their policies and use their own continuation
+controls before resuming global background work. Rollback does not undo files,
+internal records or isolated coding edits that already happened.
+
+Optional checks, as app account from /home/superhuman/app:
+.venv/bin/python /home/superhuman/superhuman-v1.25-upgrade/install_v125.py --preflight
+.venv/bin/python /home/superhuman/superhuman-v1.25-upgrade/install_v125.py --check

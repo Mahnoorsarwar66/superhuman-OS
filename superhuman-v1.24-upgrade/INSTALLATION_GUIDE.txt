@@ -1,0 +1,86 @@
+SUPERHUMAN OS v1.24 — INSTALLATION
+
+Prerequisite: the delivered v1.23 repair release installed at
+/home/superhuman/app. The installer checks exact prior Python structure and
+refuses unfamiliar source before overwriting anything. No pip upgrade, database
+replacement, credential change, Nginx change or service-unit rewrite is needed.
+Keep the existing server environment and specialist registry.
+
+1. Download and extract the ZIP into C:\superhuman-os-starter.
+   Confirm this exact file exists:
+   C:\superhuman-os-starter\superhuman-v1.24-upgrade\upgrade_server.sh
+   If the extractor creates a second nested folder, move the inner upgrade folder
+   to that path. Do not copy the ZIP itself to the app source directory.
+
+2. Run in Windows PowerShell:
+
+scp -r -o IdentitiesOnly=yes -i "$env:USERPROFILE\.ssh\superhuman_replacement" "C:\superhuman-os-starter\superhuman-v1.24-upgrade" superhuman@167.71.196.20:/home/superhuman/
+ssh -o IdentitiesOnly=yes -i "$env:USERPROFILE\.ssh\superhuman_replacement" root@167.71.196.20
+
+3. In the Ubuntu SSH session:
+
+chown -R superhuman:superhuman /home/superhuman/superhuman-v1.24-upgrade
+bash /home/superhuman/superhuman-v1.24-upgrade/upgrade_server.sh
+
+The script preflights source/dependencies, stops web and worker, writes a private
+full backup, runs the whole suite against a temporary source copy without live
+data or model credentials, backs up changed code, installs and restarts services.
+If checks fail, source is retained and services restart. The script prints the
+code rollback directory; retain that exact path. The full private backup may
+contain sensitive information and stays under private-backups with mode 700.
+
+4. Open https://superhuman.167-71-196-20.sslip.io/
+   Refresh and open Tasks > Agent runs. Settings > System checks and /healthz
+   report 1.24.0. Diagnostics include saved agent run states and spend no requests.
+
+LIVE ACCEPTANCE (model requests are only authorized by starting a run)
+- Confirm v1.23 pages, existing project outputs and department plans still open.
+- Make sure the worker is Online and not globally paused; check its API key through
+  existing server setup if it reports api_key_required. Do not paste secrets here.
+- Start a small run in a department whose goal is active and not held. Title:
+  Arithmetic check. Instructions: "Use calculate for (120+80)/4. Report the result
+  with its action ID evidence and finish. Do not call other tools."
+  Permit Read files/context only, require calculate, set 4 requests / 4 steps.
+  Refresh progress. Expect calculate = 50 and a final deliverable needing review.
+  Inspect verification and actual request usage. No browser auto-refresh is implied.
+- Test a document run: upload a small evidence.txt to the same department first.
+  Instructions: "Read evidence.txt, create a Word summary from its findings, export
+  it with document.export, then finish with evidence IDs. Disclose uncertainties."
+  Permit Read files/context and Create outputs; require document.export. Set
+  8 requests / 12 steps. Download Word, open it and check the content yourself.
+- For permission gating, permit Read files/context only, request a Word export and
+  leave required tools blank. It should wait if it selects document.export. Inspect
+  its exact saved text before authorizing. Approval executes that prepared action.
+- Pause a longer run. The current step may finish; subsequent steps should wait.
+  Cancel another run and confirm it remains cancelled. Restart/interruption tests
+  use mocks; do not deliberately interrupt a paid live request merely to test this.
+- Coding tests require the previously configured Docker runner and locally cached
+  python:3.13-slim image, available to the existing service account. This package
+  does not install Docker, pull images or grant new host privileges. Missing runner
+  is unavailable/failed. Check package and syntax separately from behavioral tests.
+- Mail tools respect saved department assignment. A queued sync is pending until a
+  successful sync is observed; cached previews are not proof of fresh connectivity.
+- Check desktop/mobile layout and artifact downloads on your devices. No real
+  browser or live server acceptance was performed while preparing this package.
+
+If source preflight refuses an unknown version, keep its full output and inspect
+which version is actually installed. Do not bypass guards or overwrite live files.
+Service logs if needed:
+journalctl -u superhuman-web.service -u superhuman-worker.service -n 100 --no-pager
+Remove credentials/personal contents before sharing logs.
+
+ROLLBACK (Ubuntu as root; replace the timestamp with the printed backup path):
+bash /home/superhuman/superhuman-v1.24-upgrade/rollback_server.sh /home/superhuman/app/backups/v1.24-TIMESTAMP
+
+Source checksums must still match. User data/artifacts are retained; global
+background work stays paused. Unfinished agent tasks become unavailable and their
+projects are held. Reinstall v1.24, inspect them, then use Agent runs continuation
+controls before resuming the global worker. Do not turn them into legacy jobs.
+Completed deliverable records are retained. Their review controls become available
+after reinstall/startup; rollback temporarily quarantines every agent task. Code rollback does
+not undo already-created files, coding-copy edits, notes or internal objectives.
+
+Optional non-installing checks, as the app account from /home/superhuman/app:
+.venv/bin/python /home/superhuman/superhuman-v1.24-upgrade/install_v124.py --preflight
+.venv/bin/python /home/superhuman/superhuman-v1.24-upgrade/install_v124.py --check
+The full --check runs only staged tests; --preflight checks sources/dependencies.

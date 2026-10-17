@@ -1,0 +1,86 @@
+SUPERHUMAN v1.21 — DEPARTMENTS
+
+Requires the v1.20 navigation release that you have just installed.
+This prepares the next layer of organization; no additional external accounts
+or paid services are required.
+
+INSTALL FROM THE EXTRACTED WINDOWS FOLDER
+Extract the downloaded ZIP into C:\superhuman-os-starter so that this exists:
+C:\superhuman-os-starter\superhuman-v1.21-upgrade\upgrade_server.sh
+
+In Windows PowerShell, upload the EXTRACTED FOLDER with your existing SSH key:
+
+scp -r -o IdentitiesOnly=yes -i "$env:USERPROFILE\.ssh\superhuman_replacement" "C:\superhuman-os-starter\superhuman-v1.21-upgrade" superhuman@167.71.196.20:/home/superhuman/
+
+Connect as root using that same key:
+
+ssh -o IdentitiesOnly=yes -i "$env:USERPROFILE\.ssh\superhuman_replacement" root@167.71.196.20
+
+At the UBUNTU ROOT prompt, run these commands separately:
+
+chown -R superhuman:superhuman /home/superhuman/superhuman-v1.21-upgrade
+bash /home/superhuman/superhuman-v1.21-upgrade/upgrade_server.sh
+
+Do not run the Linux /home/... commands at the Windows PS prompt.
+No PowerShell && separator is needed.
+
+Open:
+https://superhuman.167-71-196-20.sslip.io/departments
+
+DEPARTMENTS SHOULD APPEAR ABOVE PROJECTS IN THE SIDEBAR.
+Use Ctrl+F5 if an old page is still displayed.
+
+WHAT THE INSTALLER DOES
+- Checks the supported v1.20 navigation source before changing files.
+- Checks that the existing web and worker services use the expected account.
+- Stops those services and creates a private backup with the existing bundle tool.
+- Tests the proposed source in a temporary copy with synthetic data/model clients.
+- Adds superhuman/departments and updates navigation/shell.py and navigation/web.py.
+- Keeps databases, original projects/tasks, credentials, prompts and outputs.
+- Saves rollback copies of the two navigation files.
+- Restarts the existing services and reports their state.
+
+Expect about 1–2 minutes for staged checks. No paid model requests are needed.
+If checks fail, existing code is retained and the script starts the services again.
+If a service fails after a successful code install, use the rollback instructions.
+No database migration is part of this release.
+
+QUICK CHECK AFTER INSTALLATION
+[ ] Departments appears above Projects on all existing screens.
+[ ] The dashboard shows your seven main departments.
+[ ] Writing DNA is shown separately under Shared support.
+[ ] Open UK Innovator Endorsement and Career Algorithm R&D.
+[ ] Their projects, tasks, research and conversations stay correctly separated.
+[ ] Summary shows real counts, pending reviews, blockers and a suggested next step.
+[ ] Goals/priorities/deadlines not yet configured say Not set.
+[ ] Project/review links open the existing action screens.
+[ ] Research & Documents shows real source cards, files and existing exports.
+[ ] A real export download still works; its existing download handler checks it.
+[ ] Activity & Decisions shows recorded events and eligible confirmed decisions.
+[ ] Check the dashboard once on a narrow screen/phone.
+
+WHY SOME DEPARTMENTS MAY BE EMPTY
+This release organizes records already assigned to each workstream. It does not
+import your ChatGPT history, create objectives automatically or move old records
+between departments. A source file or conversation belongs to its saved
+workstream. A wrongly assigned record remains visible in that workstream until
+it is deliberately corrected through a future or existing supported workflow.
+
+Goals, milestones, priorities and department-linked calendar deadlines are the
+next planned layer. This release does not infer or silently assign them.
+
+CHECK WITHOUT INSTALLING (UBUNTU ROOT PROMPT)
+cd /home/superhuman/app
+runuser -u superhuman -- .venv/bin/python /home/superhuman/superhuman-v1.21-upgrade/install_v121.py --check
+
+ROLLBACK
+The installer prints a code-backup path such as:
+/home/superhuman/app/backups/v1.21-TIMESTAMP
+
+Use that exact path at the Ubuntu root prompt:
+
+bash /home/superhuman/superhuman-v1.21-upgrade/rollback_server.sh /home/superhuman/app/backups/v1.21-YOUR_TIMESTAMP
+
+Rollback restores v1.20 navigation and removes only the departments package.
+It retains all user data. It refuses to overwrite code edited after installation.
+Do not roll back v1.20 itself while v1.21 is installed; roll back v1.21 first.

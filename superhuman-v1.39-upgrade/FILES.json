@@ -1,0 +1,78 @@
+{
+  "agentic/action_contract.py": {
+    "before": null,
+    "after": "0386c8fad4eb1e0142aac16239274b897f695a6546c34a23560c719f2891edf6"
+  },
+  "agentic/engine.py": {
+    "before": "e20751757409236d2aca03a7c880af2c81a807882c4e809f3818abee5ebf98fb",
+    "after": "e79e91a32150c2c0572a42a7dbf687b689a61b5d6e18ab29119b31e6c09cdae4"
+  },
+  "agentic/store.py": {
+    "before": "634b6e57d99bb5a3dfbf876599ea4709c0225864308c9363b8af66700f739893",
+    "after": "4acf1b0322bea8b00be5577f6126fb7b209e9ea094b303aa964c49c726eefd0b"
+  },
+  "agentic/tools.py": {
+    "before": "ca408d77c58a0d7e9748a852db07bb71fc1e7011737a9e763e07bc8727c5ed44",
+    "after": "4fd192136ccbdd40a087b2dd5e84874c420dae0364ff36ea832e6a1d297a098b"
+  },
+  "agentic/web.py": {
+    "before": "3941f09b314e74bf76c48e9a7ec1fc67f9ae1c5a79f731339e1bf5946f409826",
+    "after": "e07d6b6cec2a33baaf616daeea75451ddcb0f48fe94add932755987870bde6ae"
+  },
+  "collab/delivery.py": {
+    "before": "1708ad0516f39eabf8d522ea58200a8adb0dcb6103ebef386362d973aaefb0f5",
+    "after": "413722dd4bbfd8b8501724b7e33d061ef55cd200be27d193c7829c404ea0659d"
+  },
+  "collab/reliability.py": {
+    "before": "27d856e2560113996b39ad0f764b3871a91fc1fd17bee61612546365f0c11280",
+    "after": "9de32671ca5b8d1df94a9c6601c73c961d996bea05043a2162a475de2ec7a32a"
+  },
+  "collab/runner.py": {
+    "before": "2cf9cbb52d1576759256c896ba767071254f6b8ba9dca62b12f232636ada7e9d",
+    "after": "bf586ec9ef81c54a975340d49519489804b812f06e027414879d4e9a874144f0"
+  },
+  "foundation/__init__.py": {
+    "before": "6104e06f5d70cbc9519171a59a2c9bc9b4c9b0e5241e7fc6d358473f39ef2236",
+    "after": "2217051f20737efab24a616225a1812bef38fea8350fc9a842b1d04cc95ef6c2"
+  },
+  "hosted/boundary.py": {
+    "before": "aae38aa420b3b122b17a393b558353825610e9461b45608e6a5f21fcc5468fb3",
+    "after": "b750d922918edf04641b7c39f01d6b2f69a5fabe9a4961aedeb520778bee4e44"
+  },
+  "interface/views.py": {
+    "before": "ad1c3cd47177ec510786dca5e6d621e64d02561487b22ce229e926e195642b99",
+    "after": "dad7a935ed99e2c156339d159ef095c1ffd80eb84d652c7d5c945f99f82cda34"
+  },
+  "milestones/engine.py": {
+    "before": "e69c2fde34f411811dfe063b33a67ba8b3c0280961ba9581e341cc2e333a2ef2",
+    "after": "d47887ddc1a86097dc0797035d46b9566095564c2c28f81ed2e08be754b0bdae"
+  },
+  "milestones/store.py": {
+    "before": "8725dff0910d3b44ec94c07b8e4f353d856b5571ef1ed38d0b03240f1c9d7655",
+    "after": "ed8f5ee7ee4e2aa3637129974acb8011de5cc868c0548c78eada3724bc57e70a"
+  },
+  "projects/review_web.py": {
+    "before": "e702ea27478b7c2f6b35e8c9df4f226a233bfd6cff4d9b36e75a17cbc0a63887",
+    "after": "097292fd8e53635913ce9a9bf2e211eb2b5bcbaa53e3051b6bc1b82c1cc70b29"
+  },
+  "repairs/__init__.py": {
+    "before": "0cecfe9f09dab72c59d379640dedc63699d3a263f58ca728f92ae1011e250fa1",
+    "after": "357ab7c247a8751ca5678d47806a2afd82323e1a30d50db1ab3fddc2c9e8dbc6"
+  },
+  "team/work.py": {
+    "before": "45aeac59078ef2914a19f7e346035993646786a94b7e8760f69ac5393a1269a9",
+    "after": "9946c0efa7312b4db06f1101e479011fa6035d7df6ffb9ac50c63f8d1bda7bcd"
+  },
+  "teamhub/web.py": {
+    "before": "485357866a82c50ea7638d5eecb68a958155c3b27f7053361aafa4ca34b9f287",
+    "after": "33be0f0ee94dbd52962581ea3a4ea17b341b22dfceda7dabc7847ceac0c23898"
+  },
+  "workspace/assets/workspace.js": {
+    "before": "4c37309607437e2f63bdd785ca6615e00b1b7e70bd9efef98d91559580e04d8d",
+    "after": "c6285f015a0ec5dae97a9f2274e3620327e831ef978952a0afd6c13628d8396d"
+  },
+  "workspace/web.py": {
+    "before": "111514805399a3494e6673102ecbfdf8d09f733d7551426591afac6fe2576e51",
+    "after": "dbf652711e1f9e3ac781aa3ce8dd805b2d1f96c0830153279b680aec01207a6e"
+  }
+}

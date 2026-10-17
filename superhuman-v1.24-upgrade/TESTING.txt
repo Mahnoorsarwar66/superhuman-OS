@@ -1,0 +1,48 @@
+SUPERHUMAN OS v1.24 — RELEASE VALIDATION
+
+Final staged installer: 495 tests passed in 101.595 seconds.
+The installer installed v1.24 and wrote its source/rollback manifests in a local
+v1.23 fixture. No installed user database was copied into the staged test area.
+
+39 new agentic tests plus 456 inherited tests passed. Only the inherited current
+release health assertion changed from 1.23.0 to 1.24.0.
+
+New coverage includes:
+- Real canonical task dispatch, worker-tick progress and request accounting.
+- Arithmetic to evidence-backed final artifact, with owner review pending.
+- Real three-call drafting and cited research using mocked provider responses.
+- Reading an actual source and exporting its exact saved text to real DOCX.
+- Exact prepared-action approval without another model decision.
+- Duplicate-write caching, fresh dynamic reads and changed-export rejection.
+- Required-tool checks, schema/argument/path/scope validation and bounded failures.
+- Model-request and decision-step limits, budget raises and saved-action reuse.
+- Uncertain decision/write outcomes, explicit continuation and no automatic replay.
+- Restart recovery, pause/cancel, stale controls and cancellation during a claim.
+- Correction notes in subsequent context; rejected output correction and refusal
+  to resume an approved deliverable.
+- Isolated coding edits, unchanged originals, packages, stale check/package hashes
+  and unavailable tests never passing. Actual Docker execution remains a live check.
+- Inbox department isolation, proposed memory and real local capability adapters.
+- Authentication, CSRF, task links and permission requests visible in Attention.
+- Safe rollback quarantine and restoration of completed review state on reinstall.
+
+Installer lifecycle checks passed:
+- Idempotent installation recognition.
+- Refusal to roll back changed installed source before touching operational data.
+- Exact restoration of all ten original source files and removal of the new module.
+- Project records and a saved artifact retained through code rollback.
+- Persisted global worker pause and quarantine of pending AND completed new-kind
+  tasks. The actual restored v1.23 retry function refuses those unavailable tasks.
+- Refusal to overwrite an unrecognized prior source.
+- Refusal to install a payload changed while its staged tests were running.
+- Python compilation and bash -n for both server scripts.
+
+All model/provider responses are mocked. No paid model request, live inbox sync,
+real Docker test execution, real-browser visual QA or live server installation
+was performed. Live acceptance checks are in INSTALLATION_GUIDE.txt.
+
+The local reconstructed app uses a synthetic specialist-prompt registry because
+that early registry was absent from recovered archives. It is not shipped in the
+payload; staged checks on the server use its existing real registry and source.
+The ZIP contains only this upgrade's payload, source guards, tests and guides;
+it contains no local app fixture, operational database, credential or private backup.

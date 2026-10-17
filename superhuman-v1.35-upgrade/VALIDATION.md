@@ -1,0 +1,14 @@
+# v1.35 validation
+
+- Guarded staged installation: **978 tests passed in 292.519 seconds**, including 19 new Team workspace tests. Baseline release-number and navigation assertions were updated for v1.35; existing v1.34 interview, execution, evidence, privacy, accounting and recovery tests remain.
+- New checks cover authenticated local CSS/JavaScript, 128px portrait-only wrappers with no legacy bot class, employee filtering, exact project kind/id room association, invalid filters, full-history search/pagination, one Team navigation row, unchanged existing POST action sets, live/draft/dictation DOM targets, escaped owner content, pending-reply disabling/cancellation, CSRF-protected message queueing, allowance/context controls, read-only rendering, recorded activity and unchanged manual milestone creation.
+- The fixture accepted v1.34 source with protected production CLI/orchestrator variants; both remained byte-identical. The final archive payload matches the successful installation manifest.
+- Lifecycle fixture produced an approved synthetic milestone packet and queued a synthetic owner chat without live provider calls. Installed preflight was idempotent. New conversation/room/activity rendering left business rows unchanged. Rollback refused an extra owner-added package file, then restored exact v1.34 integration source while retaining identical project, task, conversation, interview, approval, employee-permission and accounting rows. All eight existing portrait files were unchanged. The worker remained paused and reinstall preflight passed.
+- Principal text/background palette pairs were checked using relative luminance: normal navigation 9.01:1, conversation navigation 8.28:1, selected conversation 8.80:1, Twin-panel secondary text 7.13:1 and main text 11.72:1. This is a palette check, not an accessibility certification.
+- Python, JavaScript and shell syntax checks passed. The ZIP passed CRC and per-file SHA-256 validation. No credentials, databases, QA screenshots, generated portraits or runtime caches are included; the existing v1.34 portraits are reused.
+
+## Limits
+
+Tests use synthetic local data and mocked model/provider responses. No live server installation, fresh real-browser desktop/mobile visual pass, microphone-service check, independent security audit or business-output assessment was performed. Check the actual UI on your desktop/phone after installing. Existing native forms/links remain usable without JavaScript; microphone and live updates depend on existing browser support.
+
+This release changes presentation/navigation only. It does not add database migrations, external action authority, multi-agent group-chat execution or automatic milestone drafting. New projects still need their milestone plan added explicitly or use the existing endorsement blueprint. The Twin can start existing ready milestones under v1.34 controls.

@@ -1,0 +1,29 @@
+SUPERHUMAN v1.23 — REPAIR RELEASE
+
+This release addresses the code-review defects and integration gaps documented
+in REPAIR_COVERAGE.txt. It adds no new business workstreams or external integrations.
+
+- Interrupted tasks/planners become visible recovery items after worker restart;
+  paid requests are never automatically replayed.
+- Department priorities/dates affect project and planner scheduling; department
+  lifecycle states and linked milestone constraints gate new project work.
+- Pending reviews retain precedence; ready actions precede dependent/held work.
+- Goals can be held, completed, archived and reopened with audited state.
+- Plans, relevant source cards and bounded local file excerpts enter shared AI
+  context with hashes/version traces and existing trust/approval boundaries.
+- Tasks consolidates execution, project-plan states, suggestions and recovery.
+- Explicit retry and request-limit controls retain request-budget protections.
+- Linked-project progress flags milestones ready for owner assessment.
+- Calendar and Attention display planning deadlines; an ICS export carries alarms.
+- System checks exposes real recorded sync/output/assignment evidence and an
+  explicit queue action for existing read-only inbox syncs.
+- Health reports version 1.23.0. No new package dependencies are introduced.
+
+Live account credentials, real paid output quality and desktop/mobile behavior
+must be checked on the running server. The package does not certify those here.
+In-app reminders refresh on view; external push/message delivery is not included.
+
+Requires v1.22. Fourteen existing source files are guarded and backed up. Planning
+adds an additive goal-lifecycle table on the next planning save; older goal rows
+remain Active by default. Existing records are retained on code rollback. The
+rollback script pauses background work before returning to v1.22 scheduling.

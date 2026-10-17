@@ -1,0 +1,67 @@
+SUPERHUMAN OS v1.25 — DEPARTMENT SUPERVISION
+Part 2 of the agentic upgrade. Requires the delivered v1.24 source.
+
+Departments > Supervision connects the v1.24 action-executing core to recurring
+work management. It reviews a saved department mission and plan, selects one
+ready target, proposes a bounded task, and optionally starts its agent run under
+an explicit policy. No policy is created or enabled merely by installation.
+
+Two per-department modes:
+- Propose for approval: recurring reviews produce a saved editable proposal.
+- Automatic starts: new bounded runs can start without approval when the saved
+  policy, target, prerequisites, permissions and budget all permit it.
+Both modes use the existing server worker. No ChatGPT automation is created.
+
+Owner controls: mission, acceptance criteria, allowed/required tools, 1–168 hour
+interval, optional five-minute checks for saved-record changes, a cumulative
+request allocation ceiling, and request/step limits for each new run. Automatic
+starts require at least one verified-tool requirement. Known minimum required
+work must fit the configured allowance before the policy can be saved.
+
+One review request is reserved before its attempt; an entire run allowance is
+reserved atomically with run creation. Allocations never reset/refund themselves,
+even if work is cancelled, fails, or uses fewer calls. Actual run request usage
+is also shown. Requests are not a currency estimate. A managed run cannot have
+its ceiling increased above the allowance reserved at launch. Manual v1.24 runs
+retain their own existing budget controls.
+
+One pending proposal or unfinished supervised run per department prevents a
+backlog. Concurrent approvals create one run. The same mission/goal revision or
+milestone revision is not silently repeated, including after dismissal/approval.
+Unchanged saved inputs do not trigger another paid review automatically.
+A completed supervised run still needs output review. Approved linked outputs
+make a milestone ready for owner assessment; they do not complete it. Completing
+the prerequisite milestone makes the next milestone eligible on a later review.
+
+Supervised runs appear in Tasks > Agent runs and department/project records.
+Their links are added to the planning snapshot without rewriting saved plans.
+Department cards show supervision state. Attention shows proposed work and
+interrupted reviews. Diagnostics include policy state and allocated requests.
+Each department has proposal, progress, review and allocation/owner-decision logs.
+The worker alternates supervision with existing conversation/project work.
+
+Goal holds/closure, mission/criteria changes, blockers, dependencies, target edits,
+withdrawn permissions,
+and policy pauses hold future managed execution steps. In-flight steps can finish.
+Stale context/policy cannot be approved without an explicit proposal refresh.
+Interrupted/invalid reviews and restarts stop for inspection; no automatic paid
+replay. Unexpected local review errors are isolated to their department.
+
+Scope and limits:
+- Saved state is reviewed, not continuously observed real-world progress.
+- Change checks cover saved plan/project states, selected context and source-file
+  metadata; they are polling checks, not webhooks or an external inbox watcher.
+- The supervisor selects a next bounded task from owner-defined milestones or,
+  without milestones, the explicit mission. It does not silently rewrite goals,
+  dependencies, acceptance criteria or milestone completion.
+- The v1.24 tool registry remains the execution boundary. No new sending,
+  publishing, purchasing, arbitrary shell or live-app self-modification tool.
+- Provider/model behavior, live account connectivity and actual Docker execution
+  still need the included live acceptance checks. Artifact verification does not
+  establish factual accuracy or business success.
+
+Installer: prior-source guards, staged full tests, private pre-upgrade backup,
+atomic source updates, checksums and code rollback. Rollback pauses the worker,
+disables supervision policies and quarantines only managed runs so v1.24 cannot
+resume them without their policy gate. Manual runs retain their own records.
+Reinstallation restores review state; policies remain off for explicit review.
