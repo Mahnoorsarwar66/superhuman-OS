@@ -57,6 +57,11 @@ def get(pid,path=p.DEFAULT_DB):
         if not row:raise ValueError('Agent run not found')
         result=dict(row);result['allowed_tools']=json.loads(result['allowed_tools']);result['required_tools']=json.loads(result['required_tools'])
         result['actions']=rows(db,'SELECT * FROM agentic_actions WHERE project_id=? ORDER BY ordinal',(pid,))
+        from superhuman.team.workplans import boundary
+        result['plan_action_boundary']=boundary(db,pid)
+        for action in result['actions']:
+            if action['ordinal']<=result['plan_action_boundary']:
+                action['recorded_status']=action['status'];action['status']='superseded'
         result['events']=rows(db,'SELECT * FROM agentic_events WHERE project_id=? ORDER BY seq DESC LIMIT 100',(pid,))
     result['project']=p.get(pid,path);return result
 

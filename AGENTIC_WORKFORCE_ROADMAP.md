@@ -46,6 +46,25 @@ This file is the central place to maintain the intended behavior, implementation
 
 ## 3. Current foundation
 
+### Completed pre-execution revision slice (UP004)
+
+Implemented locally in UP004/E004, building on UP003 objective identity and allowances, with a preserved source checkpoint. An explicit owner revision form in the original conversation identifies an enrolled, ordinary, unstarted root objective and its expected version, and records the replacement brief, criteria, and impact. Plain conversation text and model-generated plans do not authorize a revision.
+
+Initial authority contract (WF04 subset): only the authenticated owner may submit this control, in the objective's original direct conversation and current room/project scope. It grants no new tools, sources, classification, external actions, or allowance. Revisions invalidate the prior task start grant. Started work, handoffs, milestone enrollment, and active-work impact propagation remain outside this slice.
+
+Acceptance checks for this slice:
+
+- [x] Feedback creates a retained plan version and a saved owner turn/status in the source conversation, atomically.
+- [x] Execution uses the revised brief and criteria while retaining the immutable initial request.
+- [x] Repeated identical submissions are idempotent; changed payloads and stale versions are refused.
+- [x] Independent objectives, reservations, consumption, deadlines, and total allowances remain unchanged; one revision round is consumed.
+- [x] Wrong-room, changed-scope, archived-room, unsafe public research, exhausted-revision, and started-work submissions cannot revise or create work.
+- [x] Authenticated owner routes enforce CSRF; integrated offline regressions cover the changed execution path.
+
+These checks are supported by the scoped fixture tests in E004; they do not establish live-provider or broader workforce acceptance.
+
+This local development slice does not close WF01 release/rollback acceptance or WF14 live-quality acceptance. D01, D02, and D04 remain decisions for broader workflows and live evaluation. UP005 extends it with the separately reviewed impact workflow for started work; unstructured started-work edits remain refused.
+
 The review identified substantial foundations in the upgrade packages through v1.41:
 
 - A persisted agent loop with tool selection, observations, execution records, and evidence references.
@@ -58,6 +77,22 @@ The review identified substantial foundations in the upgrade packages through v1
 Preserve and extend these components. Do not duplicate them in a new scheduler or replace their recorded history without an explicit migration design.
 
 The initial review found an older local `superhuman/` tree with several newer modules missing, and did not establish the server version. Subsequent WF01 reconciliation captured the complete owner-confirmed server source, whose markers report 1.41.0, and consolidated it locally. The initial 218-file syntax check was not an integrated regression run; UP002 records the later complete-source regression results. All provider behavior in those regressions uses fixtures; live checks remain outstanding.
+
+### Active-work revision slice verified locally (WF03/WF05)
+
+**Status:** Implemented and verified for the ordinary owner-reviewed scope below. UP005/E005 records fixtures, fault checks, source identity, and remaining limits; this is not live-provider or production acceptance.
+
+Owner authorization: "proceed with it and also keep updaring the agentic workforce roadmap markdown along the way". Preserve the UP004 candidate before source edits. Implement a prepared, inspectable impact assessment followed by explicit owner application to a paused, quiescent ordinary objective. Keep assignment/run IDs, action history, artifacts, spending, attempts, request/step limits, and original deadlines. Revisions invalidate affected output/start approvals and record the exact prior state; retained completed work requires a recorded validity reason and current artifact/evidence checks. Propagate impact through dependencies and handoff context; refuse effects outside this objective, cycles, milestone work, uncertain operations, and unsupported tool replay. No new scheduler, external grants, live provider spending, or deployment.
+
+Acceptance checks for this local slice (E005):
+
+- [x] Owner can inspect all affected/retained assignments, prior outputs/approvals, dependency impact, and remaining allowances before applying.
+- [x] Apply is atomic, version/snapshot checked, idempotent, and consumes exactly one objective revision without resetting counters or deleting earlier work.
+- [x] Changed assignments require fresh owner start approval; old actions and output approvals cannot satisfy the revised plan.
+- [x] Verified completed work can be retained unchanged; downstream affected work cannot reuse invalidated inputs.
+- [x] In-flight/uncertain operations, external dependents, stale scope, tampered retained artifacts, cycles, and unsupported tool histories block application.
+- [x] Revised research/drafts execute in the same run within remaining limits, with status returned to the source conversation and fresh output review required.
+- [x] Integrated tests cover fault injection, restart persistence, concurrent/stale application, approval bypass attempts, and migration preservation.
 
 ### Main gaps
 
@@ -77,13 +112,13 @@ All statuses below refer to the proposed changes, including extensions of capabi
 | --- | --- | --- | --- | --- |
 | WF01 | Consolidate the current application and release process | P0 | In progress | None |
 | WF02 | Establish one persistent objective and work lifecycle | P0 | In progress | WF01 |
-| WF03 | Connect conversation to planning and execution | P0 | Proposed | WF02, WF04 |
-| WF04 | Define explicit delegated authority | P0 | Proposed | WF01 |
-| WF05 | Complete dynamic planning and collaboration | P1 | Proposed | WF02, WF04 |
+| WF03 | Connect conversation to planning and execution | P0 | In progress | WF02, WF04 |
+| WF04 | Define explicit delegated authority | P0 | In progress | WF01 |
+| WF05 | Complete dynamic planning and collaboration | P1 | In progress | WF02, WF04 |
 | WF06 | Add dependable recovery and reconciliation | P1 | Proposed | WF02, WF04 |
 | WF07 | Extend governed operational tools | P1 | Proposed | WF04, WF06 |
 | WF08 | Improve retrieval and source coverage | P1 | Proposed | WF01, WF02 |
-| WF09 | Connect claims to evidence and quality review | P1 | Proposed | WF05, WF08 |
+| WF09 | Connect claims to evidence and quality review | P1 | In progress | WF05, WF08 |
 | WF10 | Schedule by capacity and capability | P2 | Proposed | WF02, WF05, WF06 |
 | WF11 | Turn feedback into evaluated procedural learning | P2 | Proposed | WF09, WF14 |
 | WF12 | Complete proactive follow-through and outcome measurement | P2 | Proposed | WF02, WF04, WF09 |
@@ -119,7 +154,7 @@ All statuses below refer to the proposed changes, including extensions of capabi
 
 **Local implementation scope, 18 October 2026:** Explicit enrollment of an unstarted ordinary root assignment creates one objective inside its existing business project. Conversation origin IDs and the exact owner request are retained when present; independent requests in a shared conversation container are not merged. Future handoffs inherit membership. The canonical task/run records and `team_costs` ledger remain authoritative. Objective-scoped Twin coordination, execution, draft subrequests, and review calls share cumulative allowances and sequential execution guards. Four additive tables hold objective identity, assignment links, plan history, and cost links. Owner views expose state, usage, linked tasks, plans, controls, and final acceptance. See UP003/E003 for implementation evidence.
 
-**Initial limits:** Existing running/historical work is not automatically enrolled; enrollment rejects prior run/spend/handoff history instead of resetting it. Milestone work-package migration is not implemented. Brief revisions are allowed before execution only, with an impact note and retained plan history; post-start alternatives and conversation brief replacements are blocked pending the WF03/WF05 impact workflow. Formal output revisions consume the shared revision allowance. Autonomous graph replanning, independent reviewer extensions, and outcome follow-up remain open. This local candidate is not a production deployment or a completed WF02 release.
+**Current limits:** Existing running/historical work is not automatically enrolled; enrollment rejects prior run/spend/handoff history instead of resetting it. Milestone work-package migration is not implemented. UP004 supports explicit pre-execution owner revisions in the original conversation. UP005 adds prepared, source/state-bound owner changes to paused, quiescent ordinary work, with dependency impact, retained evidence checks, fresh approvals, and preserved cumulative limits. Unstructured post-start alternatives remain refused. Formal output revisions and applied impact changes consume the shared revision allowance. Autonomous graph replanning, broader review/evidence coverage, and outcome follow-up remain open. UP006 adds explicit ordinary-deliverable independent review; broader impact migrations after review assignment remain refused. This local candidate is not a production deployment or a completed WF02 release.
 
 **Initial record mapping (before schema changes):** Use `team_projects.id` as the business project container and `team_tasks.id` for specialist assignments. `team_tasks.run_id` links to the execution `projects.id` / `agentic_runs.project_id`; those execution projects are not separate business objectives. `milestones.project_id` links the business container to versioned work packages and reviews. `conversation_jobs.turn_id`, `task_id`, and `project_id` preserve origin links. Unlinked conversation containers currently group multiple independent requests, so a container must not automatically become one objective or one shared allowance. WF02 must introduce an objective identity within the existing business project and map its tasks, revisions, handoffs, and origin turns explicitly; do not add a second task queue or change historical grouping. Approval and allowance records must identify that objective, not merely its conversation or department.
 
@@ -140,13 +175,17 @@ All statuses below refer to the proposed changes, including extensions of capabi
 - [x] Restarting a worker or opening another interface preserves the same work state for the initial enrolled-assignment scope. Fresh-process and owner-route checks are recorded in E003.
 - [ ] Completion requires the recorded success criteria and mandatory reviews to be satisfied.
 - [ ] Changes to the brief produce an explicit plan revision and impact assessment.
-- [x] Nested delegation and formal output/initial-plan revisions share cumulative allowances; restart and resume preserve consumption. Active-work replanning remains refused pending its impact workflow, rather than creating untracked iterations. See E003.
+- [x] Nested delegation and formal output/initial-plan revisions share cumulative allowances; restart and resume preserve consumption. See E003. UP005 extends the same limits to explicit owner-applied active-work changes; autonomous replanning remains outside scope.
 - [x] Concurrent dispatch/reservations competing for the last available allowance admit only affordable work in the initial scope. Unknown usage remains reserved and repeated settlement cannot double charge or release it. See E003.
 - [x] Reaching an applicable limit blocks the affected new work and produces an actionable blocker without discarding completed work. A zero revision allowance blocks revisions, not the initial assignment. See E003.
 
 ### WF03 Connect conversation to planning and execution
 
 **Current position:** v1.41 connects an explicit owner request to one bounded research or drafting job. Broader planning and collaboration use separate workflows.
+
+UP004 adds an explicit owner revision control in that job's original conversation for an enrolled, unstarted assignment. It atomically saves a new plan, feedback turn, operational receipt, and audit link. Execution uses the revised brief and criteria; the initial request remains immutable. Plain-text references to revising an objective are directed to the explicit control rather than queued as duplicate work. This is not natural-language target resolution, active-work replanning, or the complete multi-specialist lifecycle.
+
+UP005 extends this through a prepared impact assessment for started ordinary work: same assignment/run identities, immutable prior-state snapshots, source-conversation receipts, fresh assignment approval, and current-plan evidence boundaries. It does not automatically infer a target or apply conversational feedback, and it does not implement strategic or milestone graph redesign.
 
 **Required changes:**
 
@@ -165,6 +204,8 @@ All statuses below refer to the proposed changes, including extensions of capabi
 - [ ] Progress claims match persisted execution state and actual evidence.
 
 ### WF04 Define explicit delegated authority
+
+**Initial implemented subset:** UP004/D11 defines a source-bound owner revision action; UP005/D12 adds content-bound prepared impact application and fresh start approval for changed assignments. Both recheck current scope/state and retain execution authority. The generic actor/tool/data/destination/expiry delegation model below remains unimplemented; this requirement is not complete.
 
 **Required changes:**
 
@@ -260,6 +301,8 @@ All statuses below refer to the proposed changes, including extensions of capabi
 - [ ] Retrieval respects current permissions before supplying content to a model.
 
 ### WF09 Connect claims to evidence and quality review
+
+**Current local slice (UP006/E006, 18 October 2026):** Implemented and fixture-verified explicit owner assignment of separate ordinary-task reviewer work, exact artifact/evidence/rubric binding, structured passage-supported findings, shared-allowance rejection/revision, and mandatory acceptance gates. No live-quality or production acceptance is asserted. Review is opt-in per deliverable; once assigned, its review requirement persists across output revisions. Broader assurance evidence registers and source-change propagation remain open.
 
 **Required changes:**
 
@@ -540,6 +583,30 @@ Add one entry per substantive feedback item. Preserve the original wording when 
 - Interpretation: Continue from the reconciled source with persistent objective identity and cumulative execution limits. Implement and verify the local candidate without inventing business-quality thresholds, new source grants, or production deployment authority.
 - Status: Local objective implementation and focused verification delivered; complete final-snapshot regression validation recorded in UP003/E003.
 
+### FB004 — 18 October 2026
+
+- From: Owner.
+- Related requirements: WF01, WF03, WF04, WF05, WF13, WF14.
+- Original feedback: "Start working as per your recommendation".
+- Interpretation: Start the recommended local pre-execution conversation revision slice, preserving the baseline and defining the authority and acceptance contract first. This does not set business-quality thresholds, authorize live spending, or authorize deployment.
+- Status: Local implementation delivered; verification and remaining limits recorded in UP004/E004.
+
+### FB005 — 18 October 2026
+
+- From: Owner.
+- Related requirements: WF02, WF03, WF04, WF05, WF13, WF14.
+- Original feedback: "proceed with it and also keep updaring the agentic workforce roadmap markdown along the way".
+- Interpretation: Implement the proposed impact workflow for changes after work starts and maintain this document during implementation and verification. Retain completed work where valid, invalidate affected approvals, preserve cumulative accounting, and report changes to the source conversation. No live-provider spending allowance, production deployment, or numeric quality threshold was supplied.
+- Status: Local implementation and scoped fixture validation delivered. See D12 and UP005/E005; broader workforce requirements remain open.
+
+### FB006 — 18 October 2026
+
+- From: Owner.
+- Related requirements: WF02, WF04, WF09, WF13, WF14.
+- Original feedback: "ohk, so proceed with the implementation for this".
+- Interpretation: Implement independent review, supported rejection, revision within the same objective, and acceptance bound to the exact artifact; continue maintaining this roadmap. This authorizes local implementation and fixture verification; it does not supply live-quality thresholds or authorize deployment/provider spending.
+- Status: Local implementation and scoped fixture verification delivered; see D13 and UP006/E006. Broader workforce and release acceptance remain open.
+
 ```text
 Feedback ID: FB001
 Date:
@@ -583,6 +650,34 @@ Resolution and evidence:
 - Completion: Reuse existing output reviews and artifact/evidence contracts, then require explicit owner acceptance of criteria. Business outcome measurement and independent reviewer extensions are separate unfinished work.
 - Compatibility: Preserve legacy work unchanged. Refuse milestone enrollment and post-start/conversation brief changes until their migration/impact design exists; prevent the older alternative-instruction route from bypassing that boundary. Rollback requires worker/assignment quarantine and retained accounting, not deletion of the new tables or automatic resumption under older code.
 - Revisit condition: WF03 conversation feedback/impact propagation, WF05 versioned active work graphs, milestone migration evidence, and the WF09/WF14 quality and release gates.
+
+### D12 Prepared changes to started work — 18 October 2026
+
+- Related requirements: WF02, WF03, WF04, WF05, WF13, WF14.
+- Authority: Owner instructed, "proceed with it and also keep updaring the agentic workforce roadmap markdown along the way", following the proposed active-work impact slice.
+- Decision: Require the objective to be paused and quiescent. Prepare an immutable assignment-by-assignment assessment, bind owner application to its content and state snapshot, then apply atomically. Retain only accepted completed work with unchanged instructions/criteria, recorded validity reasons, and verified artifacts. Changed work and its dependency/handoff-context closure require revised briefs/criteria, new start approval, and fresh output review.
+- History/accounting: Preserve assignment and run IDs, raw prior actions, artifact bytes, source request, earlier review records in the immutable snapshot, cumulative objective/task spending, model requests, action counts, limits, and original deadlines. Derive obsolete-action status from a plan boundary; prior evidence and tool cache entries cannot satisfy current work. Record two additive tables for assessments and per-assignment plan approval/action boundaries; use the existing worker and ledger.
+- Boundaries: Refuse active/uncertain operations until settled/reconciled, affected dependents outside the objective, invalid graphs, milestones, consequential scope changes, and prior tool histories without a reviewed replay adapter. Incoming external prerequisites are read-only snapshot context and are not enrolled or modified. Initial affected histories support calculation, bounded research/local drafts, and resolved internal handoff/challenge tools. Existing authority checks still govern every subsequent invocation. Do not infer provider quality or semantic validity from fixtures.
+- Consequences: Applying leaves the objective paused and uses one revision allowance. Owner start approval for changed assignments and explicit objective resume are separate controls. Reached task request/action limits require the existing explicit allowance controls; a new plan does not replenish them. No deployment, live spending, new connector, or generic external-write replay is authorized by this slice.
+- Status: Local implementation and scoped verification recorded in UP005/E005. This supersedes earlier started-work refusals only for this prepared owner workflow; generic strategic replanning and milestone migration remain open.
+
+### D11 Owner conversation revision control — 18 October 2026
+
+- Related requirements: WF02, WF03, WF04, WF13, WF14.
+- Authority: Owner instruction, "Start working as per your recommendation", following the review recommending the pre-execution conversation revision slice.
+- Decision: Add an explicit authenticated owner form on the original work message. Bind its objective, expected objective and room versions, complete brief, criteria, impact, and idempotency key. Save the plan and a deterministic conversation receipt in one transaction. Retain the exact initial request and existing accounting. Require task start approval again after revision.
+- Boundary: This action cannot grant tools, change employee/project/privacy scope, increase allowances, send externally, enroll milestones, or revise started work. Model output cannot invoke it. Recognized plain-text revision references return links to the owner controls without creating another task; ambiguous targets are never selected automatically.
+- Consequences: No new queue, schema, dependency, paid provider call, or deployment. Unknown prior spending remains reserved. This supersedes D10's refusal of conversation brief replacements only for this explicit pre-execution slice. D01/D02/D04 remain open for wider workflows and live acceptance.
+- Revisit condition: Reviewed active-work impact propagation, milestone migration, or broader delegated authority contracts.
+
+### D13 Independent ordinary-deliverable review — 18 October 2026
+
+- Authority: FB006 and the owner's earlier instruction to keep this roadmap updated.
+- Decision: Extend the existing team assignments, canonical final-output review and objective ledger. Owner assignment makes an immutable rubric mandatory for that ordinary deliverable and later revisions. Use a different nonauthor specialist in a separate task/run, with an assignment-scoped artifact/evidence read adapter and no author action history in its execution context.
+- Contract: Bind the complete bounded artifact, brief, criteria, classification, plan, saved execution evidence and source conversation to a fingerprint. Each criterion has its own assessment; each revise verdict needs a quoted passage, severity, specific problem and correction. Owner acceptance of the actual saved critique records the report. Every current mandatory critique must pass before source acceptance or objective completion; recheck critique bytes, identity and actual read evidence at each decision.
+- Revision: Apply supported findings through the existing output revision control, consume one cumulative revision, preserve the same author task/run and all counters/limits/deadline, mark earlier actions historical, and require fresh continuation approval. The replacement artifact requires a new separate reviewer run. Current-round findings enter bounded source-conversation execution only after the existing public/private and consequential-scope checks.
+- Boundary: No automatic legacy enrollment/review, external source retrieval, permission expansion for existing employees, rubric mutation, independent business-quality assertion, or deployment. Existing employees require an explicit owner grant of the review-source tool. Started consumers, unresolved accounting/requests and unsupported tool histories hold revision; broader impact migrations after review assignment are deferred. Prior snapshot/review history remains immutable.
+- Verification: UP006/E006 records the local fixture results and phased regression source identities. WF09 and WF14 remain In progress overall.
 
 ```text
 Decision ID:
@@ -650,6 +745,39 @@ Supersedes or superseded by:
 - Limitations/status: WF02 and WF13 remain In progress. Milestone migration, material changes after execution starts, autonomous versioned graph replanning, independent-review extensions, outcome follow-up, reviewed deployment/rollback packaging, owner-approved quality thresholds and live provider evaluations remain open. No business or production readiness is asserted. Production services, configuration, credentials, business records, permissions and budgets were not changed.
 - Next action: Complete WF03/WF05 impact propagation and milestone enrollment against explicit migration and authority contracts; retain these counters and historical links through every subsequent phase.
 
+### UP004 — 18 October 2026 Source-bound owner conversation revisions
+
+- Related requirements: WF02 preservation; initial WF03/WF04 conversation revision contract; WF13 visibility; WF14 integration checks. Broader WF05 planning is not implemented by this slice.
+- Checkpoint: Before source edits, retained 276 application, tooling, test, dependency/provenance, and documentation files in `.workforce/before-conversation-revisions-20261018T081200Z/source.zip`, with per-file SHA-256 hashes in `manifest.json`. No configuration values or business data were included. This is a source checkpoint, not complete release/rollback acceptance.
+- Changes: Added `superhuman/conversationwork/revisions.py` and `tests/test_conversation_objective_revisions.py`; updated `conversationwork/bridge.py`, `conversationwork/execution.py`, `experience/web.py`, `team/objectives.py`, README, and this roadmap. The reference table now identifies current source before historical packages.
+- Behavior: The original work message offers an owner revision form bound to the objective and current room/objective versions. A single `BEGIN IMMEDIATE` transaction saves the new plan, task changes, one consumed revision round, owner feedback turn, operational receipt, and audit correlation. The task start grant is invalidated; the control makes no provider call and does not dispatch. Identical submission retries return the original saved turn; conflicting keys and stale competing revisions fail without additional consumption.
+- Execution: Conversation research/drafting reads the latest explicitly saved plan and its criteria. The initial `conversation_jobs.request`, source turn, objective origin, and earlier plans remain unchanged. Recognized plain-text revision references return the relevant objective controls without creating a duplicate assignment or claiming the brief changed.
+- Authority/compatibility: Existing task/project scope, classifications, tools, worker controls, budgets, deadlines, reservations, and consumed requests remain authoritative. Wrong-room and changed-scope requests, archived/inbox conversations, consequential actions, private public-web queries, unsupported draft-to-research changes, started/cancelled work, in-flight objective requests, exhausted revision limits, and milestone work are refused. No new database tables, dependencies, queue, scheduler, provider, or permission grants were added. Existing data is not automatically enrolled or migrated.
+- Verification: On Windows/Python 3.13.0, all **70 local tests passed in 91.103 seconds** (23 new revision checks, 31 existing objective checks, 16 tooling checks). All **44 isolated existing conversation tests passed in 130.008 seconds** with fixture providers and external networking blocked. New coverage includes actual revised research execution and saved results, draft adapter instructions, competing feedback versions, idempotency, unchanged independent objectives, uncertain spending, atomic receipt-failure rollback, source/classification checks, refusal of started/cancelled/milestone work, and authenticated CSRF-protected owner routes. Python syntax and `git diff --check` pass; post-run hashes confirm all 241 application files still match the candidate manifest. The complete historical 565-test Linux suite was not rerun for this slice.
+- Diagnostic limitation: Additional `test_dialogue` checks produced five failures and 14 errors across 39 tests; the same 19 failing/error test identities reproduce against the preserved pre-change source. Those legacy tests are excluded from the v1.41 supported runner and assume older budget/approval behavior. Both diagnostic logs are retained; this work does not claim they passed or repair them.
+- Evidence: `.workforce/conversation-revision-verified.log`, `.workforce/conversation-revision-conversation-verified.log`, `.workforce/conversation-revision-final.manifest.json`; legacy diagnostic comparison in `.workforce/conversation-revision-dialogue.log` and `.workforce/conversation-revision-dialogue-baseline.log`. Earlier development runs are diagnostic history.
+- Candidate: 241 application source/asset files; fingerprint `5ecd90c7aefab755196ffe989e4a080341f782694bf4f31b0ee6f973274eb74b`. Manifest: `.workforce/conversation-revision-final.manifest.json`. Historical `source-provenance.json` is unchanged.
+- Limitations/status: WF03 and WF04 are In progress for this bounded owner-control subset. Active-work revisions, natural-language target resolution, milestone migration, generic delegated authority, independent reviewer extensions, live provider competence, and release/rollback acceptance remain open. No production deployment, real provider request, owner configuration, or business data changes were performed.
+- Reproduce: `.workforce/venv/Scripts/python.exe -m unittest discover -s tests -v`; `.workforce/venv/Scripts/python.exe tools/run_workforce_checks.py --source . --case test_conversationwork --log .workforce/conversation-revision-conversation-verified.log`. Root local checks used `PYTHON_DOTENV_DISABLED=1`; the isolated runner excludes credentials, disables dotenv, blocks external networking, and uses disposable fixture state.
+- Next action: Define affected-work/approval invalidation rules for WF03/WF05 active-work changes before implementing them. Keep dispatch sequential and retain cumulative allowances. WF01 release/restore evidence and D01/D02/D04 decisions still gate their corresponding rollout/live-evaluation work.
+
+### UP005 — 18 October 2026 Prepared impact changes to started ordinary work
+
+- Related requirements: WF02 identity/allowance preservation; WF03 source-conversation feedback; WF04 owner authority; initial WF05 impact propagation; WF13 owner visibility; WF14 fixture/fault checks. WF05 moved to In progress for this owner-reviewed subset, not autonomous graph planning or parallel dispatch.
+- Checkpoint: Preserved the 278-file UP004 application/test/tool/dependency/documentation state before source changes in `.workforce/before-active-work-revisions-20261018T083603Z/source.zip` and its per-file `manifest.json`. Credentials and business databases/artifacts were not included or modified.
+- Implementation: Added `superhuman/team/workplans.py`, `workplan_web.py`, and `tests/test_active_work_revisions.py`. Extended `team/objectives.py`, `team/work.py`, `team/web.py`, `agentic/store.py`, `agentic/engine.py`, `agentic/tools.py`, `conversationwork/execution.py`, and `conversationwork/revisions.py`. Updated README and this roadmap during development.
+- Records: Two additive, idempotently initialized tables, `workforce_plan_changes` and `workforce_task_plan_controls`. The former keeps exact prepared payloads, complete prior task/run/action/review/accounting/scope snapshots, a content/state digest, application state, resulting plan version, and receipt turn. The latter records affected task approval and the prior-action ordinal boundary. Existing task, run, project, and cost identities remain authoritative. No new scheduler, queue, provider, or connector.
+- Preparation: Objective must already be paused and quiescent. Every member has an explicit revise/retain choice and reason. Only accepted completed work with unchanged instructions/criteria and verified output/evidence may be retained. Dependency and handoff-context closure forces affected downstream work to be revised. Incoming external prerequisite state is captured without enrollment; affected external dependents, invalid/missing/cyclic inputs, milestones, unresolved requests, in-flight/uncertain costs, consequential scope changes, and unsupported tool histories are refused.
+- Application: Owner reviews the exact replacement brief, criteria, impact, changed/retained assignments, prior review/output, consumed spending/requests/actions, limits, and original deadline, then submits the bound digest. `BEGIN IMMEDIATE` rechecks the material payload and current state/scope, consumes one shared revision, saves the new plan, invalidates affected start/output approval, records per-task action boundaries, and persists source-conversation feedback/status atomically. An identical application returns its saved plan version without another revision. Stale competing candidates cannot both apply. The objective stays paused.
+- Execution/history: Affected tasks remain the same assignments and use the same runs. Earlier raw action records and artifact bytes are not deleted or rewritten. Current action views mark earlier actions superseded; they cannot supply finish evidence, exports, pending permission, or cache hits for the revised plan. Old canonical review state/note/result are kept in the immutable snapshot; the current review status is pending and its old approval note is cleared. Authenticated historical downloads read the snapshot's original artifact, with integrity/path checks and an explicit historical label. No approval for current work is inferred from those downloads.
+- Continuation/accounting: Each changed assignment needs a fresh owner **Approve start / continuation** action with an inspection note, followed separately by objective resume. Approval guards also apply at dispatch, provider reservation/invocation, and tool/run gates. Pausing/replanning/resuming preserves all objective/task dollar totals, reservations, used requests, action counts, limits, accumulated attempts, and the original deadline. Reached request/step limits need the existing explicit owner amendment; they are not replenished by a new plan. Run-version checks reject a worker that cached an older run before replanning. New research/draft output returns through the original source conversation and requires fresh output review.
+- Verification: On Windows/Python 3.13.0, the complete supported application suite passed **565 tests in 1417.625 seconds** using fixture providers, cleared credentials, blocked external networking, and disposable temporary state. The corrected local suite passed **102 tests in 135.035 seconds** (32 active-work checks, 23 earlier conversation-revision checks, 31 objective checks, 16 tooling checks). The final isolated active-work suite passed **32 tests in 72.382 seconds** with credentials excluded, dotenv disabled, external network/DNS blocked, and temporary state. These local/isolated counts overlap and are not additive.
+- Final limit correction: After the broad run, review identified that a fixed conversation tool plus its completion record needs two action slots. Added a pre-provider guard, and verified a one-slot remainder stops without a paid request or action-count overrun. An owner can then explicitly amend the total task step limit and approve continuation of the same revised run; counters remain consumed and no extra plan revision is charged. All **44 existing conversation tests passed in 109.721 seconds** after the two-slot guard. The final 32 isolated checks include the last bounded-continuation helper changes, external-input/cycle checks, historical downloads, fresh-process state, and receipt-failure rollback. The 565-test suite was not rerun after those focused corrections; its earlier pass and the final focused runs are distinguished here. Earlier development logs, including a corrected test-class placement error, remain diagnostic history.
+- Candidate: 243 application source/asset files; fingerprint `6c7be6711df34b0ce804d54ede592c440b7d072e5fc9f109c71774869d898a5f`. Per-file source and test hashes are in `.workforce/active-work-final.manifest.json`; historical server provenance remains unchanged. All Python modules pass syntax parsing with their original UTF-8/BOM handling; source bytes were not normalized to remove historical BOMs.
+- Evidence: `.workforce/active-work-full-regressions.log`, `.workforce/active-work-final-local.log`, `.workforce/active-work-acceptance.log`, `.workforce/active-work-conversation-final.log`, `.workforce/active-work-step-limit-final.log`, `.workforce/active-work-final.manifest.json`. Final owner-route/download checks are also recorded in `.workforce/active-work-owner-ui-verified.log`. Python syntax and `git diff --check` pass; post-run source/test hash confirmation is retained with this evidence. No full Linux candidate validation, power-loss recovery, live model competence, or independent business acceptance is asserted.
+- Scope/limitations: Initial affected histories cover calculation, bounded research/local drafting, and resolved internal handoff/challenge tools. Automatic target resolution, strategic graph/ownership/dependency redesign, milestones, unsupported write/replay adapters, independent semantic review, broader delegated authority, live provider competence, production rollback/restore, and business outcome acceptance remain open. Retention validity is an explicit owner judgment plus existing technical integrity checks, not independent factual verification. No deployment, paid live request, `.env` edit, permission expansion, or real business data migration occurred.
+- Next work: Implement the separately assigned reviewer → supported rejection → revision → artifact-bound acceptance workflow under one objective/allowance (WF09/WF14). WF01 release/restore evidence and D01/D02/D04 decisions remain necessary for corresponding rollout/live acceptance. WF02/WF03/WF04/WF05/WF13/WF14 remain In progress overall; only the scoped checks above are accepted locally.
+
 ```text
 Update ID:
 Date:
@@ -664,6 +792,31 @@ Backlog status changes:
 Next action:
 ```
 
+### UP006 — Independent ordinary-deliverable review — 18 October 2026
+
+- Authority: Owner instruction, "ohk, so proceed with the implementation for this", following the recommendation for independent review, supported rejection, same-objective revision and artifact-bound acceptance. The earlier instruction to maintain this roadmap remains active.
+- Related requirements: Initial ordinary-work WF09; WF02/WF04/WF13 preservation; WF14 fixture and fault checks. WF09 moves to In progress for this subset.
+- Checkpoint: `.workforce/before-independent-reviews-20261018T093306Z/source.zip` and `manifest.json` retain 264 application, tooling, test and documentation files before this slice; no `.env` or business data. This is a source checkpoint, not a reviewed deployment/restore package.
+- Implementation: Two additive tables (`workforce_review_policies`, `workforce_reviews`) retain immutable rubric and artifact/evidence snapshots, separate reviewer assignment/run identity, structured findings and revision disposition. The existing team queue, canonical output review and objective cost ledger remain authoritative.
+- Contract: Owner selects a specialist who did not author the source. A separate run reads the exact complete bounded artifact, original brief/criteria, rubric and saved execution evidence. Every criterion needs an assessment; every revise verdict needs an exact passage, severity, supported problem and requested correction. Owner acceptance of the saved critique records its findings, not approval of the author output. Every current mandatory review must pass before source acceptance and objective completion.
+- Revision contract: A supported rejection consumes one shared revision and retains the author task/run, artifact history, spending, request/action counts, limits and deadline. Prior actions become historical evidence; fresh continuation approval is required. Revised output needs new independent review. Direct project approval/local revision routes cannot bypass these controls.
+- Verification: **137 final isolated local tests passed in 213.961 seconds** on Windows/Python 3.13.0, including **35 new independent-review checks**, 32 impact checks, 23 earlier conversation-revision checks, 31 objective checks and 16 tooling checks. The complete local suite ran against the final source below with credentials excluded, dotenv disabled, temporary state and external DNS/network blocked (loopback only). Its fault coverage includes real separate reviewer execution, shared billing and exhausted request limits, self-review, current-source scope/criteria/evidence changes, every mandatory reviewer, structured unsupported/malformed findings, actual reviewer read-evidence tampering at acceptance and rejection, source/reviewer artifact tampering, project/local-revision bypasses, transactional rollback, repeat initialization, private-to-public feedback refusal, same-run/source-conversation revision, fresh continuation approval and fresh post-revision review, revision/unknown-cost/write-history/dependent-work refusals, and hosted authentication/CSRF/actual task-page controls.
+- Broad regressions: All **565 supported application tests passed**, split into three independent offline fixture processes using the same packaged module list and class selection as `superhuman-v1.41-upgrade/run_checks.py`: 185 in 421.595 seconds; 184 in 283.830 seconds; 196 in 415.844 seconds. The broad run started before final hardening in `superhuman/team/reviews.py` (rechecking accepted reviewer evidence, rejecting malformed criterion types cleanly, and selecting all findings from only the latest applied round). Its source hashes are separately retained in `independent-reviews-regression-source.manifest.json`; the final 137-test run covers those last changes. The broad 565 were not rerun after that review-specific hardening. The earlier overlapping 134-test local run passed in 241.698 seconds; development runs with corrected test-import, expected result-key and overridden task-page errors are diagnostic history, not substituted for final acceptance.
+- Final source identity: **245 active application source/assets**, fingerprint `fc9bb6def9c3a9a767c7a979b71088df84b93fa528409c20c267e008f0a048e8`, using the existing baseline inventory algorithm. `.workforce/independent-reviews-final.manifest.json` records per-file source and nine root test-file hashes. `source-provenance.json` remains the historical v1.41 baseline. Application syntax passes; post-run integrity confirms every source/test hash still matches; `git diff --check` passes.
+- Evidence: `.workforce/independent-reviews-final-acceptance.log`, `.workforce/independent-reviews-root-final.log`, `.workforce/independent-reviews-regressions-1.log`, `-2.log`, `-3.log`, `.workforce/independent-reviews-regressions-summary.json`, the final/regression source manifests, and `.workforce/independent-reviews-final-integrity.json`. The new fixture coverage is `tests/test_independent_reviews.py`. No live provider calls, deployment, `.env` changes, permission expansion for existing employees or real business-data migration occurred.
+- Scope limits: Explicit enrollment/assignment only, ordinary work only, bounded saved evidence rather than autonomous external source verification. Broader impact replanning after review assignment and revisions with already-started consumers require a later reviewed migration. Existing milestones retain their separate workflow. WF09/WF14 and release/restore acceptance remain open overall. The rubric is immutable within this first policy; a new rubric-version control is deferred rather than silently changing approval requirements. Cancelled or unsuccessful mandatory assignments hold acceptance and are not silently waived. Generic claim/source registers, evidence-disagreement resolution, automatic external source retrieval and live semantic competence remain open.
+- Next work: Build the reviewed release/restore package and rehearse additive-schema backup/restore/rollback with these objective, impact and review gates (WF01/WF14). Broader evidence/source registers, rubric-version changes, reviewed reassignments/impact migrations and owner-approved live-quality evaluations remain follow-on work. WF09/WF14 stay In progress overall; only the scoped fixture checks above are accepted locally.
+
+**Scoped local checks (UP006/E006):**
+
+- [x] A nonauthor reviewer executes in a separate task/run under the same objective allowance.
+- [x] Every current review binds the exact artifact, saved evidence, brief/criteria and immutable rubric.
+- [x] Unsupported rejection and malformed or invented-passage findings are refused.
+- [x] Supported rejection preserves the author run/counters and requires fresh continuation approval.
+- [x] Replacement artifacts need fresh independent review; prior approval cannot authorize them.
+- [x] Missing, failed, tampered or unresolved mandatory review blocks source acceptance and objective completion.
+- [x] Hosted owner controls require authentication and CSRF and appear on the final task-page route.
+
 ## 15. Acceptance evidence register
 
 | Evidence ID | Requirement | Version or commit | Scenario and environment | Result | Artifact or run reference | Reviewer and date |
@@ -671,6 +824,9 @@ Next action:
 | E001 | WF01 partial: local inventory tooling | Checkout base `26e3fbb`; source fingerprint in UP001 | Local Windows / Python 3.13.0; four isolated tests and read-only schema inventory | Tooling tests pass; consolidated application and live behavior unverified | `tools/workforce_baseline.py`, `tests/test_workforce_baseline.py`, local ignored `baseline-local.json`; commands in UP001 | Implementing agent, 18 October 2026; no independent acceptance review |
 | E002 | WF01 integrated baseline; WF14 offline harness only | v1.41 source markers; fingerprint in UP002 and `source-provenance.json` | Complete captured application, Linux/Python 3.12.3; isolated fixture state and blocked external network | 565 regressions pass; one JS check and 16 tooling tests pass; synthetic migration/readback passes. Live quality and complete real-data recovery unverified | UP002; `.workforce/linux-baseline-regressions.log`, `.workforce/migration-rehearsal.log`, `.workforce/local-before-v141/consolidation.json`; runners under `tools/` | Implementing agent, 18 October 2026; no independent business acceptance review |
 | E003 | WF02 initial ordinary-assignment scope; WF13 owner controls; WF14 regression extension | Unreleased local candidate; fingerprint in UP003 | Windows/Python 3.13.0 focused suite; Linux/Python 3.12.3 final isolated candidate suite | 565 existing regressions and 31 new objective integration tests pass on the final Linux snapshot; 47 overlapping local checks pass. Fixture results do not establish live/business acceptance | UP003; `tests/test_workforce_objectives.py`; candidate logs/manifest listed above | Implementing agent, 18 October 2026; no independent business acceptance review |
+| E004 | WF03/WF04 initial source-bound owner revisions; WF02 preservation; WF13/WF14 integration | Unreleased local candidate; fingerprint in UP004 | Windows/Python 3.13.0; fixture providers, temporary data; existing conversation runner excludes credentials and blocks external network | 70 local checks and 44 existing conversation checks pass. Additional legacy dialogue diagnostics reproduce the same 19 failing/error identities on the pre-change baseline. No live, full Linux suite, business-quality, or production acceptance claimed | UP004; `tests/test_conversation_objective_revisions.py`; final logs and manifest listed above | Implementing agent, 18 October 2026; no independent business acceptance review |
+| E005 | WF03/WF05 prepared owner impact changes; WF02/WF04 preservation; WF13/WF14 integration | Unreleased local candidate; final fingerprint in UP005 | Windows/Python 3.13.0; fixture providers; isolated suites exclude credentials and block external network | Broad suite: 565 pass before final limit corrections. Local suite: 102 pass. Final focused suites: 32 isolated impact checks and 44 existing conversation checks pass; overlapping counts. UP005 distinguishes the sequence and remaining release/live limitations | UP005; `tests/test_active_work_revisions.py`; final logs/manifest listed above | Implementing agent, 18 October 2026; no independent business acceptance review |
+| E006 | WF09 initial ordinary independent review; WF02/WF04/WF13 preservation; WF14 fixture/fault checks | Unreleased local candidate; final fingerprint in UP006 | Windows/Python 3.13.0; fixture providers, temporary state, credentials excluded and external network blocked | Final 137 local checks pass, including 35 review checks. All 565 supported regressions pass on the earlier phase; UP006 distinguishes the final review-specific hardening and source manifests. No live-quality, Linux final-candidate, independent business or production acceptance | UP006; `tests/test_independent_reviews.py`; final logs/manifests/integrity listed above | Implementing agent, 18 October 2026; no independent business acceptance review |
 
 ## 16. Code references for the initial evaluation
 
@@ -678,20 +834,21 @@ These are workspace-relative implementation references. Consolidation under WF01
 
 After UP002, the authoritative local implementation is `superhuman/`; `source-provenance.json` records its server baseline. Current modules include `superhuman/agentic/`, `superhuman/conversationwork/`, `superhuman/team/`, `superhuman/milestones/`, `superhuman/assurance/`, `superhuman/organisation/`, and `superhuman/foundation/`. The package paths below remain the historical references from the initial review, not alternate places to implement new behavior.
 
-| Area | Reference |
-| --- | --- |
-| Base runtime | `superhuman/runtime/engine.py` |
-| Base project execution | `superhuman/projects/engine.py` |
-| Agent decisions and tools | `superhuman-v1.41-upgrade/payload/agentic/engine.py` and `tools.py` |
-| Conversation execution | `superhuman-v1.41-upgrade/payload/conversationwork/execution.py` and `bridge.py` |
-| Specialist ownership and handoffs | `superhuman-v1.41-upgrade/payload/team/store.py` and `work.py` |
-| Twin coordination | `superhuman-v1.26-upgrade/superhuman/team/engine.py`, with later package transformations |
-| Milestone coordination | `superhuman-v1.39-upgrade/payload/milestones/engine.py` |
-| Group discussions | `superhuman-v1.36-upgrade/superhuman/teamhub/engine.py` |
-| Storage retrieval | `superhuman-v1.30-upgrade/superhuman/foundation/storage.py`, with later access-control changes |
-| Proactive signals | `superhuman-v1.30-upgrade/superhuman/foundation/proactive.py` |
-| Evidence and outcomes | `superhuman-v1.32-upgrade/superhuman/assurance/` |
-| Shared organisational context | `superhuman-v1.40-upgrade/README.md` and `superhuman-v1.41-upgrade/payload/organisation/context.py` |
-| Latest package installation | `superhuman-v1.41-upgrade/install_v141.py` |
-| Packaged validation and remaining live checks | `superhuman-v1.41-upgrade/VALIDATION.md` and `LIVE-ACCEPTANCE.md` |
+| Area | Current application / tooling | Historical reference |
+| --- | --- | --- |
+| Base runtime | `superhuman/runtime/engine.py` | Original starter runtime |
+| Base project execution | `superhuman/projects/engine.py` | Original starter execution |
+| Agent decisions and tools | `superhuman/agentic/engine.py`, `tools.py` | `superhuman-v1.41-upgrade/payload/agentic/` |
+| Conversation execution and revisions | `superhuman/conversationwork/bridge.py`, `execution.py`, `revisions.py` | `superhuman-v1.41-upgrade/payload/conversationwork/`; revisions added in UP004 |
+| Specialist ownership and handoffs | `superhuman/team/store.py`, `work.py`, `objectives.py` | `superhuman-v1.41-upgrade/payload/team/`; objectives added in UP003 |
+| Prepared impact changes and historical outputs | `superhuman/team/workplans.py`, `workplan_web.py` | Added in UP005 |
+| Twin coordination | `superhuman/team/engine.py` | `superhuman-v1.26-upgrade/superhuman/team/engine.py`, with later transformations |
+| Milestone coordination | `superhuman/milestones/engine.py` | `superhuman-v1.39-upgrade/payload/milestones/engine.py` |
+| Group discussions | `superhuman/teamhub/engine.py` | `superhuman-v1.36-upgrade/superhuman/teamhub/engine.py` |
+| Storage retrieval | `superhuman/foundation/storage.py` | `superhuman-v1.30-upgrade/superhuman/foundation/storage.py`, with later access-control changes |
+| Proactive signals | `superhuman/foundation/proactive.py` | `superhuman-v1.30-upgrade/superhuman/foundation/proactive.py` |
+| Evidence and outcomes | `superhuman/assurance/` | `superhuman-v1.32-upgrade/superhuman/assurance/` |
+| Shared organisational context | `superhuman/organisation/context.py` | `superhuman-v1.40-upgrade/README.md`, `superhuman-v1.41-upgrade/payload/organisation/context.py` |
+| Source checkpoint and consolidation | `tools/workforce_baseline.py`, `capture_workforce_source.py`, `consolidate_workforce_source.py` | `superhuman-v1.41-upgrade/install_v141.py` |
+| Validation and remaining live checks | `tools/run_workforce_checks.py`, `tests/` | `superhuman-v1.41-upgrade/VALIDATION.md`, `LIVE-ACCEPTANCE.md` |
 

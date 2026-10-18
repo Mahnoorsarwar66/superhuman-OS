@@ -229,6 +229,8 @@ def task_detail(ident):
     try:t=team.task(ident);parent=team.project(t['project_id'])
     except ValueError as exc:raise HTTPException(404,str(exc)) from exc
     cfg=team.effective(t);body='<p>'+link('/team/projects/'+parent['id'],parent['title'])+'</p><h1>'+E(t['title'])+'</h1><span class="badge">'+E(model.label(t['state']))+'</span><p>'+E(ux.NAMES[t['owner']])+' · '+E(cfg['priority'])+' · '+E(model.label(cfg['risk']))+' · '+E(model.label(cfg['sensitivity']))+'</p><h2>Assignment</h2>'+rich(t['instruction'])+'<h3>Success criteria</h3>'+rich(t['acceptance'])
+    from superhuman.team.review_web import panel as independent_review_panel
+    body+=independent_review_panel(t)
     good,reason=work.gate(t)
     if not good:body+='<p class="error">'+E(reason)+'</p>'
     if t['run_id']:

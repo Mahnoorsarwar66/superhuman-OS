@@ -34,7 +34,7 @@ def job_for_run(pid,path=p.DEFAULT_DB):
         r=db.execute('SELECT j.* FROM conversation_jobs j JOIN team_tasks t ON t.id=j.task_id WHERE t.run_id=?',(pid,)).fetchone()
         return dict(r) if r else None
 
-def explicit(text):
+def explicit(text, *, revisions=True):
     """Conservative direct-owner intent gate. Model classification alone grants no authority."""
     if not isinstance(text,str) or len(text)>4500:return False
     value=text.strip()
@@ -42,7 +42,13 @@ def explicit(text):
     if re.search(r'\b(do not|don.t|never|hypothetical|hypothetically|someone said|she said|he said|if i ask|if i asked|what if|example|pretend|ignore .*instructions)\b',value,re.I):return False
     question=bool(re.match(r'\s*(what|why|how|does|is|are|which)\b',value,re.I))
     if question:return bool(re.search(r'\b(current|latest|today|up.to.date)\b',value,re.I))
-    return bool(re.search(r'\b(research|search|browse|look up|look into|look online|go online|investigate|draft|write|prepare|summari[sz]e|find (?:the |current |official )?(?:guidance|sources|information|evidence))\b',value,re.I))
+    return (revisions and revision_feedback(value)) or bool(re.search(r'\b(research|search|browse|look up|look into|look online|go online|investigate|draft|write|prepare|summari[sz]e|find (?:the |current |official )?(?:guidance|sources|information|evidence))\b',value,re.I))
+
+
+def revision_feedback(value):
+    """Identify a reference needing an explicit target, never authorize a change."""
+    return bool(re.search(r'\b(revise|update|change|replace|amend)\b', value, re.I)
+                and re.search(r'\b(objective|assignment|task|brief|criteria|plan)\b', value, re.I))
 
 def candidate(claimed,trace,path=p.DEFAULT_DB):
     if trace.get('briefing_mode') or trace.get('mail_report_id') or trace.get('hub_stage') or trace.get('hub_card'):return None
@@ -91,6 +97,15 @@ def blocked(reason):return 'Work has not started: '+reason+' Check the linked co
 
 def commit(db,claimed,plan,trace,path=p.DEFAULT_DB):
     """Atomic with the source chat reply; no network or model calls here."""
+    if revision_feedback(claimed['user_text']) and 'workforce_objective_tasks' in tables(db):
+        targets = db.execute('SELECT DISTINCT m.objective_id FROM conversation_jobs j '
+                             'JOIN workforce_objective_tasks m ON m.task_id=j.task_id '
+                             'WHERE j.room_id=?', (claimed['thread_id'],)).fetchall()
+        if targets:
+            return ('No objective was changed and no new work was queued. Use the "Revise this objective before execution" '
+                    'control on the original work message to select the objective and record the complete replacement brief, '
+                    'criteria and impact. Started work needs a reviewed impact migration. Objective controls: '
+                    + ', '.join('/team/objectives/'+r['objective_id'] for r in targets))
     if not plan or plan['kind']=='none':return None
     existing=db.execute('SELECT * FROM conversation_jobs WHERE turn_id=?',(claimed['id'],)).fetchone()
     if existing:return 'This request already has a saved work record. Open its task below.'
@@ -218,6 +233,9 @@ def render(turn_id,path=p.DEFAULT_DB):
     item=status(job,path)
     body='<section class="ui-notice" data-conversation-work="'+E(item['id'])+'"><h3>'+('Research' if item['kind']=='research' else 'Local draft')+' · '+E(item['status'].replace('_',' '))+'</h3>'
     if item['task_id']:body+='<p>'+link('/team/tasks/'+item['task_id'],'Task, costs & pause/cancel controls')+'</p>'
+    if item['task_id']:
+        from .revisions import panel
+        body+=panel(job,path)
     if item['run_id']:body+='<p>'+link('/agent-runs/'+item['run_id'],'Execution evidence')+'</p>'
     if item['reason']:body+='<p>'+E(item['reason'])+'</p><p>'+link('/team/budget','Budget controls')+' · '+link('/runtime','Worker controls')+' · '+link('/team','Employee & team controls')+(' · '+link('/project-hub/'+item['project_id'],'Project controls') if item['project_id'] else '')+'</p>'
     if item['text']:

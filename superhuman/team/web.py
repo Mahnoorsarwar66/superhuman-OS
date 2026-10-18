@@ -105,6 +105,8 @@ def install(app):
         elif not t['run_id'] and not t['parent_id']:
             body+='<details><summary>Track this assignment as an objective</summary><p>Bind this unstarted assignment and its future handoffs to one persistent objective. Other requests in the same conversation remain separate. Existing task limits and permissions also apply.</p><form method="post" action="/team/tasks/'+ident+'/objective"><input type="hidden" name="version" value="'+str(t['version'])+'">'+input('Total objective dollars','cost_limit',budget.usd(t['cost_limit']))+input('Total model-request attempts, including coordination and reviews','max_requests',t['max_calls'])+input('Total wall time in seconds from creation','max_seconds')+input('Total permitted revision rounds','max_revisions')+input('Authorization note','note','',True)+'<button>Create bounded objective</button></form></details>'
         if t['run_id']:body+='<p>'+link('/agent-runs/'+t['run_id'],'Inspect tool actions, artifacts and canonical review')+'</p>'
+        from .review_web import panel as independent_review_panel
+        body+=independent_review_panel(t)
         good,reason=work.gate(t)
         if not good:body+='<p class="error">'+E(reason)+'</p>'
         body+='<form method="post" action="/team/tasks/'+ident+'/control"><input type="hidden" name="version" value="'+str(t['version'])+'">'+input('Inspection / review note','note','',True)+'<button name="action" value="approve_start">Approve start / continuation</button> <button name="action" value="pause">Pause</button> <button name="action" value="resume">Resume after inspection</button> <button name="action" value="cancel">Cancel</button> <button name="action" value="restrict_private_tools">Remove public-web tools from private run</button>'
@@ -137,6 +139,8 @@ def install(app):
         if origin.get('room_id'):body+='<p>'+link('/team-room/'+origin['room_id'],'Source owner conversation')+'</p>'
         body+='<p>Charged or reserved: $'+budget.usd(usage['cost'])+' / $'+budget.usd(obj['max_cost'])+' · Request attempts: '+str(usage['requests'])+' / '+str(obj['max_requests'])+' · Revision rounds: '+str(obj['revisions_used'])+' / '+str(obj['max_revisions'])+' · Deadline: '+E(expiry)+'</p><p>Assignments and provider requests execute sequentially. Unknown usage stays reserved. Pause, resume, restart and new assignments do not reset consumption or extend the deadline. Business outcome measurement remains separate.</p>'
         if obj['blocker']:body+='<p class="error">'+E(obj['blocker'])+'</p>'
+        from .workplan_web import links
+        body+=links(obj)
         if usage['unresolved']:body+='<p>'+str(usage['unresolved'])+' cost records need settlement or reconciliation. '+link('/team/budget','Inspect budget and cost records')+'</p>'
         body+='<form method="post" action="/team/objectives/'+ident+'/control">'+version+input('Decision rationale; completion attests the recorded success criteria','note','',True)+'<button name="action" value="pause">Pause</button> <button name="action" value="resume">Resume</button> <button name="action" value="cancel">Cancel</button> <button name="action" value="complete">Accept completed objective</button></form>'
         body+='<details><summary>Amend cumulative allowances</summary><p>These are totals from creation, not additional grants. Existing consumption and reservations are retained.</p><form method="post" action="/team/objectives/'+ident+'/limits">'+version+input('Total dollars','cost_limit',budget.usd(obj['max_cost']))+input('Total model-request attempts','max_requests',obj['max_requests'])+input('Total wall time in seconds from original creation','max_seconds',round(obj['deadline']-obj['started']))+input('Total revision rounds','max_revisions',obj['max_revisions'])+input('Reason for the change','note','',True)+'<button>Authorize amended totals</button></form></details><h2>Assignments</h2>'
@@ -145,6 +149,11 @@ def install(app):
         body+='<details><summary>Revise the brief before execution</summary><p>Active-work impact propagation and conversation brief changes require the later revision workflow. Earlier plans are retained.</p><form method="post" action="/team/objectives/'+ident+'/plan">'+version+input('Owner brief','brief',plan['brief'],True)+input('Success criteria','criteria',plan['criteria'],True)+input('Impact assessment','impact','',True)+'<button>Record plan revision</button></form></details><h2>Plan history</h2>'
         for prior in obj['plans']:body+='<details><summary>Plan '+str(prior['version'])+'</summary><p>'+E(prior['brief'])+'</p><p>'+E(prior['criteria'])+'</p><p>'+E(prior['impact'])+'</p></details>'
         return page(body,'Objective')
+
+    from .workplan_web import install as install_workplan_changes
+    from .review_web import install as install_independent_reviews
+    install_independent_reviews(app)
+    install_workplan_changes(app)
 
     @app.post('/team/objectives/{ident}/limits')
     def objective_limits(ident:str,version:int=Form(...),cost_limit:str=Form(...),max_requests:int=Form(...),max_seconds:int=Form(...),max_revisions:int=Form(...),note:str=Form(...)):

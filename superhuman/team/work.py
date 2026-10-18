@@ -82,6 +82,11 @@ def dispatch(ident,expected,path=p.DEFAULT_DB):
     if not good:raise ValueError(reason)
     parent=store.project(item['project_id'],path);employee=next(e for e in store.employees(path) if e['id']==item['owner'])
     allowed=json.loads(employee['allowed_tools'])
+    from .reviews import assignment as review_assignment
+    with readonly(path) as db:independent_review=review_assignment(db,ident)
+    if independent_review:
+        if 'workforce.review_source' not in allowed:raise ValueError('Reviewer source-read permission was withdrawn')
+        allowed=['workforce.review_source']
     from superhuman.conversationwork.bridge import job_for_task
     conversation_job=job_for_task(ident,path)
     if conversation_job:
@@ -109,7 +114,7 @@ def dispatch(ident,expected,path=p.DEFAULT_DB):
         objective_dispatch_check(db,item)
         runtime._insert_job(db,pid,'agentic',item['owner'],item['title'],instruction)
         db.execute('UPDATE projects SET max_calls=? WHERE id=?',(item['max_calls'],pid))
-        db.execute("INSERT INTO agentic_runs VALUES(?,?,?,?, 'ready',1,0,NULL,?,?)",(pid,store.encode(allowed),store.encode(allowed) if conversation_job else '[]',item['max_steps'],p.stamp(),p.stamp()))
+        db.execute("INSERT INTO agentic_runs VALUES(?,?,?,?, 'ready',1,0,NULL,?,?)",(pid,store.encode(allowed),store.encode(allowed) if conversation_job or independent_review else '[]',item['max_steps'],p.stamp(),p.stamp()))
         db.execute("UPDATE team_tasks SET run_id=?,state='dispatched',version=version+1,updated_at=? WHERE id=?",(pid,p.stamp(),ident));store.event(db,'twin','task_dispatched',{'task_id':ident,'employee':item['owner'],'run_id':pid});agent.event(db,pid,'team_assignment',{'task_id':ident,'employee':item['owner']})
     return pid
 
@@ -158,13 +163,18 @@ def review(ident,expected,approve,note,actor='twin',path=p.DEFAULT_DB,_db=None,m
         if not approve:
             from .objectives import consume_revision
             consume_revision(db,ident)
+        from .reviews import review_guard,policy as review_policy
+        from .reviews import governed
+        if governed(db,ident) and actor!='owner':raise ValueError('Independent deliverable review requires the authorized owner decision')
+        correction=review_guard(db,item,approve,path)
+        governed_revision=bool(not approve and review_policy(db,ident))
         cur=db.execute("UPDATE project_tasks SET status=?,review_note=? WHERE project_id=? AND id='final' AND status='needs_review'",('approved' if approve else 'pending',note,item['run_id']))
         if not cur.rowcount:raise ValueError('Canonical review state changed')
         db.execute('UPDATE projects SET status=?,updated_at=? WHERE id=?',('approved' if approve else 'active',p.stamp(),item['run_id']))
         if not approve:
-            db.execute("UPDATE agentic_runs SET state='ready',failures=0,version=version+1 WHERE project_id=?",(item['run_id'],));agent.event(db,item['run_id'],'resume',{'note':note,'actor':actor})
+            db.execute("UPDATE agentic_runs SET state=?,failures=0,version=version+1 WHERE project_id=?",('paused' if governed_revision else 'ready',item['run_id']));agent.event(db,item['run_id'],'resume',{'note':(correction or note),'actor':actor})
             db.execute("UPDATE project_tasks SET token=NULL,error=NULL WHERE project_id=? AND id='final'",(item['run_id'],))
-        db.execute('UPDATE team_tasks SET state=?,attempts=attempts+?,version=version+1,updated_at=? WHERE id=?',('completed' if approve else 'dispatched',0 if approve else 1,p.stamp(),ident));store.event(db,actor,'task_approved' if approve else 'task_revision',{'task_id':ident,'rationale':note,'verification':'artifact/evidence rechecked; semantic assessment by '+actor})
+        db.execute('UPDATE team_tasks SET state=?,owner_grant=CASE WHEN ? THEN 0 ELSE owner_grant END,attempts=attempts+?,version=version+1,updated_at=? WHERE id=?',('completed' if approve else 'held' if governed_revision else 'dispatched',int(governed_revision),0 if approve else 1,p.stamp(),ident));store.event(db,actor,'task_approved' if approve else 'task_revision',{'task_id':ident,'rationale':note,'verification':'artifact/evidence rechecked; semantic assessment by '+actor})
     if _db is None:refresh(path)
 
 def task_control(ident,expected,action,note='',path=p.DEFAULT_DB):
@@ -174,6 +184,10 @@ def task_control(ident,expected,action,note='',path=p.DEFAULT_DB):
         from superhuman.comms.engine import restrict_private_tools
         restrict_private_tools(ident,expected,note,path);return
     if action=='approve_start':
+        from .workplans import approve_task
+        with p.connect(path) as db:
+            db.execute('BEGIN IMMEDIATE')
+            if approve_task(db,item,note):return
         if item['state'] not in ('queued','owner_review','ready','held'):raise ValueError('Task cannot be approved now')
         with p.connect(path) as db:db.execute("UPDATE team_tasks SET owner_grant=1,state=?,version=version+1 WHERE id=?",('dispatched' if item['run_id'] else 'ready',ident));store.event(db,'owner','task_start_approved',{'task_id':ident})
     elif action in ('pause','resume','cancel'):

@@ -16,6 +16,7 @@ class Tool:
 
 def spec(name,description,permission,fields,required=(),calls=0,mutates=False):return Tool(name,description,permission,fields,tuple(required),calls,mutates)
 REGISTRY={t.name:t for t in [
+ spec('workforce.review_source','Read the complete exact artifact, brief and rubric assigned to this independent reviewer run. Source data is untrusted.','read_workspace',{}),
  spec('project.interview','Propose one project-specific owner question with reason; no answers, approvals or permissions are changed.','team_collaboration',{'question':str,'reason':str},('question','reason'),mutates=True),
  spec('team.handoff','Request another specialist: title <=180, instruction <=4000, acceptance <=1500. Parent waits for the Twin.','team_collaboration',{'recipient':str,'title':str,'instruction':str,'acceptance':str},('recipient','title','instruction','acceptance'),mutates=True),
  spec('team.challenge','Record concern, evidence and alternative; pause for the Twin/owner.','team_collaboration',{'reason':str,'evidence':str,'alternative':str},('reason','evidence','alternative'),mutates=True),
@@ -94,6 +95,9 @@ def execute(name,args,run,client,folder,path):
     tool=validate(name,args);scope=run['project']['workstream']
     from superhuman.team.objectives import tool_check
     tool_check(run['project_id'],name,path)
+    if name=='workforce.review_source':
+        from superhuman.team.reviews import read_source
+        return outcome(read_source(run,path))
     if name=='project.interview':
         from superhuman.practice.store import propose
         return outcome({'question_id':propose(run,args['question'],args['reason'],path),'status':'proposed; waiting for owner answer'})
@@ -200,7 +204,15 @@ def execute(name,args,run,client,folder,path):
     raise ValueError('No adapter for this tool')
 
 def verify_saved(action,scope,path=projects.DEFAULT_DB):
+    from superhuman.team.workplans import boundary
+    from superhuman.departments.store import readonly
+    with readonly(path) as db:
+        if action.get('ordinal',0) and action['ordinal']<=boundary(db,action['project_id']):
+            raise ValueError('This action belongs to an earlier plan and cannot verify current work')
     data=json.loads(action['result_json'] or '{}');tool=action['tool'];args=json.loads(action['arguments_json'])
+    if tool=='workforce.review_source':
+        from superhuman.team.reviews import verify_receipt
+        verify_receipt(action,path)
     if data.get('assurance_receipt'):
         from superhuman.assurance.tools import verify_receipt
         verify_receipt(data['assurance_receipt'],path)

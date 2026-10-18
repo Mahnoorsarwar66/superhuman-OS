@@ -352,6 +352,14 @@ def review(pid,tid,action,note='',path=DEFAULT_DB):
     from superhuman.team.work import owned_run
     owned=owned_run(pid,path)
     if owned and assignment(owned['id'],path):raise ValueError('Use the milestone review workflow for this assignment')
+    if owned:
+        from superhuman.team.reviews import governed
+        with connect(path) as db:independent=governed(db,owned['id'])
+        if independent:
+            from superhuman.team.work import review as team_review
+            if tid!='final' or action not in ('approve','reject'):raise ValueError('Use the team deliverable review controls')
+            team_review(owned['id'],owned['version'],action=='approve',note,actor='owner',path=path)
+            return get(pid,path)
     if action not in ('approve','reject') or len(note)>2000:raise ValueError('Invalid review')
     with connect(path) as db:
         db.execute('BEGIN IMMEDIATE')

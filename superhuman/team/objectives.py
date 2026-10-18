@@ -35,6 +35,23 @@ def initialize(path=p.DEFAULT_DB):
         CREATE TABLE IF NOT EXISTS workforce_objective_costs(
           cost_id TEXT PRIMARY KEY, objective_id TEXT NOT NULL, task_id TEXT NOT NULL);
         CREATE INDEX IF NOT EXISTS workforce_objective_ledger ON workforce_objective_costs(objective_id);
+        CREATE TABLE IF NOT EXISTS workforce_plan_changes(
+          id TEXT PRIMARY KEY, objective_id TEXT NOT NULL, submission_key TEXT UNIQUE NOT NULL,
+          payload_json TEXT NOT NULL, snapshot_json TEXT NOT NULL, digest TEXT NOT NULL,
+          state TEXT NOT NULL DEFAULT 'prepared', applied_plan INTEGER, receipt_turn_id TEXT,
+          created_at TEXT NOT NULL, applied_at TEXT);
+        CREATE TABLE IF NOT EXISTS workforce_task_plan_controls(
+          task_id TEXT PRIMARY KEY, objective_id TEXT NOT NULL, plan_version INTEGER NOT NULL,
+          action_boundary INTEGER NOT NULL, approved INTEGER NOT NULL DEFAULT 0);
+        CREATE TABLE IF NOT EXISTS workforce_review_policies(
+          task_id TEXT PRIMARY KEY, rubric_json TEXT NOT NULL, version INTEGER NOT NULL);
+        CREATE TABLE IF NOT EXISTS workforce_reviews(
+          id TEXT PRIMARY KEY, source_task_id TEXT NOT NULL,
+          reviewer_task_id TEXT UNIQUE NOT NULL, reviewer TEXT NOT NULL,
+          fingerprint TEXT NOT NULL, source_json TEXT NOT NULL, source_text TEXT NOT NULL,
+          report_json TEXT, verdict TEXT, reviewer_result_json TEXT,
+          applied_revision INTEGER NOT NULL DEFAULT 0, created_at TEXT NOT NULL,
+          UNIQUE(source_task_id,fingerprint,reviewer));
         ''')
 
 
@@ -87,6 +104,15 @@ def reason(db, objective, capacity=False, task_id=None):
     if capacity and consumed['requests'] >= objective['max_requests']:
         return 'Objective request allowance exhausted'
     if task_id:
+        from .reviews import execution_reason
+        item = db.execute('SELECT * FROM team_tasks WHERE id=?', (task_id,)).fetchone()
+        review_block = execution_reason(db, dict(item)) if item else ''
+        if review_block:
+            return review_block
+        from .workplans import approval_reason
+        approval = approval_reason(db, task_id)
+        if approval:
+            return approval
         other = db.execute("SELECT 1 FROM workforce_objective_tasks m JOIN team_tasks t ON t.id=m.task_id "
                            "WHERE m.objective_id=? AND t.id<>? AND (t.state='dispatched' OR EXISTS "
                            "(SELECT 1 FROM project_tasks r WHERE r.project_id=t.run_id AND r.status='running'))",
@@ -116,7 +142,7 @@ def reserve_check(db, task_id, amount):
     if not objective:
         return None
     from .budget import BudgetBlocked
-    problem = reason(db, objective, capacity=True)
+    problem = reason(db, objective, capacity=True, task_id=task_id)
     consumed = usage(db, objective['id'])
     if not problem and consumed['cost'] + amount > objective['max_cost']:
         problem = 'Insufficient unreserved dollars in the objective allowance'
@@ -175,10 +201,10 @@ def invoke_check(cost_id, path=p.DEFAULT_DB):
     with readonly(path) as db:
         if 'workforce_objective_costs' not in tables(db):
             return
-        row = db.execute('SELECT o.* FROM workforce_objectives o JOIN workforce_objective_costs c '
+        row = db.execute('SELECT o.*,c.task_id AS billing_task_id FROM workforce_objectives o JOIN workforce_objective_costs c '
                          'ON o.id=c.objective_id WHERE c.cost_id=?', (cost_id,)).fetchone()
         if row:
-            problem = reason(db, dict(row))
+            problem = reason(db, dict(row),task_id=row['billing_task_id'])
             if problem:
                 raise BudgetBlocked(problem)
 
@@ -212,6 +238,8 @@ def verify_accepted(ident, path=p.DEFAULT_DB):
         if not members or any(task['state'] != 'completed' for task in members):
             raise ValueError('Every objective assignment must pass its existing output review')
         for task in members:
+            from .reviews import acceptance_guard
+            acceptance_guard(db, task['id'])
             result = db.execute("SELECT result_json FROM project_tasks WHERE project_id=? AND id='final' AND status='approved'",
                                 (task['run_id'],)).fetchone()
             if not result:
@@ -326,32 +354,47 @@ def amend(ident, expected, cost, requests, seconds, revisions, note, path=p.DEFA
 
 def revise_plan(ident, expected, brief, criteria, impact, path=p.DEFAULT_DB):
     """Initial planning revisions only; active-work impact propagation is WF03 work."""
+    get(ident, path)
+    with p.connect(path) as db:
+        db.execute('BEGIN IMMEDIATE')
+        _revise_plan(db, ident, expected, brief, criteria, impact)
+
+
+def _revise_plan(db, ident, expected, brief, criteria, impact, conversation_job=None):
+    """Internal owner transaction; conversation callers must bind their source job."""
     from . import store
     brief = store.text(brief, 5000, 'Owner brief', True)
     criteria = store.text(criteria, 1500, 'Success criteria', True)
     impact = store.text(impact, 2000, 'Impact assessment', True)
-    get(ident, path)
-    with p.connect(path) as db:
-        db.execute('BEGIN IMMEDIATE')
-        row = db.execute('SELECT * FROM workforce_objectives WHERE id=?', (ident,)).fetchone()
-        if not row or row['version'] != expected or row['state'] not in ('active', 'paused'):
-            raise ValueError('Objective changed or cannot be revised now')
-        members = db.execute('SELECT t.* FROM team_tasks t JOIN workforce_objective_tasks m ON t.id=m.task_id '
-                             'WHERE m.objective_id=?', (ident,)).fetchall()
-        if len(members) != 1 or members[0]['run_id']:
-            raise ValueError('Started work or handoffs require a reviewed impact migration; pause the objective first')
-        if 'conversation_jobs' in tables(db) and db.execute(
-                'SELECT 1 FROM conversation_jobs WHERE task_id=?', (row['root_task_id'],)).fetchone():
-            raise ValueError('Conversation brief changes require the conversation revision workflow; original authority is preserved')
-        consume_revision(db, row['root_task_id'])
-        version = row['current_plan'] + 1
-        db.execute('INSERT INTO workforce_objective_plans VALUES(?,?,?,?,?,?)',
-                   (ident, version, brief, criteria, impact, p.stamp()))
-        db.execute("UPDATE workforce_objectives SET current_plan=?,last_signature='' WHERE id=?", (version, ident))
-        db.execute('UPDATE workforce_objective_tasks SET plan_version=? WHERE objective_id=?', (version, ident))
-        db.execute("UPDATE team_tasks SET instruction=?,acceptance=?,owner_grant=0,state='queued',version=version+1,updated_at=? WHERE id=?",
-                   (brief, criteria, p.stamp(), row['root_task_id']))
-        store.event(db, 'owner', 'objective_plan_revised', {'objective_id': ident, 'plan_version': version, 'impact': impact})
+    row = db.execute('SELECT * FROM workforce_objectives WHERE id=?', (ident,)).fetchone()
+    if not row or row['version'] != expected or row['state'] not in ('active', 'paused'):
+        raise ValueError('Objective changed or cannot be revised now')
+    members = db.execute('SELECT t.* FROM team_tasks t JOIN workforce_objective_tasks m ON t.id=m.task_id '
+                         'WHERE m.objective_id=?', (ident,)).fetchall()
+    if (len(members) != 1 or members[0]['run_id'] or members[0]['attempts']
+            or members[0]['state'] not in ('queued', 'ready', 'owner_review')):
+        raise ValueError('Started work or handoffs require a reviewed impact migration; pause the objective first')
+    if ('milestone_projects' in tables(db) and db.execute(
+            'SELECT 1 FROM milestone_projects WHERE project_id=?', (row['project_id'],)).fetchone()
+            or 'milestone_assignments' in tables(db) and db.execute(
+                'SELECT 1 FROM milestone_assignments WHERE task_id=?', (row['root_task_id'],)).fetchone()):
+        raise ValueError('Milestone revisions require a reviewed work-package migration')
+    job = db.execute('SELECT * FROM conversation_jobs WHERE task_id=?', (row['root_task_id'],)).fetchone() if 'conversation_jobs' in tables(db) else None
+    if job and job['id'] != conversation_job:
+        raise ValueError('Conversation brief changes require the conversation revision workflow; original authority is preserved')
+    if conversation_job and (not job or job['id'] != conversation_job):
+        raise ValueError('Conversation source changed')
+    if db.execute("SELECT 1 FROM workforce_objective_costs o JOIN team_costs c ON c.id=o.cost_id WHERE o.objective_id=? AND c.state='reserved'", (ident,)).fetchone():
+        raise ValueError('An objective provider request is in flight; wait before revising')
+    consume_revision(db, row['root_task_id'])
+    version = row['current_plan'] + 1
+    db.execute('INSERT INTO workforce_objective_plans VALUES(?,?,?,?,?,?)',
+               (ident, version, brief, criteria, impact, p.stamp()))
+    db.execute("UPDATE workforce_objectives SET current_plan=?,last_signature='' WHERE id=?", (version, ident))
+    db.execute('UPDATE workforce_objective_tasks SET plan_version=? WHERE objective_id=?', (version, ident))
+    db.execute("UPDATE team_tasks SET instruction=?,acceptance=?,owner_grant=0,state='queued',version=version+1,updated_at=? WHERE id=?",
+               (brief, criteria, p.stamp(), row['root_task_id']))
+    store.event(db, 'owner', 'objective_plan_revised', {'objective_id': ident, 'plan_version': version, 'impact': impact})
 
 
 def control(ident, expected, action, note, path=p.DEFAULT_DB):
@@ -382,6 +425,8 @@ def control(ident, expected, action, note, path=p.DEFAULT_DB):
             if consumed['unresolved'] or consumed['cost'] > row['max_cost']:
                 raise ValueError('Resolve outstanding accounting before objective completion')
             for task in members:
+                from .reviews import acceptance_guard
+                acceptance_guard(db, task['id'])
                 result = db.execute("SELECT result_json FROM project_tasks WHERE project_id=? AND id='final' AND status='approved'",
                                     (task['run_id'],)).fetchone()
                 if not result:

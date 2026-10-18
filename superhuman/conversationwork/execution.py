@@ -7,7 +7,15 @@ from .bridge import job_for_run
 def decision(run,path=p.DEFAULT_DB):
     job=job_for_run(run['project_id'],path)
     if not job:return None
-    if run['actions']:raise ValueError('Conversation work has a prior attempt; inspect it rather than automatically replaying a paid tool')
+    if any(a['status']!='superseded' for a in run['actions']):raise ValueError('Conversation work has a prior attempt; inspect it rather than automatically replaying a paid tool')
+    from .revisions import current
+    bound=current(job,path)
+    # Keep the initial request immutable; execution follows explicit owner plans.
+    if bound and bound['plan']['version']>1:
+        job=dict(job,request=bound['plan']['brief']+'\nSuccess criteria:\n'+bound['plan']['criteria'])
+    from superhuman.team.reviews import revision_notes
+    notes=revision_notes(job['task_id'],path)
+    if notes:job=dict(job,request=job['request']+notes)
     tool='research.web' if job['kind']=='research' else 'draft.create'
     plan=json.loads(job['plan']);args={'title':plan['title'],('query' if job['kind']=='research' else 'instructions'):job['request']+('\nUse current official primary sources first; include source URLs, dates and evidence limitations. This is research only, not a visa application or external action.' if job['kind']=='research' else '\nCreate only the requested local draft. Do not send or publish it.')}
     if job['kind']=='collab' and re.search(r'\b(above|earlier|previous|report|research|findings|results|summari[sz]e)\b',job['request'],re.I):

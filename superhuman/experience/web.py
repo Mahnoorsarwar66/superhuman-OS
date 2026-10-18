@@ -214,6 +214,14 @@ def install(app):
         if not any(s['id']==suggestion_id for s in suggestions):raise HTTPException(404,'Suggestion not found in room')
         try:tid=store.approve(suggestion_id,expected_hash,project_id,title,instruction);return redirect('/team/tasks/'+tid)
         except ValueError as exc:error(exc)
+    @app.post('/team-room/{ident}/objectives/{objective_id}/revise')
+    def revise_objective(ident:str,objective_id:str,version:int=Form(...),room_version:int=Form(...),
+                         brief:str=Form(...),criteria:str=Form(...),impact:str=Form(...),submission_key:str=Form(...)):
+        from superhuman.conversationwork.revisions import submit
+        try:
+            turn_id=submit(ident,objective_id,version,room_version,brief,criteria,impact,submission_key)
+            return redirect('/team-room/'+ident+'#turn-'+turn_id)
+        except ValueError as exc:error(exc)
     @app.get('/inboxes')
     def inbox_screen(account:str='all',state:str='all',selected:str='',q:str='',page:int=1):return inbox_home(account,state,selected,q,page)
     @app.post('/inbox-review')

@@ -42,8 +42,9 @@ def prompt(run):
     project=run['project'];selection=select_context(project['workstream'],project['objective'],project['details'])
     history=[]
     for a in run['actions'][-12:]:
+        if a['status']=='superseded':continue
         result=json.loads(a['result_json'] or '{}')
-        history.append({'id':a['id'],'tool':a['tool'],'status':a['status'],'arguments':json.loads(a['arguments_json']),'observation_excerpt':store.encode(result)[:30000 if a['tool'] in ('storage.pdf_pages','milestone.read_output','assurance.workspace') else 6000],'verification':json.loads(a['verification_json'] or '{}')})
+        history.append({'id':a['id'],'tool':a['tool'],'status':a['status'],'arguments':json.loads(a['arguments_json']),'observation_excerpt':store.encode(result)[:120000 if a['tool']=='workforce.review_source' else 30000 if a['tool'] in ('storage.pdf_pages','milestone.read_output','assurance.workspace') else 6000],'verification':json.loads(a['verification_json'] or '{}')})
     body={'objective':project['objective'],'instructions':project['details'],'department':project['workstream'],'allowed_tools':run['allowed_tools'],'required_tools':run['required_tools'],'remaining_model_requests':project['max_calls']-project['used_calls'],'remaining_decision_steps':run['max_actions']-len(run['actions']),'tools':tools.describe(),'history':history,'owner_control_notes':[json.loads(e['detail_json']).get('note','') for e in reversed(run['events'][:12]) if e['action'] in ('resume','approve_action')], 'owner_preferences':selection['preferences'],'untrusted_references':selection['references']}
     from superhuman.team.work import owned_run,employee_context
     employee_task=owned_run(run['project_id'])
@@ -117,13 +118,16 @@ def run_one(pid,path=p.DEFAULT_DB,client=None):
     pending=next((a for a in reversed(run['actions']) if a['status'] in ('approved','budget_wait')),None)
     stale=False
     with p.connect(path) as db:
-        db.execute('BEGIN IMMEDIATE');current=db.execute('SELECT state FROM agentic_runs WHERE project_id=?',(pid,)).fetchone()
-        if current['state'] not in ('ready','budget_blocked'):
+        db.execute('BEGIN IMMEDIATE');current=db.execute('SELECT state,version FROM agentic_runs WHERE project_id=?',(pid,)).fetchone()
+        if current['state'] not in ('ready','budget_blocked') or current['version']!=run['version']:
             db.execute("UPDATE project_tasks SET status=CASE WHEN status='running' THEN ? ELSE status END,token=NULL WHERE project_id=? AND token=?",('cancelled' if current['state']=='cancelled' else 'pending',pid,task['token']));stale=True
         else:store.update(db,pid,'running')
     if stale:return task_after(pid,path)
     limited=p.LimitedClient(actual,pid,path,run['project']['max_calls']-run['project']['used_calls'])
     trace={};aid=None;decision=None
+    from superhuman.conversationwork.bridge import job_for_run
+    if job_for_run(pid,path) and len(run['actions'])+(1 if pending else 2)>run['max_actions']:
+        return settle(pid,task['token'],None,'stopped',{}, {'verified':False,'reason':'Conversation work needs an action slot for its tool and its completion record'},path,'step_limit','Insufficient remaining action slots; inspect the task step limit')
     if pending:
         aid=pending['id'];name=pending['tool'];args=json.loads(pending['arguments_json']);approved_once=True
     else:

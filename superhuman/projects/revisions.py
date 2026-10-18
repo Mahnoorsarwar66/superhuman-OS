@@ -87,6 +87,11 @@ def commit(project,task,result,text,note,action,assessment,path,output=None):
     if not note.strip() or len(note)>2000:raise ValueError('Provide a revision/revalidation note <=2000 characters')
     initialize(path)
     pid=project['id'];tid=task['id'];rid=uuid4().hex[:12]
+    from superhuman.team.work import owned_run
+    from superhuman.team.reviews import governed
+    with e.connect(path) as db:
+        owned=owned_run(pid,path)
+        if owned and governed(db,owned['id']):raise ValueError('Use the independent review rejection and same-run revision workflow for this deliverable')
     new_output=output or task['output']
     content_hash=hashlib.sha256(text.encode()).hexdigest()
     new_result=dict(result)
