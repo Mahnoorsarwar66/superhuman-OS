@@ -8,7 +8,7 @@ STYLE='''*{box-sizing:border-box}body{margin:0;background:#f4f6f1;color:#18352d;
 
 def page(body,title='Superhuman',signed_in=True):
     controls='<form method="post" action="/logout"><button>Sign out</button></form>' if signed_in else ''
-    nav='<nav><a href="/">Today</a><a href="/projects">Projects</a><a href="/tools">Files</a><a href="/documents">Documents</a><a href="/coding">Coding</a></nav>' if signed_in else ''
+    nav='<nav><a href="/">Today</a><a href="/projects">Projects</a><a href="/tools">Files</a><a href="/documents">Documents</a><a href="/coding">Coding</a><a href="/memory">Memory</a><a href="/talk">Talk</a><a href="/tasks">Tasks</a><a href="/calendar">Calendar</a><a href="/meetings">Meetings</a><a href="/research-desk">Research</a><a href="/inboxes">Inboxes</a><a href="/briefing">Briefing</a></nav>' if signed_in else ''
     return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(title)+'</title><style>'+STYLE+'</style></head><body><header><a href="/"><strong>superhuman.</strong></a>'+controls+'</header><main>'+nav+body+'</main></body></html>'
 
 
@@ -20,3 +20,5 @@ LABELS={'new':'Ready to plan','plan_review':'Plan needs approval','active':'In p
 
 
 def label(value):return LABELS.get(value,value.replace('_',' ').capitalize())
+
+# knowledge-v110

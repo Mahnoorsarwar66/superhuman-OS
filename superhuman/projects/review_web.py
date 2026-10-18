@@ -72,9 +72,11 @@ def task_html(pid, task):
     errors += result.get('project_quality_checks', [])
     report = result.get('quality_report', {})
     if isinstance(report, dict): errors += report.get('errors', [])
-    if assessment: errors += assessment['errors']
+    # Current assessment is displayed separately from historical stored findings.
     errors = list(dict.fromkeys(str(error) for error in errors if error))
-    check_view = ('<p>Current local checks: '+('Passed' if assessment['passes'] else 'Blocked')+'</p>'+dump(assessment)) if assessment else '<p>Current local checks have not been evaluated.</p>'
+    check_view = ('<p>Saved approval records remain historical; current checks assess this stored draft against current rules. A failed check does not silently rewrite approval history.</p>' if task['status']=='approved' else '') + ('<p>Current local checks: '+('Passed' if assessment['passes'] else 'Blocked')+'</p>'+dump(assessment)) if assessment else '<p>Current local checks have not been evaluated.</p>'
+    if result.get('execution_evidence'):
+        check_view+='<details><summary>Execution evidence (separate from deliverable)</summary>'+dump(result['execution_evidence'])+'<p>Saved tool integrity is not proof of factual correctness or owner approval.</p></details>'
     if result.get('original_generation_quality_report'):
         check_view += '<details><summary>Archived generation report</summary>'+dump(result['original_generation_quality_report'])+'</details>'
     controls = ''
@@ -87,7 +89,7 @@ def task_html(pid, task):
         controls += '<form method="post" action="/projects/'+esc(pid)+'/tasks/'+esc(tid)+'/local">'+common+'<label>Revalidation note<input name="note" maxlength="2000" required></label><button name="action" value="revalidate">Revalidate stored draft</button></form>'
     entries = history(pid, tid)
     audit = ''.join('<section><p>'+esc(row['created_at'])+' | '+esc(row['action'])+'</p><p>'+esc(row['note'])+'</p><p>Invalidated tasks: '+esc(', '.join(x['id'] for x in data(row['invalidated_json'], [])))+'</p></section>' for row in entries) or '<p>No local revisions recorded.</p>'
-    return '<section class="panel" style="margin-top:20px"><h2>'+esc(task['title'])+'</h2><p>Status: <strong>'+esc(task['status'])+'</strong> | Dependencies: '+esc(task['deps'])+'</p><p>Last review: '+esc(task.get('review_note') or 'None')+'</p><h3>Quality findings</h3>'+(''.join('<p>'+esc(x)+'</p>' for x in errors) or '<p>No stored quality errors.</p>')+check_view+'<h3>Deliverable</h3><pre>'+esc(content or 'No draft yet.')+'</pre>'+controls+'<details><summary>Context recorded at generation</summary>'+context_html(result.get('context_selection'))+'</details><details><summary>Local revision history ('+str(len(entries))+')</summary>'+audit+'</details><p>Factual accuracy is not established by local formatting checks.</p></section>'
+    return '<section id="task-'+esc(tid)+'" class="panel" style="margin-top:20px"><h2>'+esc(task['title'])+'</h2><p>Status: <strong>'+esc(task['status'])+'</strong> | Dependencies: '+esc(task['deps'])+'</p><p>Last review: '+esc(task.get('review_note') or 'None')+'</p><h3>Stored quality findings</h3>'+(''.join('<p>'+esc(x)+'</p>' for x in errors) or '<p>No stored quality errors.</p>')+check_view+'<h3>Deliverable</h3><pre>'+esc(content or 'No draft yet.')+'</pre>'+controls+'<details><summary>Context recorded at generation</summary>'+context_html(result.get('context_selection'))+'</details><details><summary>Local revision history ('+str(len(entries))+')</summary>'+audit+'</details><p>Factual accuracy is not established by local formatting checks.</p></section>'
 
 @app.get('/projects/{pid}')
 def detail(pid: str):
@@ -99,7 +101,7 @@ def detail(pid: str):
     elif project['status'] == 'plan_review':
         controls = '<form method="post" action="/projects/'+esc(pid)+'/approve-plan"><button>Approve local plan</button></form>'
     preview = select_context(project['workstream'], project['objective'], project['details'])
-    return web.page('<h1>'+esc(project['objective'])+'</h1><p>Project status: <strong>'+esc(project['status'])+'</strong> | API attempts: '+str(project['used_calls'])+'/'+str(project['max_calls'])+'</p><p>'+esc(project['details'])+'</p><p>'+esc(project.get('error') or '')+'</p>'+controls+'<details><summary>Plan</summary>'+dump(data(project['plan_json'], {}))+'</details><details><summary>Current objective context preview</summary><p>This is a fresh preview for the objective. Recorded task traces below show what was selected for each generated draft.</p>'+context_html(preview['trace'])+'</details><p>Worker command: <code>python -m superhuman.projects.cli worker '+esc(pid)+'</code></p><p>Workers run separately. Draft approval does not authorize external actions.</p>'+''.join(task_html(pid, task) for task in project['tasks']), 'Project review | v1.4')
+    return web.page('<h1>'+esc(project['objective'])+'</h1><p>Project status: <strong>'+esc(project['status'])+'</strong> | API attempts: '+str(project['used_calls'])+'/'+str(project['max_calls'])+'</p><p>'+esc(project['details'])+'</p><p>'+esc(project.get('error') or '')+'</p>'+controls+'<details><summary>Plan</summary>'+dump(data(project['plan_json'], {}))+'</details><details><summary>Current objective context preview</summary><p>This is a fresh preview for the objective. Recorded task traces below show what was selected for each generated draft.</p>'+context_html(preview['trace'])+'</details><p>Worker command: <code>python -m superhuman.projects.cli worker '+esc(pid)+'</code></p><p>Workers run separately. Draft approval does not authorize external actions.</p>'+''.join(task_html(pid, task) for task in project['tasks']), 'Project review')
 
 @app.get('/projects/{pid}/tasks/{tid}/download')
 def download(pid: str, tid: str):

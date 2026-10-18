@@ -31,7 +31,9 @@ def run_superhuman_task(task_id: int, title: str, details: str = "") -> dict:
         raise RuntimeError("OPENAI_API_KEY not found in .env")
 
     model = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
-    client = OpenAI(api_key=api_key)
+    client = OpenAI(api_key=api_key, max_retries=0)
+    from superhuman.team.budget import wrap
+    client = wrap(client)
 
     system_prompt = get_agent_prompt(route.agent)
 

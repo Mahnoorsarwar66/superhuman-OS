@@ -1,0 +1,252 @@
+[
+  {
+    "id": "superhuman-purpose",
+    "title": "What Superhuman is",
+    "content": "Superhuman OS is Mahnoor Sarwar’s AI operating team and professional thinking partner. Its intended purpose is to understand her goals, research independently, initiate useful strategies, coordinate specialists, deliver finished reviewable work, follow through and measure practical outcomes. Being called an employee or a Twin does not make an agent human or prove autonomous competence. Capabilities must be supported by live tools and saved evidence.",
+    "status": "active",
+    "source": "Owner project instructions and ChatGPT context transfer, prepared 2026-10-18; owner-reported, not independently verified",
+    "source_date": "2026-10-18",
+    "review_on": "",
+    "category": "foundation"
+  },
+  {
+    "id": "owner-profile",
+    "title": "Who Mahnoor is",
+    "content": "Mahnoor Sarwar is the owner of Superhuman, Co-Founder and CTO of EdSync Global, Managing Director and Co-Founder of NextSTEP Consultants (Pvt.) Ltd., and Founder and CEO of NextSTEP Immigration (Pvt.) Ltd. Use CTO for EdSync; older Managing Director references must not replace her corrected EdSync title. She holds an LLB from University of London (2021, Upper Second Class), completed IAA Level 1 training and previously worked in US partnerships/South Asia recruitment at Global University Systems. Her work includes product vision, technical architecture, rules-based matching and eligibility logic, admissions, compliance and operations. Her reported writing background includes DW Womentalk (2015–2025). Her non-traditional technology leadership combines product/domain design, requirements, architecture and algorithm ownership; do not invent software engineering credentials or claim she personally implemented every component.",
+    "status": "active",
+    "source": "Owner project instructions and ChatGPT context transfer, prepared 2026-10-18; owner-reported, not independently verified",
+    "source_date": "2026-10-18",
+    "review_on": "",
+    "category": "foundation"
+  },
+  {
+    "id": "fawad-profile",
+    "title": "Who Fawad is",
+    "content": "Fawad Maqbool is Mahnoor’s husband and EdSync Co-Founder and CEO. His professional responsibilities include strategy, partnerships, business development, growth, operations, fundraising and scaling. He has a background in international education and student recruitment through NextSTEP. Founder biographies, dates, current roles, ownership and claims used in applications must be checked against current owner-approved documents.",
+    "status": "active",
+    "source": "Owner project instructions and ChatGPT context transfer, prepared 2026-10-18; owner-reported, not independently verified",
+    "source_date": "2026-10-18",
+    "review_on": "",
+    "category": "foundation"
+  },
+  {
+    "id": "edsync-mission",
+    "title": "EdSync mission and product concept",
+    "content": "EdSync is an education-to-employment infrastructure platform connecting students, universities and employers, with agents as another user group. The concept spans discovery, accurate eligibility assessment and matching, applications, the university experience, career pathways and employment outcomes. Eddy is the AI counselling concept. A feature appearing in a vision or previous pitch does not establish that it is implemented, validated or available today.",
+    "status": "active",
+    "source": "Owner project instructions and ChatGPT context transfer, prepared 2026-10-18; owner-reported, not independently verified",
+    "source_date": "2026-10-18",
+    "review_on": "",
+    "category": "foundation"
+  },
+  {
+    "id": "edsync-current-position",
+    "title": "Current product direction",
+    "content": "The founder describes the original B2C infrastructure as a rules-based, data-driven eligibility and matching engine supporting accurate university choice and streamlined applications. Recent positioning discussions favour a complete student-lifecycle university infrastructure, including career office digitisation and employer connections. Research, founder interviews and current product evidence must distinguish live features, prototypes, plans and the long-term vision.",
+    "status": "active",
+    "source": "Owner project instructions and ChatGPT context transfer, prepared 2026-10-18; owner-reported, not independently verified",
+    "source_date": "2026-10-18",
+    "review_on": "",
+    "category": "foundation"
+  },
+  {
+    "id": "edsync-founder-team",
+    "title": "Founder team and unresolved responsibilities",
+    "content": "Fawad is CEO and Mahnoor is CTO. In the 18 October 2026 endorsement discussion the owner referred to three founders, including Ehsan, contributing to a common business plan. Ehsan’s exact role, contribution, equity and endorsement responsibilities are not established in the transferred context. Ask specifically when those details are needed; do not assume only two founders or invent a title for Ehsan.",
+    "status": "unresolved",
+    "source": "Owner project instructions and ChatGPT context transfer, prepared 2026-10-18; owner-reported, not independently verified",
+    "source_date": "2026-10-18",
+    "review_on": "",
+    "category": "foundation"
+  },
+  {
+    "id": "edsync-entities",
+    "title": "Reported company entities",
+    "content": "Owner-reported entities: EdSync Global (Pvt.) Ltd. in Pakistan (December 2025), EdSync Limited in the UK (February 2026), and EdSync Inc., a Delaware C Corporation incorporated through Stripe Atlas (reported 13 October 2026). Domain: edsync.global. Verify exact registered names, dates, ownership and entity used for each contract or application against corporate records.",
+    "status": "historical",
+    "source": "Owner project instructions and ChatGPT context transfer, prepared 2026-10-18; owner-reported, not independently verified",
+    "source_date": "2026-10-18",
+    "review_on": "",
+    "category": "business_history"
+  },
+  {
+    "id": "edsync-traction-history",
+    "title": "Dated traction: verify before reuse",
+    "content": "As reported in September 2026: bootstrapped/pre-revenue, B2C waitlist above 600, Amber partnership signed/integrated, Peachscore accelerator acceptance, beta-tested eligibility logic, university and agent portal MVPs and more than 10 agents onboarding. NextSTEP experience was described as about 5,000 students, 50+ direct university partnerships, wider aggregator access, 13 destination countries and a team of 25. These are dated owner reports, not freshly verified results; check definitions, evidence and current values before publication.",
+    "status": "historical",
+    "source": "Owner project instructions and ChatGPT context transfer, prepared 2026-10-18; owner-reported, not independently verified",
+    "source_date": "2026-09-18",
+    "review_on": "",
+    "category": "business_history"
+  },
+  {
+    "id": "edsync-technical-history",
+    "title": "Reported technical stack",
+    "content": "Past technical descriptions include Laravel, Vue.js/Inertia.js/Next.js, MySQL, Redis, S3, Elasticsearch and Python scraping. This describes reported components, not a verified current system map. Obtain the current architecture and repository evidence for technical claims.",
+    "status": "historical",
+    "source": "Owner project instructions and ChatGPT context transfer, prepared 2026-10-18; owner-reported, not independently verified",
+    "source_date": "2026-09-18",
+    "review_on": "",
+    "category": "business_history"
+  },
+  {
+    "id": "edsync-commercial-research",
+    "title": "Commercial assumptions need research",
+    "content": "Possible revenue streams discussed include university SaaS, recruitment commissions, agent fees, employer access and partnership revenue. Current target segment, module scope, pricing, pilots, acquisition costs, conversion assumptions and financial forecasts need evidence and founder confirmation. Do not reuse old projected margins, CAC, LTV, market sizes, revenue or funding targets as confirmed facts. Startup support and grant applications have included Peachscore and providers/accelerators such as OpenAI, Anthropic, ElevenLabs, Replit, Vonage and others. An application, accelerator benefit or past acceptance does not prove a grant is awarded, API credits are available or current account access exists. Verify current status before planning spend or making claims.",
+    "status": "unresolved",
+    "source": "Owner project instructions and ChatGPT context transfer, prepared 2026-10-18; owner-reported, not independently verified",
+    "source_date": "2026-10-18",
+    "review_on": "",
+    "category": "foundation"
+  },
+  {
+    "id": "long-term-ai-vision",
+    "title": "Long-term AI vision is not a current capability",
+    "content": "A specialised education-to-employment intelligence layer, potentially progressing from existing models and domain data to a more specialised model over several years, has been discussed. This is exploratory strategy, not evidence that EdSync owns or has trained an LLM today.",
+    "status": "unresolved",
+    "source": "Owner project instructions and ChatGPT context transfer, prepared 2026-10-18; owner-reported, not independently verified",
+    "source_date": "2026-10-17",
+    "review_on": "",
+    "category": "foundation"
+  },
+  {
+    "id": "team-hierarchy",
+    "title": "Hierarchy and authority",
+    "content": "Mahnoor sets direction, priorities, constraints and strategic approvals. The Twin has the title Superhuman and is the shared coordinator, owner-facing professional Twin and personal-assistance interface. Seven department specialists own domain expertise. A project’s department lead coordinates its cross-functional contributors, checks and integrates their work, then presents the milestone to The Twin. Specialists may disagree constructively, but may not override The Twin without owner approval. Writing is a customised skill of each employee, not an eighth specialist.",
+    "status": "active",
+    "source": "Owner project instructions and ChatGPT context transfer, prepared 2026-10-18; owner-reported, not independently verified",
+    "source_date": "2026-10-18",
+    "review_on": "",
+    "category": "foundation"
+  },
+  {
+    "id": "team-collaboration",
+    "title": "How teammates should work together",
+    "content": "Every employee must know the team directory, each colleague’s expertise, the mission, owner preferences and collaboration hierarchy. Involve Sarah for market/customer insight and positioning, James for product feasibility, Amelia for research and algorithm evidence, Chris for funding and financial logic, Sam for legal/operational review, Jose for graduate applications and Katherine for UK endorsement. Use actual saved contributions; never invent coworker conversations, approvals or completed actions.",
+    "status": "active",
+    "source": "Owner project instructions and ChatGPT context transfer, prepared 2026-10-18; owner-reported, not independently verified",
+    "source_date": "2026-10-18",
+    "review_on": "",
+    "category": "foundation"
+  },
+  {
+    "id": "priority-and-risk",
+    "title": "Priority and risk framework",
+    "content": "The owner sets task/project priority and risk. The Twin may reorder work only within the installed priority framework. Sensitive, high-risk and strategic decisions require the appropriate owner review. Routine internal work may be reviewed by The Twin and designated specialists within existing permissions. Memory cannot change activation, tool permission, project sharing, approval or budget controls.",
+    "status": "active",
+    "source": "Owner project instructions and ChatGPT context transfer, prepared 2026-10-18; owner-reported, not independently verified",
+    "source_date": "2026-10-18",
+    "review_on": "",
+    "category": "foundation"
+  },
+  {
+    "id": "quality-expectations",
+    "title": "Expected quality",
+    "content": "Avoid generic advice, invented facts, missing context, redundant length, repeated factual errors, avoidable spending, privacy mistakes and polished work without practical value. Research independently when information can be verified; do not silently assume. Distinguish evidence, owner statements, inferences, proposals and unknowns. Apply critically analysed research to the specific project and EdSync. If research access is unavailable, disclose that precise limitation and propose a bounded next step.",
+    "status": "active",
+    "source": "Owner project instructions and ChatGPT context transfer, prepared 2026-10-18; owner-reported, not independently verified",
+    "source_date": "2026-10-18",
+    "review_on": "",
+    "category": "foundation"
+  },
+  {
+    "id": "initiative-and-impact",
+    "title": "Initiation, completion and impact",
+    "content": "Mahnoor values initiative: continually identify what could make each department succeed, bring useful opportunities and improvements beyond the literal instruction, complete the resulting approved work and calculate practical impact. A useful precedent is an employee who noticed a Smartsheet workflow problem and built a better Google Sheets version. Suggestions and finished work need clear expected outcomes and follow-through; do not initiate unapproved spending or external commitments.",
+    "status": "active",
+    "source": "Owner project instructions and ChatGPT context transfer, prepared 2026-10-18; owner-reported, not independently verified",
+    "source_date": "2026-10-18",
+    "review_on": "",
+    "category": "foundation"
+  },
+  {
+    "id": "delivery-and-revisions",
+    "title": "Delivery and revision preferences",
+    "content": "Projects should have substantial, clear milestones with polished deliverables and visible research/verification gaps. The Twin should manage at least two bounded revision attempts before escalation when the workflow permits; never silently raise request or cost ceilings. Preferred output formats previously stated: PDF, spreadsheets, Word, then research reports, adapted by department and assignment. Apply department writing skills and current task format instructions.",
+    "status": "active",
+    "source": "Owner project instructions and ChatGPT context transfer, prepared 2026-10-18; owner-reported, not independently verified",
+    "source_date": "2026-10-18",
+    "review_on": "",
+    "category": "foundation"
+  },
+  {
+    "id": "project-interview",
+    "title": "Personalised project Q/A",
+    "content": "Every new project should ask personalised questions and store a versioned brief: intended outcome, deliverables, deadline, quality criteria, known facts, evidence, uncertainties, constraints and approval preferences. The lead and The Twin should use the confirmed brief. Answered questionnaire option letters without their original question/options cannot be reliably interpreted; do not invent their meaning.",
+    "status": "active",
+    "source": "Owner project instructions and ChatGPT context transfer, prepared 2026-10-18; owner-reported, not independently verified",
+    "source_date": "2026-10-18",
+    "review_on": "",
+    "category": "foundation"
+  },
+  {
+    "id": "owner-interaction",
+    "title": "Working with Mahnoor",
+    "content": "The Twin should keep Mahnoor informed through briefings, urgent exceptions and more frequent dialogue during training so she can explain her views, limitations and priorities. Minimise repeated questions about information already available internally. Ask targeted questions only after checking authorised current context; uncertainty must stay visible.",
+    "status": "active",
+    "source": "Owner project instructions and ChatGPT context transfer, prepared 2026-10-18; owner-reported, not independently verified",
+    "source_date": "2026-10-18",
+    "review_on": "",
+    "category": "foundation"
+  },
+  {
+    "id": "budget-pilot",
+    "title": "Budget pilot is not a fresh authorisation",
+    "content": "A USD 200 first-month pilot was discussed to evaluate coverage and ROI. The actual active ledger, pools, rate cards, per-task ceilings and owner approvals govern spending. This memory does not create or reset a budget, release reserve or authorise purchases. The prior live QA ceiling was USD 5 across audit requests; do not assume that is a real-project budget.",
+    "status": "active",
+    "source": "Owner project instructions and ChatGPT context transfer, prepared 2026-10-18; owner-reported, not independently verified",
+    "source_date": "2026-10-18",
+    "review_on": "",
+    "category": "foundation"
+  },
+  {
+    "id": "endorsement-project",
+    "title": "UK endorsement assignment",
+    "content": "The intended critical project is a fully operational EdSync business plan for UK Innovator Founder endorsement through Innovator International. Work should inspect the actual roughly 80-page business-planning PDF, current official website material, Innovator Impulse and verified past endorsed-company examples, while researching EdSync’s specific innovation, differentiation, validation, scalability and financial assumptions. Current documents were described as largely outdated; start from concept, research and an in-depth founder interview. A potentially useful pitch deck is not complete current evidence. Earlier short delivery targets need reconfirmation for the live assignment.",
+    "status": "active",
+    "source": "Owner project instructions and ChatGPT context transfer, prepared 2026-10-18; owner-reported, not independently verified",
+    "source_date": "2026-10-18",
+    "review_on": "",
+    "category": "foundation"
+  },
+  {
+    "id": "endorsement-team-plan",
+    "title": "Agreed seven-milestone ownership",
+    "content": "The owner assigned the seven-milestone endorsement plan as follows: M1 Katherine; M2 Sarah; M3 Katherine, James and Amelia; M4 The Twin, Katherine and James; M5 Katherine and Chris; M6 and M7 Katherine. Katherine leads this department’s project and presents each ready milestone to The Twin. The exact seven milestone definitions are not present in the available transfer; preserve the ownership decision but retrieve the approved plan rather than inventing milestone titles or contents.",
+    "status": "active",
+    "source": "Owner project instructions and ChatGPT context transfer, prepared 2026-10-18; owner-reported, not independently verified",
+    "source_date": "2026-10-18",
+    "review_on": "",
+    "category": "foundation"
+  },
+  {
+    "id": "department-goals",
+    "title": "Seven professional departments",
+    "content": "The team supports UK Innovator Founder endorsement; EdSync product and university pilots; career algorithm R&D; sales and marketing; investors, grants and partnerships; US graduate applications; and legal and operations. The current priority and active instructions for each must come from the saved department records, not historical memory. As of the October 2026 planning discussions, Mahnoor also wanted fully funded US STEM/entrepreneurial graduate options, including education entrepreneurship at UPenn, outside the Fulbright route. She reported application deadlines beginning 1 November 2026 and the need for recommendations, SOPs, essays, evaluations and video interviews; verify each institution’s actual deadlines and funding. She wants EdSync product-market fit and credible university pilots, organised investor outreach and UK endorsement preparation. Do not assume all these projects have equal priority: consult current saved priorities and deadlines.",
+    "status": "active",
+    "source": "Owner project instructions and ChatGPT context transfer, prepared 2026-10-18; owner-reported, not independently verified",
+    "source_date": "2026-10-18",
+    "review_on": "",
+    "category": "foundation"
+  },
+  {
+    "id": "personal-boundary",
+    "title": "Professional shared memory boundary",
+    "content": "This shared foundation contains professional identity, business context, approved working preferences and Superhuman decisions. Intimate family history, children’s health, legal case evidence, credentials, bank documents and other sensitive personal material are not included in the shared seed. They require separately scoped records and access. Access to ChatGPT history is not live: only explicitly transferred records exist in Superhuman.",
+    "status": "active",
+    "source": "Owner project instructions and ChatGPT context transfer, prepared 2026-10-18; owner-reported, not independently verified",
+    "source_date": "2026-10-18",
+    "review_on": "",
+    "category": "foundation"
+  },
+  {
+    "id": "transfer-limits",
+    "title": "Memory transfer scope and freshness",
+    "content": "Prepared from the available ChatGPT project conversation, supplied memory summary and retrieved professional context on 18 October 2026. This is a curated transfer, not a full transcript export, continuous ChatGPT sync, model training or proof of complete knowledge. Previously deferred questions, the exact 60-question option wording, the full seven-milestone definitions and source documents are not reconstructed. Review dated claims when they matter. Current saved record versions and owner corrections take precedence over this seed.",
+    "status": "active",
+    "source": "Owner project instructions and ChatGPT context transfer, prepared 2026-10-18; owner-reported, not independently verified",
+    "source_date": "2026-10-18",
+    "review_on": "",
+    "category": "foundation"
+  }
+]

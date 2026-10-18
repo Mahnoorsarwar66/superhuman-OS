@@ -35,6 +35,8 @@ def create_app(settings=None,configured=True):
         body+='<div class="grid"><section class="card"><h2>Give Superhuman a task</h2><form method="post" action="/tasks"><label>Workstream<select name="workstream">'+options()+'</select></label><label>Task type<select name="kind"><option value="collab">Prepare a draft</option><option value="research">Research with sources</option></select></label><label>What should be done?<textarea name="instruction" maxlength="12000" required></textarea></label><small>Drafting allows up to three model requests; research allows one. Your worker processes the task when available.</small><p><button>Create task</button></p></form></section>'
         body+='<section class="card"><h2>Plan a larger objective</h2><form method="post" action="/objectives"><label>Workstream<select name="workstream">'+options()+'</select></label><label>Objective<input name="objective" maxlength="1000" required></label><label>Context and requirements<textarea name="details" maxlength="12000"></textarea></label><label>Model-request limit<input name="max_calls" type="number" min="5" max="100" value="12" required></label><small>Preparing a plan uses one request. You review the plan before execution starts.</small><p><button>Create objective and prepare plan</button></p></form></section></div>'
         body+='<div class="row" style="margin-top:28px"><h2>Projects and tasks</h2><a href="/">Refresh</a></div>'+(cards or '<section class="card"><p>No tasks yet. Start with a clear instruction above.</p></section>')
+        from superhuman.planning.presentation import overview_panel
+        body=overview_panel()+body
         return HTMLResponse(views.page(body))
     @inner.post('/tasks')
     def task(workstream:str=Form(...),kind:str=Form(...),instruction:str=Form(...)):
@@ -73,6 +75,8 @@ def create_app(settings=None,configured=True):
             if t['status']=='needs_review':
                 body+='<form method="post" action="/work/'+views.esc(pid)+'/review"><input type="hidden" name="task" value="'+views.esc(t['id'])+'"><label>Review note<input name="note" maxlength="2000"></label><div class="stack"><button name="action" value="approve">Approve</button><button class="secondary" name="action" value="reject">Request changes</button></div></form>'
             body+='</section>'
+        from superhuman.knowledge.web import feedback_link
+        body += feedback_link(pid)
         return HTMLResponse(views.page(body,p['objective']))
     @inner.post('/projects/{pid}/plan')
     def queue_plan(pid:str):
@@ -89,6 +93,30 @@ def create_app(settings=None,configured=True):
     def pause(paused:str=Form(...)):
         if paused not in ('true','false'):raise HTTPException(400,'Invalid worker state')
         jobs.pause(paused=='true');return RedirectResponse('/',status_code=303)
+    # knowledge-v110
+    from superhuman.knowledge.web import install as install_knowledge
+    install_knowledge(inner)
+    # dialogue-v111
+    from superhuman.dialogue.web import install as install_dialogue
+    install_dialogue(inner)
+    from superhuman.mail.web import install as install_mail
+    install_mail(inner)
+    from superhuman.briefing.web import install as install_briefing
+    install_briefing(inner)
+    from superhuman.mailflow.web import install as install_mailflow
+    install_mailflow(inner)
+    from superhuman.taskdesk.web import install as install_taskdesk
+    install_taskdesk(inner)
+    from superhuman.calendar.web import install as install_calendar
+    install_calendar(inner)
+    from superhuman.meetingdesk.web import install as install_meetingdesk
+    install_meetingdesk(inner)
+    from superhuman.researchdesk.web import install as install_researchdesk
+    install_researchdesk(inner)
+    from superhuman.researchreview.web import install as install_researchreview
+    install_researchreview(inner)
+    from superhuman.navigation.web import install as install_navigation
+    install_navigation(inner)
     return Boundary(inner,settings,views.login)
 
 

@@ -32,7 +32,10 @@ def run_plan(path=p.DEFAULT_DB,client=None):
     initialize(path)
     with p.connect(path) as db:
         db.execute('BEGIN IMMEDIATE')
-        row=db.execute("SELECT project_id FROM hosted_plans WHERE status='queued' ORDER BY rowid LIMIT 1").fetchone()
+        candidates=[r[0] for r in db.execute("SELECT project_id FROM hosted_plans WHERE status='queued' ORDER BY rowid")]
+        from superhuman.repairs.scheduler import order
+        ranked=order(candidates,path)
+        row={'project_id':ranked[0]} if ranked else None
         if not row:return None
         pid=row['project_id'];token=uuid4().hex
         db.execute("UPDATE hosted_plans SET status='running',token=?,started=? WHERE project_id=?",(token,time.time(),pid))

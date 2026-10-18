@@ -111,3 +111,15 @@ def main():
     print(json.dumps(result['trace'] if a.trace_only else result,indent=2))
 
 if __name__=='__main__':main()
+
+
+# knowledge-v110
+_legacy_select_context = select_context
+
+
+def select_context(project, title, details='', max_reference_chars=7000):
+    from superhuman.repairs.context import select
+    result=select(project,title,details,max_reference_chars)
+    from superhuman.team.work import writing
+    result['preferences']+=writing(project)
+    return result

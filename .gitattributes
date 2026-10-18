@@ -1,0 +1,2 @@
+# Preserve captured release bytes so source provenance works on Windows and Linux.
+superhuman/** -text

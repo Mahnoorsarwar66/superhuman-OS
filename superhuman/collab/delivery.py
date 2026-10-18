@@ -1,6 +1,7 @@
 """Scoped delivery policies and checks, without extra model requests."""
 import json
 import re
+import unicodedata
 from .reliability import validate_final
 
 __version__='1.8.1'
@@ -86,20 +87,47 @@ def policy(family,req):
     return text
 
 
-def parse_review(raw,draft,allowed_requirements=None):
+def normalized_quote(value):
+    return ' '.join(unicodedata.normalize('NFKC',value).translate(str.maketrans({'“':'"','”':'"','‘':"'",'’':"'"})).casefold().split())
+
+def review_contract(brief):
+    # Exact sentences/lines from the authoritative task contract, not references.
+    clauses=[]
+    for sentence in re.split(r'\n+|(?<=[.!?])\s+',brief):
+        sentence=sentence.strip()
+        while len(sentence)>1100:
+            stop=sentence.rfind(' ',0,1000)
+            if stop<1:stop=1000
+            clauses.append(sentence[:stop]);sentence=sentence[stop:].lstrip()
+        if sentence:clauses.append(sentence)
+    return {'R'+str(i+1):clause for i,clause in enumerate(dict.fromkeys(clauses))}
+
+def review_schema(catalog):
+    from copy import deepcopy
+    schema=deepcopy(REVIEW_SCHEMA);item=schema['properties']['issues']['items']
+    item['properties'].pop('requirement')
+    item['properties']['requirement_id']={'type':'string','enum':list(catalog)}
+    item['required']=['category','requirement_id','evidence','correction']
+    return schema
+
+
+def parse_review(raw,draft,allowed_requirements=None,catalog=None):
     value=json.loads(raw)
     if not isinstance(value,dict) or set(value)!={'issues'} or not isinstance(value['issues'],list) or len(value['issues'])>10:
         raise ValueError('Invalid reviewer structure')
     allowed={'requirements','unsupported_claim','scope','format','length'}
     for issue in value['issues']:
+        if catalog is not None and isinstance(issue,dict) and set(issue)=={'category','requirement_id','evidence','correction'}:
+            if not isinstance(issue['requirement_id'],str) or issue['requirement_id'] not in catalog:raise ValueError('Reviewer invented a requirement identifier')
+            key=issue.pop('requirement_id');issue['requirement']=catalog[key]
         if not isinstance(issue,dict) or set(issue)!={'category','requirement','evidence','correction'}:
             raise ValueError('Invalid reviewer issue')
         if issue['category'] not in allowed or any(not isinstance(issue[k],str) or len(issue[k])>1200 for k in ('requirement','evidence','correction')):
             raise ValueError('Invalid reviewer issue value')
         if not issue['requirement'].strip() or not issue['correction'].strip():raise ValueError('Reviewer must identify a requirement and correction')
-        if allowed_requirements is not None and issue['requirement'].casefold() not in allowed_requirements.casefold():
+        if allowed_requirements is not None and normalized_quote(issue['requirement']) not in normalized_quote(allowed_requirements):
             raise ValueError('Reviewer invented a requirement instead of quoting the current task contract')
-        if issue['evidence'] and issue['evidence'].casefold() not in draft.casefold():
+        if issue['evidence'] and normalized_quote(issue['evidence']) not in normalized_quote(draft):
             raise ValueError('Reviewer evidence does not occur in the draft')
     return value
 

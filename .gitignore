@@ -9,5 +9,12 @@ data/outputs/
 /data/
 /backups/
 .env.*
+!.env.example
 *-transfer.zip
 *-backup.zip
+
+# Host inventory reports can contain local metadata; keep generated copies private.
+baseline-local.json
+baseline-server.json
+baseline-server-host.json
+.workforce/

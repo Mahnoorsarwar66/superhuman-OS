@@ -26,7 +26,7 @@ def check_text(title,text):
     if not text.strip() or len(text)>100_000:raise ValueError('Use nonempty text under 100,000 characters')
     if re.search(r'[\x00-\x08\x0b\x0c\x0e-\x1f\ud800-\udfff]',title+text):raise ValueError('Text contains unsupported control characters')
 
-def make_docx(path,title,text):
+def _v133_make_docx(path,title,text):
     from docx import Document
     from docx.shared import Inches,Pt,RGBColor
     doc=Document();section=doc.sections[0]
@@ -69,7 +69,7 @@ def pdf_fonts(text):
     if any(ord(char)>126 for char in text):raise ValueError('A Unicode font is unavailable. Export Word or install Arial/DejaVu Sans.')
     return 'Helvetica','Helvetica-Bold'
 
-def make_pdf(path,title,text):
+def _v133_make_pdf(path,title,text):
     from reportlab.lib import colors
     from reportlab.lib.pagesizes import A4
     from reportlab.lib.styles import ParagraphStyle
@@ -154,3 +154,12 @@ def artifact(project,rid):
     path=folder/filename
     if path.is_symlink() or not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest()!=record.get('sha256'):raise ValueError('Export changed or missing')
     return path,record
+
+
+def make_docx(path,title,text):
+    from superhuman.practice.exports import docx
+    return docx(path,title,text)
+
+def make_pdf(path,title,text):
+    from superhuman.practice.exports import pdf
+    return pdf(path,title,text)

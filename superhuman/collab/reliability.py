@@ -12,7 +12,7 @@ def requirements_for(details,provided=None):
     if not req.get('max_words'):
         # Only the current brief, not identity or dependency source excerpts.
         current=details.split('USER-CURATED IDENTITY',1)[0].split('DEPENDENCY REFERENCES',1)[0]
-        limits=re.findall(r'(?:under|at most|maximum(?: of)?|max|no more than)\s+(\d+)\s+words',current,re.I)
+        limits=re.findall(r'(?:under|fewer than|less than|at most|maximum(?: of)?|max|no more than)\s+(\d+)\s+words',current,re.I)
         if limits:req['max_words']=min(int(x) for x in limits)
     req.setdefault('required_terms',[])
     if req.get('max_words') and (type(req['max_words']) is not int or not 1<=req['max_words']<=5000):
@@ -60,8 +60,8 @@ def render_final(value,forbid=False):
             # Do not guess the meaning of numeric ranges or arithmetic.
             if text[match.start()-1].isdigit() and text[match.end()].isdigit():return match.group()
             return '; '
-        changed=re.sub(r'(?<=\S)[ \t]+[\u2014\u2013][ \t]+(?=\S)',punctuation,text)
-        if changed!=text:changes.append('Replaced spaced em/en dash separators with semicolons')
+        changed=re.sub(r'(?<=\S)[ \t]+[\u2014\u2013-][ \t]+(?=\S)',punctuation,text)
+        if changed!=text:changes.append('Replaced spaced dash separators with semicolons')
         text=changed
     return text,changes
 

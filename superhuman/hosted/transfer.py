@@ -54,6 +54,10 @@ def bundle(root,output):
                 else:raw=path.read_bytes()
                 archive.writestr(relative.as_posix(),raw)
                 manifest['files'].append({'name':relative.as_posix(),'sha256':digest(raw),'bytes':len(raw)})
+            if (root/'superhuman/mail').is_dir():
+                dependency=b'cryptography>=44,<51\n'
+                archive.writestr('requirements-v112.txt',dependency)
+                manifest['files'].append({'name':'requirements-v112.txt','sha256':digest(dependency),'bytes':len(dependency)})
             archive.writestr('bundle-manifest.json',json.dumps(manifest,indent=2))
         os.chmod(temporary,0o600);temporary.replace(output)
     except Exception:
@@ -138,7 +142,7 @@ def restore(archive,target):
                 rel=PurePosixPath(name)
                 if rel.is_absolute() or '..' in rel.parts or '\\' in name or ':' in name or name=='bundle-manifest.json':
                     raise ValueError('Invalid transfer archive path')
-                if rel.parts[0] not in ('superhuman','data','superhuman-deploy-v19','.gitignore','requirements.txt','requirements-v19.txt'):
+                if rel.parts[0] not in ('superhuman','data','superhuman-deploy-v19','.gitignore','requirements.txt','requirements-v19.txt','requirements-v112.txt'):
                     raise ValueError('Unexpected archive content')
                 raw=z.read(name)
                 if len(raw)!=item['bytes'] or digest(raw)!=item['sha256']:raise ValueError('Archive integrity check failed')
@@ -148,3 +152,5 @@ def restore(archive,target):
         if target.exists():target.rmdir()
         stage.rename(target)
     return {'restored_to':str(target),'sessions_revoked':True,'api_calls':0}
+
+# knowledge-v110

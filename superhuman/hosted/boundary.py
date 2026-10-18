@@ -12,8 +12,8 @@ from .auth import Store,COOKIE,LOGIN_COOKIE
 from .config import origin
 
 HEADERS={'Cache-Control':'no-store','X-Content-Type-Options':'nosniff','X-Frame-Options':'DENY',
-         'Referrer-Policy':'same-origin','Permissions-Policy':'camera=(), microphone=(), geolocation=()',
-         'Content-Security-Policy':"default-src 'self'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"}
+         'Referrer-Policy':'same-origin','Permissions-Policy':'camera=(), microphone=(self), geolocation=()',
+         'Content-Security-Policy':"default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"}
 
 
 def csrf_from(body,content_type,headers):
@@ -79,11 +79,15 @@ class Boundary:
             except ValueError:local=False
             if not local:return await reply(PlainTextResponse('Tunnel mode requires a loopback connection',status_code=403))
         if scope['path']=='/favicon.ico' and scope['method'] in ('GET','HEAD'):
-            return await reply(PlainTextResponse('', status_code=204))
+            return await reply(PlainTextResponse('',status_code=204))
         if scope['path']=='/healthz' and scope['method']=='GET':
-            return await reply(JSONResponse({'status':'ok','version':'1.9.0'}))
+            return await reply(JSONResponse({'status':'ok','version':'1.41.0'}))
         store=Store(settings.auth_db)
         if not store.configured():return await reply(PlainTextResponse('Service setup required',status_code=503))
+        if scope['path']=='/hooks/whatsapp':
+            if names.count('x-hub-signature-256')>1:return await reply(PlainTextResponse('Invalid signature headers',status_code=400))
+            from superhuman.comms.providers import webhook
+            return await reply(await webhook(scope,receive,headers))
         cookies=SimpleCookie()
         try:cookies.load(headers.get('cookie',''))
         except CookieError:return await reply(PlainTextResponse('Invalid cookie',status_code=400))
@@ -123,13 +127,6 @@ class Boundary:
             body=b''.join(parts)
             try:supplied=csrf_from(body,headers.get('content-type',''),headers)
             except (ValueError,UnicodeError):supplied=''
-            print("CSRF diagnostic:", {
-                "content_type": headers.get("content-type", ""),
-                "body_bytes": len(body),
-                "csrf_fields": len(parse_qs(body.decode("utf-8", errors="replace")).get("csrf", [])),
-                "received_length": len(supplied),
-                "expected_length": len(session["csrf"])
-            }, flush=True)
             if not supplied or not hmac.compare_digest(supplied.encode('utf-8'),session['csrf'].encode('utf-8')):
                 return await reply(PlainTextResponse('Form expired or invalid; reload the page',status_code=403))
         if login:
@@ -178,3 +175,5 @@ class Boundary:
                     await send(start);await send({'type':'http.response.body','body':content,'more_body':False})
             else:await send(message)
         return await self.inner(scope,replay if unsafe else receive,protected_send)
+
+# knowledge-v110

@@ -1,0 +1,1183 @@
+{
+  "scope": "source only; no data, secrets, installation manifests or service changes",
+  "server_source_fingerprint": "05980ffa2494833617d75c270248b38ff0b954237dad49ea7043106b4d18025d",
+  "source_files": {
+    "superhuman/__init__.py": {
+      "bytes": 31,
+      "sha256": "49ecc487d004f6e6099251be069c37d5d277fc3ac199a1d048b1ee0370100018",
+      "syntax": "pass"
+    },
+    "superhuman/agentic/__init__.py": {
+      "bytes": 93,
+      "sha256": "cf9df5904af40efcfa106347f14963e5b0e09dcd9f7ea4999bc64a3593e9b9ec",
+      "syntax": "pass"
+    },
+    "superhuman/agentic/action_contract.py": {
+      "bytes": 1110,
+      "sha256": "0386c8fad4eb1e0142aac16239274b897f695a6546c34a23560c719f2891edf6",
+      "syntax": "pass"
+    },
+    "superhuman/agentic/engine.py": {
+      "bytes": 19437,
+      "sha256": "9221e75cb2208db98fdb43ee620de448e94d9ab99a859bba46b58f78ad58d586",
+      "syntax": "pass"
+    },
+    "superhuman/agentic/store.py": {
+      "bytes": 12025,
+      "sha256": "4acf1b0322bea8b00be5577f6126fb7b209e9ea094b303aa964c49c726eefd0b",
+      "syntax": "pass"
+    },
+    "superhuman/agentic/tools.py": {
+      "bytes": 20523,
+      "sha256": "8db7900e7876b13509c81dd6b1179c266b9b1df32e14d37dab08809478d7078d",
+      "syntax": "pass"
+    },
+    "superhuman/agentic/web.py": {
+      "bytes": 11489,
+      "sha256": "e07d6b6cec2a33baaf616daeea75451ddcb0f48fe94add932755987870bde6ae",
+      "syntax": "pass"
+    },
+    "superhuman/agents/__init__.py": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "syntax": "pass"
+    },
+    "superhuman/agents/registry.py": {
+      "bytes": 4281,
+      "sha256": "5834d57ca1d7c7d02edcb3ee6401a0572c380d4fef33f355ed79b9606b9eebb5",
+      "syntax": "pass"
+    },
+    "superhuman/assurance/__init__.py": {
+      "bytes": 88,
+      "sha256": "6fa10a6fd2fee0b8f1d993775b7e049bc1b3175068e2b4c0186efb2d2f053768",
+      "syntax": "pass"
+    },
+    "superhuman/assurance/cli.py": {
+      "bytes": 449,
+      "sha256": "732842bc2c9da1d7bdce08ef28a60e0831d89fc382f7aa67d4b391c50a243198",
+      "syntax": "pass"
+    },
+    "superhuman/assurance/engine.py": {
+      "bytes": 2506,
+      "sha256": "6c02dd0cf88f7631fa9f12c1a0a4482c124dcd41f93bd26da73cb99d1b6bd83c",
+      "syntax": "pass"
+    },
+    "superhuman/assurance/evidence.py": {
+      "bytes": 7219,
+      "sha256": "8f0b12a5d719c6777f622f76804f05c4474a64ab13c4abf4a6cfc6027e234122",
+      "syntax": "pass"
+    },
+    "superhuman/assurance/investigations.py": {
+      "bytes": 5868,
+      "sha256": "b8fa8f61c2b7723a711a9c3d40f030cbd20eb5b4bb6188fec9c2569304181916",
+      "syntax": "pass"
+    },
+    "superhuman/assurance/outcomes.py": {
+      "bytes": 10606,
+      "sha256": "b8f62c34c7f00d995c10ff3bf2e0052db8017d3104bb0d3ae76b1fb99e973471",
+      "syntax": "pass"
+    },
+    "superhuman/assurance/store.py": {
+      "bytes": 15780,
+      "sha256": "1742b1d0e4a5698c247d752865f22045fe379e20e366036f053c4df43c27bdbe",
+      "syntax": "pass"
+    },
+    "superhuman/assurance/tools.py": {
+      "bytes": 7810,
+      "sha256": "0dc8df3c602598e0c74df0381525dd5d83d76ade3e0715c3dba61fba3b5cf7af",
+      "syntax": "pass"
+    },
+    "superhuman/assurance/web.py": {
+      "bytes": 20980,
+      "sha256": "882257af8ad012393bc320348d53156c0a109da9c6d11cbd08841df38d53ede0",
+      "syntax": "pass"
+    },
+    "superhuman/assurance/workflow.py": {
+      "bytes": 13992,
+      "sha256": "e47ecf62133a45a53588b620bbf964fc016b77791cf3ebd0b0b4395f52424370",
+      "syntax": "pass"
+    },
+    "superhuman/briefing/__init__.py": {
+      "bytes": 82,
+      "sha256": "7caee32f1148200f08875315b5e3bac6ac00e05aff45b7b0b35ba90ca17cc17c",
+      "syntax": "pass"
+    },
+    "superhuman/briefing/engine.py": {
+      "bytes": 11453,
+      "sha256": "9e2aba89a74b9bb77292f79706181323a6bb4bc63aa482cb9805a3d60ab47875",
+      "syntax": "pass"
+    },
+    "superhuman/briefing/web.py": {
+      "bytes": 11932,
+      "sha256": "db4c73b497cf49f6df23c27312ae24fcb1c0434a2eccb5f8f997dac983dd6fd5",
+      "syntax": "pass"
+    },
+    "superhuman/calendar/__init__.py": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "syntax": "pass"
+    },
+    "superhuman/calendar/export.py": {
+      "bytes": 1248,
+      "sha256": "c0f2edf0522111b9972b12e908911da3cd08d5d72d2948edaf33c8704c089637",
+      "syntax": "pass"
+    },
+    "superhuman/calendar/store.py": {
+      "bytes": 12903,
+      "sha256": "3386d3c43a6cc2a5d4367e062b089495447ee12b19216d1a42ebda478bdb2eca",
+      "syntax": "pass"
+    },
+    "superhuman/calendar/web.py": {
+      "bytes": 12929,
+      "sha256": "94d5f881e8600dc8053739614f5feb8a1d64ce0436bf08c33c20d913d157dd37",
+      "syntax": "pass"
+    },
+    "superhuman/capabilities/__init__.py": {
+      "bytes": 79,
+      "sha256": "db25d1d4ecbab05fcf3b31b2bd6e7f5420872f3ee500cba8eaaa7c7dc01c688a",
+      "syntax": "pass"
+    },
+    "superhuman/capabilities/cli.py": {
+      "bytes": 957,
+      "sha256": "b8d3731a7c150c75ea89cefe2b2e59749987e6ed6bce5f4a227b6e0bf7e43657",
+      "syntax": "pass"
+    },
+    "superhuman/capabilities/coding.py": {
+      "bytes": 15818,
+      "sha256": "934c03345b7fe0df3f8b222d0ad6f567acd1ccd326561b7fb5400f6c9197a11c",
+      "syntax": "pass"
+    },
+    "superhuman/capabilities/coding_web.py": {
+      "bytes": 9833,
+      "sha256": "c3b007f8ac94edb3e3009ccc9b5d498a48b2a1903ac05b7bbbf2dea40bef0f76",
+      "syntax": "pass"
+    },
+    "superhuman/capabilities/document_web.py": {
+      "bytes": 8876,
+      "sha256": "ea5e9d6594ac453075fbd5f12efe1089ce8714f5ea4c1b1af669c80c336084bc",
+      "syntax": "pass"
+    },
+    "superhuman/capabilities/exports.py": {
+      "bytes": 11188,
+      "sha256": "42f92f017213b16071105449e1348a9a83892c7f8ce1129f2b9a74c063f4011d",
+      "syntax": "pass"
+    },
+    "superhuman/capabilities/local.py": {
+      "bytes": 14235,
+      "sha256": "87311f95e7c11d0576e417dd98f7959633782ba48896e3b458d7ccea4b98c34a",
+      "syntax": "pass"
+    },
+    "superhuman/capabilities/web.py": {
+      "bytes": 6462,
+      "sha256": "032c2a4c02852d5765c2a4563bc9346e5cdd51aaf0e0d72d4dc6c9295d2da98a",
+      "syntax": "pass"
+    },
+    "superhuman/cli.py": {
+      "bytes": 9226,
+      "sha256": "9e3a02eb966fa1b1b07d04a18c993dd08c5d7b8a22845fcc623931c120bd01a3",
+      "syntax": "pass"
+    },
+    "superhuman/collab/__init__.py": {
+      "bytes": 57,
+      "sha256": "3561a62225f123ef772201e84814dd015fd256c534de376c49f4416a31b4449f",
+      "syntax": "pass"
+    },
+    "superhuman/collab/cli.py": {
+      "bytes": 757,
+      "sha256": "5cb70f4c62e3fb6b59868e6b298f2cd65be6874d21558272cc2a2a8d26c96ac7",
+      "syntax": "pass"
+    },
+    "superhuman/collab/delivery.py": {
+      "bytes": 11753,
+      "sha256": "413722dd4bbfd8b8501724b7e33d061ef55cd200be27d193c7829c404ea0659d",
+      "syntax": "pass"
+    },
+    "superhuman/collab/reliability.py": {
+      "bytes": 4733,
+      "sha256": "9de32671ca5b8d1df94a9c6601c73c961d996bea05043a2162a475de2ec7a32a",
+      "syntax": "pass"
+    },
+    "superhuman/collab/runner.py": {
+      "bytes": 10086,
+      "sha256": "bf586ec9ef81c54a975340d49519489804b812f06e027414879d4e9a874144f0",
+      "syntax": "pass"
+    },
+    "superhuman/comms/__init__.py": {
+      "bytes": 84,
+      "sha256": "d804af8e4c58342c0fb555b3accbab38fb033983003bbf02cf44a1e391e31a12",
+      "syntax": "pass"
+    },
+    "superhuman/comms/cli.py": {
+      "bytes": 2654,
+      "sha256": "a80a1eb0020476064b0f8fddcd624089a28b1be84a065be8f2dd46a01168ccec",
+      "syntax": "pass"
+    },
+    "superhuman/comms/engine.py": {
+      "bytes": 22321,
+      "sha256": "dc6d2515e6fae5947ca064951a60f5800a8731c0ba926d500647011c8e93516b",
+      "syntax": "pass"
+    },
+    "superhuman/comms/providers.py": {
+      "bytes": 14787,
+      "sha256": "dd3374f953f925dfe3e42d0d1722c4c3b6bd8be9ffaa9bd4bfd38c37bac456c0",
+      "syntax": "pass"
+    },
+    "superhuman/comms/store.py": {
+      "bytes": 18848,
+      "sha256": "ea87ad3df7759c200d628cbc81e24755b2e41ef51aa64099816c2343fcd78c4f",
+      "syntax": "pass"
+    },
+    "superhuman/comms/web.py": {
+      "bytes": 17676,
+      "sha256": "17a81a2f36d65ede8f7d6604f055556b779ba3c034536fcaeeb63f16abed0082",
+      "syntax": "pass"
+    },
+    "superhuman/conversationwork/__init__.py": {
+      "bytes": 73,
+      "sha256": "d83c0de30bcf42bec5609765ba4dee9b2b9b10a2dac0674198ccafcca8863c42",
+      "syntax": "pass"
+    },
+    "superhuman/conversationwork/bridge.py": {
+      "bytes": 22827,
+      "sha256": "72965d283b55128e25260e46911d8eab16ba1de99c79e45f57e47bf1c8933f7a",
+      "syntax": "pass"
+    },
+    "superhuman/conversationwork/execution.py": {
+      "bytes": 3481,
+      "sha256": "527c10b3563d421c701fcb9c051efaf060de7bf1636d1da44d00280577b78a56",
+      "syntax": "pass"
+    },
+    "superhuman/core.py": {
+      "bytes": 2137,
+      "sha256": "3bb48da4ba6bb44efb2c6a5e9ea0d9c2fbcbf0b094adf32dc08acdbff8f182ca",
+      "syntax": "pass"
+    },
+    "superhuman/core/__init__.py": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "syntax": "pass"
+    },
+    "superhuman/core/orchestrator.py": {
+      "bytes": 3061,
+      "sha256": "515f9f0e4e41aba19d91fc7e958e5d7de155bc7dcfc15b46f2ee2fbabffe10d1",
+      "syntax": "pass"
+    },
+    "superhuman/core/router.py": {
+      "bytes": 3468,
+      "sha256": "b45efd6c912b521c368d92301bbe338294eb7be8b140396c28a17fb8e63779a6",
+      "syntax": "pass"
+    },
+    "superhuman/dashboard/__init__.py": {
+      "bytes": 37,
+      "sha256": "c7993bada24c1e725056befa1ceb44c1d0a25051acf3083fea3477c74bb6d551",
+      "syntax": "pass"
+    },
+    "superhuman/dashboard/app.py": {
+      "bytes": 8384,
+      "sha256": "3930d3408cf3e1e4a222fa4a113019d41b43eb6eafab8091cf238412f0e9d22b",
+      "syntax": "pass"
+    },
+    "superhuman/departments/__init__.py": {
+      "bytes": 69,
+      "sha256": "e84caa8b1a6844675d7186920818d2ea2597f171de7c2922c08e0b052c8af0cd",
+      "syntax": "pass"
+    },
+    "superhuman/departments/store.py": {
+      "bytes": 8954,
+      "sha256": "01d19b5efa39786a0ae357de93e2851f4cea7eb0b53f0af7296ae9ae86dd276a",
+      "syntax": "pass"
+    },
+    "superhuman/departments/web.py": {
+      "bytes": 18319,
+      "sha256": "0d4289880b809dce2e3f6f45b64a034e4b3d50b73978ac84398931b49b15b28c",
+      "syntax": "pass"
+    },
+    "superhuman/dialogue/__init__.py": {
+      "bytes": 99,
+      "sha256": "ea94df4283c68fb47a91152e0d6247abd3eee295f738f29752f6239fcd93509f",
+      "syntax": "pass"
+    },
+    "superhuman/dialogue/cli.py": {
+      "bytes": 951,
+      "sha256": "6847a3e417c151dc4bba3a0cbb98be2fe64078e4aa9b0677785d362565690f90",
+      "syntax": "pass"
+    },
+    "superhuman/dialogue/engine.py": {
+      "bytes": 10353,
+      "sha256": "08901ae2207e9c3da8551fa7cf7d44b09eca0e9996ddab993b02c8266372c45e",
+      "syntax": "pass"
+    },
+    "superhuman/dialogue/store.py": {
+      "bytes": 12737,
+      "sha256": "404ac1816225ad98a57145ccd5e08b33f197077b616bb034d58af2712c39c769",
+      "syntax": "pass"
+    },
+    "superhuman/dialogue/web.py": {
+      "bytes": 12553,
+      "sha256": "1a475552bbb16922cc2fc535edab89f8691f8c1bc1da444741c2a327ed698059",
+      "syntax": "pass"
+    },
+    "superhuman/experience/__init__.py": {
+      "bytes": 69,
+      "sha256": "930d36719d34cbac834a0bdb504c9ff1eb29c0018d6e69f4fb99db2ae3dba678",
+      "syntax": "pass"
+    },
+    "superhuman/experience/assets/workspace.css": {
+      "bytes": 4359,
+      "sha256": "05544b36246e6d6f93e50fc211b9e15738d60b1333061025654ae4b5c6f878f7"
+    },
+    "superhuman/experience/assets/workspace.js": {
+      "bytes": 5235,
+      "sha256": "1c991013c339c44e19f7136a6a1a83bfae8a7d526709546036b28dbba377892b"
+    },
+    "superhuman/experience/calendar.py": {
+      "bytes": 8879,
+      "sha256": "6e758b0aec92dd626960917eda250ecaf5e39b12908d84c6aa9d3585f284cf1c",
+      "syntax": "pass"
+    },
+    "superhuman/experience/chat.py": {
+      "bytes": 5073,
+      "sha256": "2cd4c5f6cde1d781148805db59fc35dd10b2f0de431bbb00cef5c7c08371604b",
+      "syntax": "pass"
+    },
+    "superhuman/experience/inbox.py": {
+      "bytes": 3601,
+      "sha256": "8744e096473ec61bf8237a82f660bac062ee050cfe19e6d546834e8d7b056094",
+      "syntax": "pass"
+    },
+    "superhuman/experience/store.py": {
+      "bytes": 11136,
+      "sha256": "9ac87ab09d6e0bc47458b80dd0688fd0ad9d4ca498318d2da30092d3fb8d0340",
+      "syntax": "pass"
+    },
+    "superhuman/experience/web.py": {
+      "bytes": 30038,
+      "sha256": "219743be02fe7cccc122596cf661bc3b77dad4c35578f3a506338e3541b7c554",
+      "syntax": "pass"
+    },
+    "superhuman/foundation/__init__.py": {
+      "bytes": 295,
+      "sha256": "e56aed2307f3ed72f8684440c32ca4fd23f9ce770dc4ca2a7f930206233ad149",
+      "syntax": "pass"
+    },
+    "superhuman/foundation/baseline.py": {
+      "bytes": 5146,
+      "sha256": "84ea616182db9b7f4389be47371364095cceac0a2aeb701b156c9881ecb4062b",
+      "syntax": "pass"
+    },
+    "superhuman/foundation/cli.py": {
+      "bytes": 469,
+      "sha256": "868d91e1755f312fbcff5e1ef73cc781b8466e32f54f0fb7b8f80a1c09df0528",
+      "syntax": "pass"
+    },
+    "superhuman/foundation/context.py": {
+      "bytes": 3187,
+      "sha256": "3e97bb27033da08f1b2b210dfb05b3a6065526d8d52aca566fe083cf8cac9d95",
+      "syntax": "pass"
+    },
+    "superhuman/foundation/personality.py": {
+      "bytes": 4257,
+      "sha256": "ff00e81b60ced651e52296b997b78f2dd51b7d457d41380d14fa1c2f526bf12f",
+      "syntax": "pass"
+    },
+    "superhuman/foundation/proactive.py": {
+      "bytes": 9300,
+      "sha256": "a069e6868c1e846eb4dc04f0fd9f36b2d1e48bd9995598cb5520e63ed427795e",
+      "syntax": "pass"
+    },
+    "superhuman/foundation/storage.py": {
+      "bytes": 12900,
+      "sha256": "366bf65a09b4d0322345619aedcc9c725ea300a062ceb38ab229e564e9530df2",
+      "syntax": "pass"
+    },
+    "superhuman/foundation/web.py": {
+      "bytes": 19747,
+      "sha256": "ba8e91e73631a864aa40109958620d634c89d9fbcd5802fa90cff08eae29cc10",
+      "syntax": "pass"
+    },
+    "superhuman/hosted/__init__.py": {
+      "bytes": 96,
+      "sha256": "c2ef9c8f8c40d67fc315fcad921d3860c878635b0aaa13ee67ff97e90b2bb178",
+      "syntax": "pass"
+    },
+    "superhuman/hosted/auth.py": {
+      "bytes": 5450,
+      "sha256": "d25d086088972d909f000023572f8c923338172325a167f9d9810fca72cca490",
+      "syntax": "pass"
+    },
+    "superhuman/hosted/boundary.py": {
+      "bytes": 11207,
+      "sha256": "581383d8dc92c3d24ca6e72eec321528000c567578e0ca025ac7e22c7967d066",
+      "syntax": "pass"
+    },
+    "superhuman/hosted/cli.py": {
+      "bytes": 2987,
+      "sha256": "238ee02b893b6957f59af725e7fdcfe4b594826b31ee9ba7bf537aaba8730bd0",
+      "syntax": "pass"
+    },
+    "superhuman/hosted/config.py": {
+      "bytes": 2991,
+      "sha256": "38f35d524463825ea744e910ab97af1459579cc78b25f13cb93ee4d4e685df17",
+      "syntax": "pass"
+    },
+    "superhuman/hosted/jobs.py": {
+      "bytes": 3918,
+      "sha256": "ab7ed1f57e3d6a5cc9090847b55184d7e28a59ce9a46e5e2dedee4e5f89d8adb",
+      "syntax": "pass"
+    },
+    "superhuman/hosted/transfer.py": {
+      "bytes": 9106,
+      "sha256": "13754ea5ca9f5fced5135cb7fc55aa66e44ad35027c61b7543368a6ed4c600c1",
+      "syntax": "pass"
+    },
+    "superhuman/hosted/views.py": {
+      "bytes": 4252,
+      "sha256": "267f41e5b78dfaaea970e34096b7aae91e268769830ab6880fa1a3e210f6cc6c",
+      "syntax": "pass"
+    },
+    "superhuman/hosted/web.py": {
+      "bytes": 9957,
+      "sha256": "4982e28de2d15ce3bce7c3a432d53757dbbceafa5073b9a0526ead0d963dc3d3",
+      "syntax": "pass"
+    },
+    "superhuman/hosted/worker.py": {
+      "bytes": 7507,
+      "sha256": "4dcbf1f623824229d31c2f26d8c4c18eedafc472fa901a179374a3568f04da31",
+      "syntax": "pass"
+    },
+    "superhuman/identity/__init__.py": {
+      "bytes": 35,
+      "sha256": "a49dc29ada94cf25951b7a7b1ba5af0e3d6770b1da25fc0eceee5ae8f62dc312",
+      "syntax": "pass"
+    },
+    "superhuman/identity/cli.py": {
+      "bytes": 2251,
+      "sha256": "24728a36138e275e81e62f496a73085b8d043a24f44d7cfe7a87219578c319a5",
+      "syntax": "pass"
+    },
+    "superhuman/identity/selection.py": {
+      "bytes": 8033,
+      "sha256": "08edac8b14bdbc37b59f71792437ec5f1d5629d9259f81e2e6e15a8e718dd2a1",
+      "syntax": "pass"
+    },
+    "superhuman/identity/store.py": {
+      "bytes": 5410,
+      "sha256": "39d2c09dadd16d798b019c65f9b75c3468ddd1c52912d4ca295fd3e0f688d186",
+      "syntax": "pass"
+    },
+    "superhuman/interface/__init__.py": {
+      "bytes": 94,
+      "sha256": "d5144a3dee27faba2334248eb505d1dd07a7032b03affdc0bcce7566bb48eebb",
+      "syntax": "pass"
+    },
+    "superhuman/interface/assets/design.css": {
+      "bytes": 13666,
+      "sha256": "96e16db1778443176905d331705bcaad5c257bfdc49d76f8e17b894e01b61727"
+    },
+    "superhuman/interface/assets/design.js": {
+      "bytes": 1788,
+      "sha256": "ee32c737d839af984736d81c000197672787c48df5f2b7dbb4f0ffbf5330dc5c"
+    },
+    "superhuman/interface/chrome.py": {
+      "bytes": 10908,
+      "sha256": "6a04f8bf2e96ca282d9d233fef396696867659b66f2e74c93db9268cee747025",
+      "syntax": "pass"
+    },
+    "superhuman/interface/cli.py": {
+      "bytes": 534,
+      "sha256": "847e07332aed99ef602bd046b8232699fcf0f32d2c110ad2446e44399f8f6440",
+      "syntax": "pass"
+    },
+    "superhuman/interface/decisions.py": {
+      "bytes": 1358,
+      "sha256": "c764ac0584d146b3840df58d6a17ac8cf122c6dfd4057b9c483a2868a37ba7fb",
+      "syntax": "pass"
+    },
+    "superhuman/interface/tree.py": {
+      "bytes": 2619,
+      "sha256": "65c1ca183851b7785e6b1cd7fffbc8c9e4b2a4504bf3a89e81b67d2a8d160789",
+      "syntax": "pass"
+    },
+    "superhuman/interface/views.py": {
+      "bytes": 33062,
+      "sha256": "ba0e833cff8785331a090dec1b34122b22eb1f71c9aaa471947679e178403099",
+      "syntax": "pass"
+    },
+    "superhuman/interface/web.py": {
+      "bytes": 4954,
+      "sha256": "08e16b4470e24ab71a6f19042507eda196f55b530e0d02e530314e4ca9a9ff8c",
+      "syntax": "pass"
+    },
+    "superhuman/knowledge/__init__.py": {
+      "bytes": 105,
+      "sha256": "239ce5cff531e7e081ded255da3a09acd8fd81f0b233b8e47cd8c15fd1e6c2fd",
+      "syntax": "pass"
+    },
+    "superhuman/knowledge/cli.py": {
+      "bytes": 1561,
+      "sha256": "7d6c6d5a290a5e4cf003ca949ee34127b74b7618cd7bf951b5e85133c26390fe",
+      "syntax": "pass"
+    },
+    "superhuman/knowledge/context.py": {
+      "bytes": 4849,
+      "sha256": "6cbf3ebb745fe2e848aac584f991f70641807906bc29c1d4ef5a3b46b59cb71d",
+      "syntax": "pass"
+    },
+    "superhuman/knowledge/store.py": {
+      "bytes": 8709,
+      "sha256": "55d21f24643e3d18bef5ad644d6367c5e9c82ec00ae9b3b477cf675180862efa",
+      "syntax": "pass"
+    },
+    "superhuman/knowledge/web.py": {
+      "bytes": 12509,
+      "sha256": "93be224a76d4b80b9d5640adfd34691036b9bc4c6f1919574da486a5393a3a6b",
+      "syntax": "pass"
+    },
+    "superhuman/mail/__init__.py": {
+      "bytes": 61,
+      "sha256": "b72ce5afa58966563860823008076a22e23f8579473b446124ae16a4ddfab430",
+      "syntax": "pass"
+    },
+    "superhuman/mail/cli.py": {
+      "bytes": 3922,
+      "sha256": "8467a141a568b8e706aa12c7f3029a3b32f58ec0ea8d19551dca94d9336ce70f",
+      "syntax": "pass"
+    },
+    "superhuman/mail/providers.py": {
+      "bytes": 8023,
+      "sha256": "ff50cb845b18921b6ebf9d9b928ab659ae1c387ec53373083e86ab8debee8a34",
+      "syntax": "pass"
+    },
+    "superhuman/mail/store.py": {
+      "bytes": 9140,
+      "sha256": "d336a9ec453f1a0743c3dfd17af78e28149c4acaca0dd3ef06e823d08e203cce",
+      "syntax": "pass"
+    },
+    "superhuman/mail/vault.py": {
+      "bytes": 1511,
+      "sha256": "fc55d16aab93f1fa6b61dbda0ed5c833e0a16ad1a31e4fee4c62929801248ac5",
+      "syntax": "pass"
+    },
+    "superhuman/mail/web.py": {
+      "bytes": 7539,
+      "sha256": "8ccb417278a0946302b2461a1e3a029c95f3a40408fcc89f05e4892b54655341",
+      "syntax": "pass"
+    },
+    "superhuman/mailflow/__init__.py": {
+      "bytes": 71,
+      "sha256": "2852cd7f4414607f40a54540543b185e4cfc881fbccf83a7a8cf74d8a30dcd1b",
+      "syntax": "pass"
+    },
+    "superhuman/mailflow/engine.py": {
+      "bytes": 9781,
+      "sha256": "b692e91c4ed85ed69d347021520e94f2a3f9d93e7ba08688820d3b8c6371d2b0",
+      "syntax": "pass"
+    },
+    "superhuman/mailflow/reports.py": {
+      "bytes": 2532,
+      "sha256": "d3de04104267794f99c9ff7e56fde277b2bea55e914374cd06f85f80385dbdef",
+      "syntax": "pass"
+    },
+    "superhuman/mailflow/state.py": {
+      "bytes": 8093,
+      "sha256": "69cd618ac8319c50ead18e805cf7dfcaaa0b117afe9629ad34de3c1401a7bf14",
+      "syntax": "pass"
+    },
+    "superhuman/mailflow/web.py": {
+      "bytes": 2263,
+      "sha256": "aa4be8ca8ae3d42c294c2895b2bf3428f5792c39f2f19779c764f03aaef2ceb4",
+      "syntax": "pass"
+    },
+    "superhuman/meetingdesk/__init__.py": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "syntax": "pass"
+    },
+    "superhuman/meetingdesk/store.py": {
+      "bytes": 9477,
+      "sha256": "ff2f16b5219b0d42401fedb552a08eb23410c3410af6fb982daed9189754cbb6",
+      "syntax": "pass"
+    },
+    "superhuman/meetingdesk/web.py": {
+      "bytes": 8499,
+      "sha256": "5ddf3124f180e275c75a9d3a1fd3533c189ca1f2b66c980489ff5c05abaa44ba",
+      "syntax": "pass"
+    },
+    "superhuman/memory/__init__.py": {
+      "bytes": 57,
+      "sha256": "2912adb66b7cc8fb1f1be524519099fb8fb049d0da8a8bd4182d516eec540a46",
+      "syntax": "pass"
+    },
+    "superhuman/memory/cli.py": {
+      "bytes": 1484,
+      "sha256": "e00f85c9ec44019c1bd733076c6b970c14d8175d73677d35b75761efa9b8b24e",
+      "syntax": "pass"
+    },
+    "superhuman/memory/store.py": {
+      "bytes": 2696,
+      "sha256": "b167e443693d7ca715f591fc4d4291ddbe7a08c6b7765c00c6ddeb20e797107a",
+      "syntax": "pass"
+    },
+    "superhuman/milestones/__init__.py": {
+      "bytes": 89,
+      "sha256": "26f8b2746543703cac9a6e700e8e3a50860c250fca4ec3fcc20c385d81adba75",
+      "syntax": "pass"
+    },
+    "superhuman/milestones/blueprints.py": {
+      "bytes": 2702,
+      "sha256": "84459670665647a7fda66d8cecadd72e50437309f352e5b9b6af08f0bc200480",
+      "syntax": "pass"
+    },
+    "superhuman/milestones/cli.py": {
+      "bytes": 524,
+      "sha256": "1fe135cbc7cb480499537e70face63736f0e8a48539d0d51465d5d705195e6f5",
+      "syntax": "pass"
+    },
+    "superhuman/milestones/engine.py": {
+      "bytes": 16315,
+      "sha256": "d47887ddc1a86097dc0797035d46b9566095564c2c28f81ed2e08be754b0bdae",
+      "syntax": "pass"
+    },
+    "superhuman/milestones/pdf.py": {
+      "bytes": 6916,
+      "sha256": "daf38a997e6b0feb20a78cbee51607ff6ae329b05aa759174f2e352d36051a0d",
+      "syntax": "pass"
+    },
+    "superhuman/milestones/store.py": {
+      "bytes": 27579,
+      "sha256": "ed8f5ee7ee4e2aa3637129974acb8011de5cc868c0548c78eada3724bc57e70a",
+      "syntax": "pass"
+    },
+    "superhuman/milestones/web.py": {
+      "bytes": 24829,
+      "sha256": "117e25fbdde2aa6c8326f419c80de9b5d630c8274934be415338223f45c59361",
+      "syntax": "pass"
+    },
+    "superhuman/milestones/workflow.py": {
+      "bytes": 18725,
+      "sha256": "ad12950ce796d9a902dd451ade5fdb687a5b3bfa6e8f0895590fb7b8319a5ae7",
+      "syntax": "pass"
+    },
+    "superhuman/navigation/__init__.py": {
+      "bytes": 62,
+      "sha256": "55dd3e0a3b688b216326d96552c95536d848cfc54c058c4985b52db2b589c31c",
+      "syntax": "pass"
+    },
+    "superhuman/navigation/shell.py": {
+      "bytes": 13800,
+      "sha256": "052dd6e6f35400653c5862ce930056666dd6805e88c113e37e957c5c80e36c83",
+      "syntax": "pass"
+    },
+    "superhuman/navigation/web.py": {
+      "bytes": 10932,
+      "sha256": "ae0d2788bfdff1d8d54abd595b6462597dfcd7ee36205c9a6ae312589d0b0e63",
+      "syntax": "pass"
+    },
+    "superhuman/organisation/__init__.py": {
+      "bytes": 100,
+      "sha256": "555be9ef5096928ca124eaa2ca076966532d82d2de38d519209b0935404c3350",
+      "syntax": "pass"
+    },
+    "superhuman/organisation/context.py": {
+      "bytes": 13008,
+      "sha256": "af32b890b698bcc105eea6e0b33b1e3e7f1f48af968f3ee4d456db77aff659e1",
+      "syntax": "pass"
+    },
+    "superhuman/organisation/seed.json": {
+      "bytes": 21427,
+      "sha256": "8507095d2b040ee9bb7537cc46887d44b1e69cd4d5e272e85b2fb27e148ead38"
+    },
+    "superhuman/organisation/store.py": {
+      "bytes": 4946,
+      "sha256": "ba2b75e7d2adcddaf563aefde77d11714baa90cab453ee937c004640b42b8211",
+      "syntax": "pass"
+    },
+    "superhuman/organisation/web.py": {
+      "bytes": 7827,
+      "sha256": "4a94d27b9b0b12c5f74c410fcc242ac57c307e44d9eeda555114b23ed9a2782c",
+      "syntax": "pass"
+    },
+    "superhuman/planning/__init__.py": {
+      "bytes": 78,
+      "sha256": "d5fa5b58ed5ea8d37cf4b7f023d617b1af4c8ce7c5d7c9889cc3453b46a8e696",
+      "syntax": "pass"
+    },
+    "superhuman/planning/presentation.py": {
+      "bytes": 3802,
+      "sha256": "d1aa49c30713b6c686b24ed09feb94d090557b056b3481dfcc036f0bd189c78e",
+      "syntax": "pass"
+    },
+    "superhuman/planning/priority.py": {
+      "bytes": 910,
+      "sha256": "92a0b22f659c313def9a6000035eaae5a3cf82f966520ff630fc74d1037678d5",
+      "syntax": "pass"
+    },
+    "superhuman/planning/store.py": {
+      "bytes": 16437,
+      "sha256": "50b2cecd870a5a0ee96654f962d83e2dfdc36c139c2dbe7044cce31fee3f35dd",
+      "syntax": "pass"
+    },
+    "superhuman/planning/web.py": {
+      "bytes": 17154,
+      "sha256": "7d1b702fab891731f0f3a13d0f4ba8075403853d1252786e4c8e4a2ac47e2e4e",
+      "syntax": "pass"
+    },
+    "superhuman/practice/__init__.py": {
+      "bytes": 101,
+      "sha256": "15717a7a0efba5495c5e400e98772dec4dedb72552eaadd86972fa7285e0e58e",
+      "syntax": "pass"
+    },
+    "superhuman/practice/assets/applications.png": {
+      "bytes": 2049063,
+      "sha256": "51c5c10b2d20e658444857c6fae8fd115383c1115fa89f063e9c0c08c1c99f9f"
+    },
+    "superhuman/practice/assets/career_rnd.png": {
+      "bytes": 2193078,
+      "sha256": "363e761fddeaf23056906762e64c97968f93d7858d08de0fc7b6cf1a546caa70"
+    },
+    "superhuman/practice/assets/edsync_product.png": {
+      "bytes": 2052796,
+      "sha256": "3126d19e42f249afc1ff7620c4a4adf11039adb8c32bd0c49a97371032aa0105"
+    },
+    "superhuman/practice/assets/endorsement.png": {
+      "bytes": 2137169,
+      "sha256": "1761a922b1565fe2bf2ad66090ac7dafbfe0b43b9ba2c62dc46a1426ad8a0527"
+    },
+    "superhuman/practice/assets/investors_grants.png": {
+      "bytes": 2256949,
+      "sha256": "e17695f6d78c0863ee487675236a97379347bacde58ec3da5cb12b9361f28b48"
+    },
+    "superhuman/practice/assets/legal_ops.png": {
+      "bytes": 2224625,
+      "sha256": "4457e1fc676402da9b8bdd1ee12fd7d4160ea07b2fc4c432ebeea3f75460d0ae"
+    },
+    "superhuman/practice/assets/marketing.png": {
+      "bytes": 2247494,
+      "sha256": "692442a2ba613273561da2d89b0c784c11fe653afe55200bd464f93eb896739c"
+    },
+    "superhuman/practice/assets/practice.css": {
+      "bytes": 9062,
+      "sha256": "5859a9331e89508acf9b5af07cb1d879346c274c9f05dc6f4cca2056baaeb97b"
+    },
+    "superhuman/practice/assets/practice.js": {
+      "bytes": 2402,
+      "sha256": "b2310ab207a41a93f8befc3d05b579422423ec63a4a0ffce6f811b5aa5ab12b8"
+    },
+    "superhuman/practice/assets/twin.png": {
+      "bytes": 2055376,
+      "sha256": "dbde7e63b73ad1badcd9cebe621b6a3bde627c6161c1c05780b888715957edf7"
+    },
+    "superhuman/practice/attention.py": {
+      "bytes": 1368,
+      "sha256": "d0c161ab6ee7fdeed496cd96104dfa48bc9e6f541fb2e56f5ce2bb2f954e4eda",
+      "syntax": "pass"
+    },
+    "superhuman/practice/billing.py": {
+      "bytes": 531,
+      "sha256": "e34dab11647e85c4488b1056d836c86c87170806eca2b3e9f50994a0b03ed8d7",
+      "syntax": "pass"
+    },
+    "superhuman/practice/cli.py": {
+      "bytes": 690,
+      "sha256": "21e5a96e80d67603713310aa2688cca92d27ee3148252c9c39868fef913e6a20",
+      "syntax": "pass"
+    },
+    "superhuman/practice/exports.py": {
+      "bytes": 6346,
+      "sha256": "bdfda34c143d7644fcc5fc46771530ce04bee97be7312af416362730e2838074",
+      "syntax": "pass"
+    },
+    "superhuman/practice/impact.py": {
+      "bytes": 3817,
+      "sha256": "bedc9101f123e81e4b392df754b4ee5bf2256bd5e5d2310c7e9b8f115ee145de",
+      "syntax": "pass"
+    },
+    "superhuman/practice/policy.py": {
+      "bytes": 8088,
+      "sha256": "4a6248ab6fe44b9deb422d2ea9b90f5c29b0b2a8cf4ddc64dd26e5cbfeef9075",
+      "syntax": "pass"
+    },
+    "superhuman/practice/store.py": {
+      "bytes": 15617,
+      "sha256": "8cf4b9602cb9ca67ebd17d4a34b91be61b72c4943e4f5ced6856a27cf5aceb8a",
+      "syntax": "pass"
+    },
+    "superhuman/practice/web.py": {
+      "bytes": 17194,
+      "sha256": "00edf54c24080d22da3874a0fbdb4b9bc0785718a79d2ed5b32b52ae52ba72d3",
+      "syntax": "pass"
+    },
+    "superhuman/projects/__init__.py": {
+      "bytes": 69,
+      "sha256": "8bffc5ab4936195e524cf93d1943570ad6d4fe82407630017a0458811545cd0a",
+      "syntax": "pass"
+    },
+    "superhuman/projects/assembly.py": {
+      "bytes": 3106,
+      "sha256": "75b4fe13150d8f4d6b8da03b1d02e90d327c5a7e941d0548ee4b21afa2368c0a",
+      "syntax": "pass"
+    },
+    "superhuman/projects/cli.py": {
+      "bytes": 2800,
+      "sha256": "67075a68debfeb68946cd40704e4c74c204524f4f4665f76c019d634727accab",
+      "syntax": "pass"
+    },
+    "superhuman/projects/engine.py": {
+      "bytes": 26544,
+      "sha256": "678d274aa03dc8ed49165af01eff26202d145fd80965c6a003adf5c1e75afb6f",
+      "syntax": "pass"
+    },
+    "superhuman/projects/review_web.py": {
+      "bytes": 11213,
+      "sha256": "097292fd8e53635913ce9a9bf2e211eb2b5bcbaa53e3051b6bc1b82c1cc70b29",
+      "syntax": "pass"
+    },
+    "superhuman/projects/revisions.py": {
+      "bytes": 10910,
+      "sha256": "25bdba22150e743178f38a6ed0a85e11f9d4b2db2ba986b9cc6a0b4f5a00a3f6",
+      "syntax": "pass"
+    },
+    "superhuman/projects/studio.py": {
+      "bytes": 16083,
+      "sha256": "36ab33fc41d57ee2c1c404c7e0427962a270e2a560465bf5bd989df051528b1c",
+      "syntax": "pass"
+    },
+    "superhuman/projects/web.py": {
+      "bytes": 4495,
+      "sha256": "19f01b830154bf2fc8a1bd3c492042e3e847ddeef4ee0bf3a8c70f8e8f75abf8",
+      "syntax": "pass"
+    },
+    "superhuman/queue/__init__.py": {
+      "bytes": 60,
+      "sha256": "cf95a7f8a7d4aa3b691202ac31b24b257846b81f1bf8438cbb747d878f66c04e",
+      "syntax": "pass"
+    },
+    "superhuman/queue/cli.py": {
+      "bytes": 2514,
+      "sha256": "68562ecd088f9264aca978c7b06327b4e6effaacbdf7a110a55d2dd61434e7e4",
+      "syntax": "pass"
+    },
+    "superhuman/queue/engine.py": {
+      "bytes": 6300,
+      "sha256": "d7739a6d4812c7e9473b936238474939ff1f5b870e0d9c1d882c70b80a6ca045",
+      "syntax": "pass"
+    },
+    "superhuman/repairs/__init__.py": {
+      "bytes": 90,
+      "sha256": "99024c7a0df90620e90aee54696b9bd4ceb97dcf09df4ae3763caac1ca3b1004",
+      "syntax": "pass"
+    },
+    "superhuman/repairs/actions.py": {
+      "bytes": 4390,
+      "sha256": "b011aba5d5d9a0b9a87039385902d1841319e2818d20612d465f61cb177de669",
+      "syntax": "pass"
+    },
+    "superhuman/repairs/checks.py": {
+      "bytes": 5862,
+      "sha256": "b4eff29e33ac4b79fc6693eeab3ad429ccfb891b14945f7e7b4b6032a0a41d9c",
+      "syntax": "pass"
+    },
+    "superhuman/repairs/cli.py": {
+      "bytes": 402,
+      "sha256": "ddb807795ec3815252788599db206ffe7ecc210e9256c4e6c54b0369807f15e4",
+      "syntax": "pass"
+    },
+    "superhuman/repairs/context.py": {
+      "bytes": 4975,
+      "sha256": "6d8f93a7f3c88731c4399a7dd4d88c1070d3369709c3a6388bf12dbec4b96a88",
+      "syntax": "pass"
+    },
+    "superhuman/repairs/deadlines.py": {
+      "bytes": 3281,
+      "sha256": "5ebf796f1f8733798f9e84ae09996dbb79f1eb2fbe194b2550fffa29a1d061c2",
+      "syntax": "pass"
+    },
+    "superhuman/repairs/lifecycle.py": {
+      "bytes": 1696,
+      "sha256": "4347910a606b88c6056de5b5543061a12ef5712e5b5b101e5b1020b99c0258be",
+      "syntax": "pass"
+    },
+    "superhuman/repairs/recovery.py": {
+      "bytes": 1413,
+      "sha256": "49a7cd90af7a73d650357227d1fbcd10a63a0281669a219477b471bfdc7ba83e",
+      "syntax": "pass"
+    },
+    "superhuman/repairs/scheduler.py": {
+      "bytes": 1838,
+      "sha256": "b39ec8ddd29699234a87c71a914b3d0e9a49201ff94acd935d48a7d5194242cd",
+      "syntax": "pass"
+    },
+    "superhuman/repairs/web.py": {
+      "bytes": 16001,
+      "sha256": "4c43d922d49df231ff234575e59b09d67260f35d6b6ec748bb6fffb9f1775aee",
+      "syntax": "pass"
+    },
+    "superhuman/research/__init__.py": {
+      "bytes": 57,
+      "sha256": "e65c7be8bd60ce98785af737eb351a393fec7eb7959ffe6895b3298e90b9979c",
+      "syntax": "pass"
+    },
+    "superhuman/research/cli.py": {
+      "bytes": 859,
+      "sha256": "a448f52889738c50426249b2c23820e9c4286b8b4c89a0bfaee0af1c92b2de73",
+      "syntax": "pass"
+    },
+    "superhuman/research/runner.py": {
+      "bytes": 6440,
+      "sha256": "21f4104f1fa05b9ca2785b0799e4826c1fc004457f34c239fdf6266bce0e1442",
+      "syntax": "pass"
+    },
+    "superhuman/researchdesk/__init__.py": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "syntax": "pass"
+    },
+    "superhuman/researchdesk/store.py": {
+      "bytes": 16032,
+      "sha256": "e4fcb05295856fe2352c40d0697d076507f2c2f582a8dc923f85aa812c1a97b8",
+      "syntax": "pass"
+    },
+    "superhuman/researchdesk/web.py": {
+      "bytes": 13833,
+      "sha256": "70b347710b532364d9b3d2ab697982cd6ce81b0d514531b504b42013dc7e1f36",
+      "syntax": "pass"
+    },
+    "superhuman/researchreview/__init__.py": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "syntax": "pass"
+    },
+    "superhuman/researchreview/store.py": {
+      "bytes": 11870,
+      "sha256": "aeac256ac0c79d50f58c99c12ef24825f242b455af14ca13356860fa6eb727a1",
+      "syntax": "pass"
+    },
+    "superhuman/researchreview/web.py": {
+      "bytes": 8994,
+      "sha256": "effde069bd2558a0a7ee33d35f2fbcc94b284cc010a5fa5a83cdfce580b93b71",
+      "syntax": "pass"
+    },
+    "superhuman/runtime/__init__.py": {
+      "bytes": 77,
+      "sha256": "6d41ea5555dc945a5c53f4f82faf9a75476e34ba88ab705e08a9ab7dee742ffe",
+      "syntax": "pass"
+    },
+    "superhuman/runtime/cli.py": {
+      "bytes": 4636,
+      "sha256": "7bc800fff7464f72c8387b141ce9e743c1acb2f0f7e6614b7431566657fa7d89",
+      "syntax": "pass"
+    },
+    "superhuman/runtime/demo.py": {
+      "bytes": 2467,
+      "sha256": "6c0676d10f876ae310c74733a578216870da2863f2e849fd064d032f4a9cea51",
+      "syntax": "pass"
+    },
+    "superhuman/runtime/engine.py": {
+      "bytes": 14957,
+      "sha256": "a1c75018f030afc2d446d0d9ad6644da9117dca15b367950fb4338f7574d06de",
+      "syntax": "pass"
+    },
+    "superhuman/runtime/web.py": {
+      "bytes": 2412,
+      "sha256": "4862559fd48fd01b951df31528aa040635d2ce5886f3f253845fcf8ed5d597a5",
+      "syntax": "pass"
+    },
+    "superhuman/supervision/__init__.py": {
+      "bytes": 65,
+      "sha256": "71041cc977dbeb0fc16d62412ea8eb36776b78dc4901af1eee87da92a370cd71",
+      "syntax": "pass"
+    },
+    "superhuman/supervision/context.py": {
+      "bytes": 7018,
+      "sha256": "802e32f3f03557016a91f1604e1d85f2b041f91286efe875cb10775611ef0746",
+      "syntax": "pass"
+    },
+    "superhuman/supervision/engine.py": {
+      "bytes": 16781,
+      "sha256": "e15e2b7fb88cc3aeac085aab62f2ecfef3e4303172ea2c711ac774e2b1ba0e54",
+      "syntax": "pass"
+    },
+    "superhuman/supervision/store.py": {
+      "bytes": 13696,
+      "sha256": "0bd69f5de037f6af5492fa02fbe166a806f72d027349b70ff8a0d5cf4f3dfe16",
+      "syntax": "pass"
+    },
+    "superhuman/supervision/web.py": {
+      "bytes": 12346,
+      "sha256": "95f50922434049ca897ec3ad6dfe95b3a0847b9e089d2d896783b3602d2a81f9",
+      "syntax": "pass"
+    },
+    "superhuman/taskdesk/__init__.py": {
+      "bytes": 77,
+      "sha256": "835da322ae3c057a0d6c8550b5eb549a9f9a5d1e62e8417b8ffcc827a8a4e3db",
+      "syntax": "pass"
+    },
+    "superhuman/taskdesk/store.py": {
+      "bytes": 4626,
+      "sha256": "f351bd9b866217d4b3317aba642c67f9cd0e2edb8f7a11d21f40ec0cf119c090",
+      "syntax": "pass"
+    },
+    "superhuman/taskdesk/web.py": {
+      "bytes": 7210,
+      "sha256": "a0196d5feda9590ce80cc0bd9308c57a0f03e210d47a27ddb8f388b012ebd508",
+      "syntax": "pass"
+    },
+    "superhuman/tasks/__init__.py": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "syntax": "pass"
+    },
+    "superhuman/team/__init__.py": {
+      "bytes": 79,
+      "sha256": "365558704e6f32c436a2c434647d13b37b7367a8e95c6805e47f8bfb6ad69b19",
+      "syntax": "pass"
+    },
+    "superhuman/team/budget.py": {
+      "bytes": 18810,
+      "sha256": "f96764ca19d37de5c0528c180c1a6f8b84718fa1d5ca60a991e45b6966073d5e",
+      "syntax": "pass"
+    },
+    "superhuman/team/engine.py": {
+      "bytes": 17304,
+      "sha256": "a0ce5734de2d9f414573489bd6f2f1fa8ace158c4305f81d1b63030811e020f1",
+      "syntax": "pass"
+    },
+    "superhuman/team/store.py": {
+      "bytes": 18047,
+      "sha256": "e151bee2b61b441dca8be16ce5a0699206164ca994ca5be13a867d27c3c93343",
+      "syntax": "pass"
+    },
+    "superhuman/team/web.py": {
+      "bytes": 26825,
+      "sha256": "5a67745c8d9d5d541c3c480cff6b71f06a9f9b12a538e020eadbf80a51888a1a",
+      "syntax": "pass"
+    },
+    "superhuman/team/work.py": {
+      "bytes": 26557,
+      "sha256": "06d3345e12e4ad8a92c8dc98de4b26639f73cee337859ae2bd674f7541291fa5",
+      "syntax": "pass"
+    },
+    "superhuman/teamhub/__init__.py": {
+      "bytes": 56,
+      "sha256": "b5117dc292007ded61d944370cbf2f50c35ab61621551910af871d285fd80842",
+      "syntax": "pass"
+    },
+    "superhuman/teamhub/assets/teamhub.css": {
+      "bytes": 10202,
+      "sha256": "42d4d09b4fa824147261a4c74344b977f55e4a46240af3a07b3e137ba859ca6c"
+    },
+    "superhuman/teamhub/assets/teamhub.js": {
+      "bytes": 3371,
+      "sha256": "29c531a8be4ac63167737a9667170e0f33dcbad468a348b2d00ed27fc89697ec"
+    },
+    "superhuman/teamhub/cards.py": {
+      "bytes": 13351,
+      "sha256": "92cf36596a0943a8b8fa0f3d699b5a1fe3ef965bed45f063afa4ff9ec8ba5529",
+      "syntax": "pass"
+    },
+    "superhuman/teamhub/cli.py": {
+      "bytes": 551,
+      "sha256": "104456a0732f0d9e4419445c181b35552b6418c3c4b414a93289218c0b3626c1",
+      "syntax": "pass"
+    },
+    "superhuman/teamhub/context.py": {
+      "bytes": 6456,
+      "sha256": "07b8cdd021230f623f47dee8e0f937a352849fd20273bc8b508e5172ac475d30",
+      "syntax": "pass"
+    },
+    "superhuman/teamhub/engine.py": {
+      "bytes": 7367,
+      "sha256": "1b3f1e50c5fd70db8d325b525ba998c37b8877030b23c715596bb3728a4c6a9f",
+      "syntax": "pass"
+    },
+    "superhuman/teamhub/project.py": {
+      "bytes": 2105,
+      "sha256": "45d23921052fd5759e6d24584e16b3847aba2349f75c68394e546d67e85be384",
+      "syntax": "pass"
+    },
+    "superhuman/teamhub/readiness.py": {
+      "bytes": 3462,
+      "sha256": "f88261d3ab198bb3acd45137484c0e45727220a4d89e0b7bf2312bd6d9fe09a1",
+      "syntax": "pass"
+    },
+    "superhuman/teamhub/store.py": {
+      "bytes": 20754,
+      "sha256": "fd044d4b8b69211dd0ba5551515685bce1447fc046e0ea68b4a4a9071c8d2157",
+      "syntax": "pass"
+    },
+    "superhuman/teamhub/web.py": {
+      "bytes": 44179,
+      "sha256": "cd995a1af80e7c06c7c1919c3f3bccc4411800521b3695d72c3917dfb91a2e85",
+      "syntax": "pass"
+    },
+    "superhuman/teamspace/__init__.py": {
+      "bytes": 100,
+      "sha256": "c71dbc2d10408585444678fe9fb5e580dd76a8b702030e641b9eb53d1e57ec75",
+      "syntax": "pass"
+    },
+    "superhuman/teamspace/assets/teamspace.css": {
+      "bytes": 10607,
+      "sha256": "1daec0a58b5c1d3b146ae71559e1d7b269d7f72ce13096101dc1897ce7fb1baf"
+    },
+    "superhuman/teamspace/assets/teamspace.js": {
+      "bytes": 1182,
+      "sha256": "28ee8d4d8f173aeac76ac8b3dd67e59a640921b8d77eaa9f2ab86726c1e81dc5"
+    },
+    "superhuman/teamspace/cli.py": {
+      "bytes": 489,
+      "sha256": "9a4717a776ca85b470c1fa06b600cc77f05d5300f54703777c399b65587f1327",
+      "syntax": "pass"
+    },
+    "superhuman/teamspace/views.py": {
+      "bytes": 9758,
+      "sha256": "5373ee6b0ac38ba22d6506dc9de396bdf5a3b842ea377414b0565203afbda14b",
+      "syntax": "pass"
+    },
+    "superhuman/teamspace/web.py": {
+      "bytes": 475,
+      "sha256": "3aaae6a475cd3921cd408a683b42e40e93569c7b21ad0d3326929947f878efa6",
+      "syntax": "pass"
+    },
+    "superhuman/trust/__init__.py": {
+      "bytes": 1294,
+      "sha256": "6432ce819865367f8f2e5383f3abaf6e0738a8344db4e44e4f32d096d85a5406",
+      "syntax": "pass"
+    },
+    "superhuman/workspace/__init__.py": {
+      "bytes": 39,
+      "sha256": "be046022a454cbdc87ce0ca15c24dd2ceacc5607e4ca5c4103cc7139d2134725",
+      "syntax": "pass"
+    },
+    "superhuman/workspace/assets/workspace.css": {
+      "bytes": 2262,
+      "sha256": "67785baec37e03074229f181dc6b8ce6e252861a081cba289fdefe40ee5f2bf0"
+    },
+    "superhuman/workspace/assets/workspace.js": {
+      "bytes": 4136,
+      "sha256": "c6285f015a0ec5dae97a9f2274e3620327e831ef978952a0afd6c13628d8396d"
+    },
+    "superhuman/workspace/chat.py": {
+      "bytes": 8290,
+      "sha256": "180fca046bef8672cb9142d071e3dabbec232c9cc6e3684d15736298294cd670",
+      "syntax": "pass"
+    },
+    "superhuman/workspace/model.py": {
+      "bytes": 8369,
+      "sha256": "b1d5b81602536309b162c40e2cd0d648a2da637c575a1ae5f7eecf3bcd795c66",
+      "syntax": "pass"
+    },
+    "superhuman/workspace/presentation.py": {
+      "bytes": 1185,
+      "sha256": "8adeb3885cd8673718eafc8ae2516fb62d350e7aac793f0cbbea31ceb9b0c7d7",
+      "syntax": "pass"
+    },
+    "superhuman/workspace/web.py": {
+      "bytes": 49883,
+      "sha256": "3bad5b3cdd02f09148ca23044ec5c90a46ea0c04728e3cf3b41261e94181270d",
+      "syntax": "pass"
+    }
+  },
+  "host": "root@167.71.196.20",
+  "root": "/home/superhuman/app",
+  "runtime_version": "v1.41 manifest matches; full release unverified"
+}

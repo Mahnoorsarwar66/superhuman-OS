@@ -1,0 +1,70 @@
+{
+  "agentic/engine.py": {
+    "before": "e79e91a32150c2c0572a42a7dbf687b689a61b5d6e18ab29119b31e6c09cdae4",
+    "after": "9221e75cb2208db98fdb43ee620de448e94d9ab99a859bba46b58f78ad58d586"
+  },
+  "agentic/tools.py": {
+    "before": "4fd192136ccbdd40a087b2dd5e84874c420dae0364ff36ea832e6a1d297a098b",
+    "after": "8db7900e7876b13509c81dd6b1179c266b9b1df32e14d37dab08809478d7078d"
+  },
+  "conversationwork/__init__.py": {
+    "before": null,
+    "after": "d83c0de30bcf42bec5609765ba4dee9b2b9b10a2dac0674198ccafcca8863c42"
+  },
+  "conversationwork/bridge.py": {
+    "before": null,
+    "after": "72965d283b55128e25260e46911d8eab16ba1de99c79e45f57e47bf1c8933f7a"
+  },
+  "conversationwork/execution.py": {
+    "before": null,
+    "after": "527c10b3563d421c701fcb9c051efaf060de7bf1636d1da44d00280577b78a56"
+  },
+  "dialogue/engine.py": {
+    "before": "a9131adf56c5746c1b3bb147765888c5104809bd811e0636206c75bf4a0a272b",
+    "after": "08901ae2207e9c3da8551fa7cf7d44b09eca0e9996ddab993b02c8266372c45e"
+  },
+  "dialogue/store.py": {
+    "before": "e2cc1340b9dc31be071eb769e88001518ba0360c985451567b27fbe6a6d834d7",
+    "after": "404ac1816225ad98a57145ccd5e08b33f197077b616bb034d58af2712c39c769"
+  },
+  "foundation/__init__.py": {
+    "before": "e81eb73ef407421f6bb4c701666440cb70486bdc762b03e20d1b10bbba856d4d",
+    "after": "e56aed2307f3ed72f8684440c32ca4fd23f9ce770dc4ca2a7f930206233ad149"
+  },
+  "hosted/boundary.py": {
+    "before": "639044b123ba4006b3804e13a5c278382f5eb6f8a7e5787c238997302d6d3d3c",
+    "after": "581383d8dc92c3d24ca6e72eec321528000c567578e0ca025ac7e22c7967d066"
+  },
+  "organisation/context.py": {
+    "before": "a1997e7f2708dc81e9047195f8b3d998c6e96a96b15c79a4cf0e701ed3ca68cb",
+    "after": "af32b890b698bcc105eea6e0b33b1e3e7f1f48af968f3ee4d456db77aff659e1"
+  },
+  "repairs/__init__.py": {
+    "before": "750bcfe40e1d9bd263162a6a203d0e5da0724177e1eda7bd2c9c95e70e5d3e0c",
+    "after": "99024c7a0df90620e90aee54696b9bd4ceb97dcf09df4ae3763caac1ca3b1004"
+  },
+  "research/runner.py": {
+    "before": "37b5337a4a946c48eb09a96c45254f659f03a683c868759da521f89c2e39e4bd",
+    "after": "21f4104f1fa05b9ca2785b0799e4826c1fc004457f34c239fdf6266bce0e1442"
+  },
+  "team/store.py": {
+    "before": "242174275e14d2dc88ae00201f8745d462e311b44f862e6babf9fcc98a552144",
+    "after": "e151bee2b61b441dca8be16ce5a0699206164ca994ca5be13a867d27c3c93343"
+  },
+  "team/work.py": {
+    "before": "9946c0efa7312b4db06f1101e479011fa6035d7df6ffb9ac50c63f8d1bda7bcd",
+    "after": "06d3345e12e4ad8a92c8dc98de4b26639f73cee337859ae2bd674f7541291fa5"
+  },
+  "teamhub/store.py": {
+    "before": "0ecb6aafbe4156476cc394cba6af36926a80ea2c65cb3c3f2d332399a8bf2968",
+    "after": "fd044d4b8b69211dd0ba5551515685bce1447fc046e0ea68b4a4a9071c8d2157"
+  },
+  "workspace/chat.py": {
+    "before": "f6fe2ca7f7a83243eba4179103059ec336adbca2f75881cc0198bfe0f2709418",
+    "after": "180fca046bef8672cb9142d071e3dabbec232c9cc6e3684d15736298294cd670"
+  },
+  "workspace/web.py": {
+    "before": "dbf652711e1f9e3ac781aa3ce8dd805b2d1f96c0830153279b680aec01207a6e",
+    "after": "3bad5b3cdd02f09148ca23044ec5c90a46ea0c04728e3cf3b41261e94181270d"
+  }
+}

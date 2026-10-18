@@ -1,0 +1,58 @@
+{
+  "dialogue/engine.py": {
+    "before": "706ab36cfaf097aa7514c312c00818742f2e9f2b5929964b5983f3d1171d8e52",
+    "after": "a9131adf56c5746c1b3bb147765888c5104809bd811e0636206c75bf4a0a272b"
+  },
+  "experience/chat.py": {
+    "before": "73f9d5a45ebde068d241753618437734d7d115b2f7b26d98e9d1544a06356a36",
+    "after": "2cd4c5f6cde1d781148805db59fc35dd10b2f0de431bbb00cef5c7c08371604b"
+  },
+  "foundation/__init__.py": {
+    "before": "2217051f20737efab24a616225a1812bef38fea8350fc9a842b1d04cc95ef6c2",
+    "after": "e81eb73ef407421f6bb4c701666440cb70486bdc762b03e20d1b10bbba856d4d"
+  },
+  "foundation/web.py": {
+    "before": "ccbdd476a23d0e9d27f66fec57a58490973f48987b3a0bcca6d961bf95ac4e5a",
+    "after": "ba8e91e73631a864aa40109958620d634c89d9fbcd5802fa90cff08eae29cc10"
+  },
+  "hosted/boundary.py": {
+    "before": "b750d922918edf04641b7c39f01d6b2f69a5fabe9a4961aedeb520778bee4e44",
+    "after": "639044b123ba4006b3804e13a5c278382f5eb6f8a7e5787c238997302d6d3d3c"
+  },
+  "interface/views.py": {
+    "before": "dad7a935ed99e2c156339d159ef095c1ffd80eb84d652c7d5c945f99f82cda34",
+    "after": "ba0e833cff8785331a090dec1b34122b22eb1f71c9aaa471947679e178403099"
+  },
+  "organisation/__init__.py": {
+    "before": null,
+    "after": "555be9ef5096928ca124eaa2ca076966532d82d2de38d519209b0935404c3350"
+  },
+  "organisation/context.py": {
+    "before": null,
+    "after": "a1997e7f2708dc81e9047195f8b3d998c6e96a96b15c79a4cf0e701ed3ca68cb"
+  },
+  "organisation/seed.json": {
+    "before": null,
+    "after": "8507095d2b040ee9bb7537cc46887d44b1e69cd4d5e272e85b2fb27e148ead38"
+  },
+  "organisation/store.py": {
+    "before": null,
+    "after": "ba2b75e7d2adcddaf563aefde77d11714baa90cab453ee937c004640b42b8211"
+  },
+  "organisation/web.py": {
+    "before": null,
+    "after": "4a94d27b9b0b12c5f74c410fcc242ac57c307e44d9eeda555114b23ed9a2782c"
+  },
+  "repairs/__init__.py": {
+    "before": "357ab7c247a8751ca5678d47806a2afd82323e1a30d50db1ab3fddc2c9e8dbc6",
+    "after": "750bcfe40e1d9bd263162a6a203d0e5da0724177e1eda7bd2c9c95e70e5d3e0c"
+  },
+  "team/budget.py": {
+    "before": "d06c0b16397d40cc4f530ba040576ef19bbbd315e3461da30eb4edf286211261",
+    "after": "f96764ca19d37de5c0528c180c1a6f8b84718fa1d5ca60a991e45b6966073d5e"
+  },
+  "teamhub/web.py": {
+    "before": "33be0f0ee94dbd52962581ea3a4ea17b341b22dfceda7dabc7847ceac0c23898",
+    "after": "cd995a1af80e7c06c7c1919c3f3bccc4411800521b3695d72c3917dfb91a2e85"
+  }
+}

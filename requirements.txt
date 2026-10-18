@@ -1,2 +1,2 @@
-openai>=1.80.0
-python-dotenv>=1.0.1
+# Current application baseline; historical upgrade specifications are retained separately.
+-r requirements-server-v141.lock

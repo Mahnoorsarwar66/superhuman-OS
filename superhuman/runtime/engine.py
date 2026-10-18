@@ -199,6 +199,8 @@ def tick(path=DEFAULT_DB, client=None, executor=None):
     with projects.connect(path) as db:
         candidates=[r['id'] for r in db.execute('''SELECT p.id FROM projects p LEFT JOIN runtime_schedule s ON s.project_id=p.id
              WHERE p.status='active' ORDER BY COALESCE(s.served_at,0),p.created_at,p.id''')]
+    from superhuman.repairs.scheduler import order
+    candidates=order(candidates,path)
     for pid in candidates:
         p=projects.get(pid,path)
         # An exception on one project must not starve unrelated work.
@@ -211,7 +213,7 @@ def tick(path=DEFAULT_DB, client=None, executor=None):
         else:
             if task is None:continue
             result={'project_id':pid,'task_id':task['id'],'status':task['status'],'output':task['output']}
-            event('task_completed',pid,task['id'],{'status':task['status']},path)
+            event('agent_step' if task.get('kind')=='agentic' and task['status']!='needs_review' else 'task_completed',pid,task['id'],{'status':task['status']},path)
         with projects.connect(path) as db:
             db.execute('INSERT OR REPLACE INTO runtime_schedule VALUES(?,?)',(pid,time.time()))
         return result

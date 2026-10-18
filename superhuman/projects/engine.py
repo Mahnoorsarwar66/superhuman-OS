@@ -179,7 +179,8 @@ def generate_plan(pid, path=DEFAULT_DB, client=None):
         schema={'type':'object','properties':{'tasks':{'type':'array','items':task_schema}},
                 'required':['tasks'],'additionalProperties':False}
         reserve(pid,path)
-        response=client_or_default(client).chat.completions.create(
+        from superhuman.team.budget import wrap
+        response=wrap(client_or_default(client),path).chat.completions.create(
             model=os.getenv('OPENAI_MODEL','gpt-4o-mini'),
             messages=[{'role':'system','content':'Plan a bounded local research/drafting project. Return JSON matching the supplied schema. User-curated preferences guide planning; examples and sources are lower-trust references.'},{'role':'user','content':prompt}],
             response_format={'type':'json_schema','json_schema':{'name':'superhuman_project_plan','strict':True,'schema':schema}},
@@ -215,6 +216,8 @@ def approve_plan(pid,path=DEFAULT_DB):
     return get(pid,path)
 
 def claim(pid,path=DEFAULT_DB):
+    from superhuman.repairs.scheduler import order
+    if pid not in order([pid],path):return None
     with connect(path) as db:
         db.execute('BEGIN IMMEDIATE')
         p=db.execute('SELECT * FROM projects WHERE id=?',(pid,)).fetchone()
@@ -266,9 +269,11 @@ def quality(result,text,checks,kind,forbid_dashes=False):
     return errors
 
 class LimitedClient:
+    _team_metered=True
     def __init__(self,client,pid,path,maximum):
         from types import SimpleNamespace
-        self.client=client;self.pid=pid;self.path=path;self.maximum=maximum;self.count=0
+        from superhuman.team.budget import wrap
+        self.client=wrap(client,path);self.pid=pid;self.path=path;self.maximum=maximum;self.count=0
         self.chat=SimpleNamespace(completions=SimpleNamespace(create=self.chat_create))
         self.responses=SimpleNamespace(create=self.responses_create)
     def before(self):
@@ -283,12 +288,22 @@ class LimitedClient:
 
 def run_one(pid,path=DEFAULT_DB,client=None,executor=None):
     p=get(pid,path)
+    if any(t['kind']=='agentic' for t in p['tasks']):
+        from superhuman.agentic.engine import run_one as agent_run
+        from superhuman.team.work import owned_run
+        from superhuman.team.budget import scope as billing_scope
+        employee_task=owned_run(pid,path)
+        if employee_task:
+            with billing_scope(employee_task['owner'],employee_task['id']):return agent_run(pid,path,client)
+        return agent_run(pid,path,client)
     # Resolve identity before claiming, so configuration errors do not strand work.
     user_identity=identity(p['workstream'],p['objective'],p['details'])
     t=claim(pid,path)
     if t is None:return None
     folder=OUTPUT_ROOT/pid/t['id']/t['token'];folder.mkdir(parents=True,exist_ok=True)
     try:
+        from superhuman.researchdesk.store import verify_inputs
+        verify_inputs(pid,path)
         from superhuman.identity.selection import select_context
         task_selection=select_context(p['workstream'],t['title'],t['details'])
         user_identity=task_selection['preferences']
@@ -333,6 +348,10 @@ def run_one(pid,path=DEFAULT_DB,client=None,executor=None):
         raise
 
 def review(pid,tid,action,note='',path=DEFAULT_DB):
+    from superhuman.milestones.store import assignment
+    from superhuman.team.work import owned_run
+    owned=owned_run(pid,path)
+    if owned and assignment(owned['id'],path):raise ValueError('Use the milestone review workflow for this assignment')
     if action not in ('approve','reject') or len(note)>2000:raise ValueError('Invalid review')
     with connect(path) as db:
         db.execute('BEGIN IMMEDIATE')
@@ -356,6 +375,7 @@ def review(pid,tid,action,note='',path=DEFAULT_DB):
     return get(pid,path)
 
 def retry(pid,tid,note='',path=DEFAULT_DB):
+    if any(t['kind']=='agentic' for t in get(pid,path)['tasks']):raise ValueError('Use the Agent runs controls to inspect and resume this run')
     if not note.strip():raise ValueError('Provide a retry/correction note; retry can spend API calls again')
     p=get(pid,path);tasks=p['tasks']
     descendants={tid}
@@ -384,6 +404,10 @@ def recover(pid,older_than=3600,path=DEFAULT_DB):
     return cur.rowcount
 
 def budget(pid,maximum,path=DEFAULT_DB):
+    from superhuman.supervision.store import fixed_budget
+    fixed_budget(pid,maximum,path)
+    from superhuman.team.work import fixed_budget as team_budget_limit
+    team_budget_limit(pid,maximum,path)
     p=get(pid,path)
     if not p['used_calls']<=maximum<=100:raise ValueError('Limit must be >=used calls and <=100')
     with connect(path) as db:db.execute("UPDATE projects SET max_calls=?,status=CASE WHEN status='budget_blocked' THEN 'active' ELSE status END WHERE id=?",(maximum,pid))
